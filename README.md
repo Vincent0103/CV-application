@@ -1,8 +1,34 @@
-# React + Vite
+# testing-practice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+<!-- TODO -->
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+
+<!-- TODO -->
+
+## Technologies Used
+
+- **Programming Language**: Javascript
+- **Testing Framework**: Jest
+- **Additional Technologies**: Check the devDependencies in [packages.json](package.json)
+
+## Getting Started
+
+Clone the repository: git clone https://github.com/your-username/your-project.git
+Navigate to the project directory: cd your-project
+Install dependencies: npm install or yarn install
+Run the tests: npm test or yarn test
+
+## Testing
+
+all the tests are located in <!-- TODO [LINK] -->
+
+## License
+
+This project is licensed under the vinct License.
+
+## Acknowledgements
+
+The Odin Project for providing valuable resources and guidance.
