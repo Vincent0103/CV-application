@@ -1,4 +1,4 @@
-import Input from "./Utils";
+import Input, { Select, AddBtn } from "./Utils";
 
 const FormSections = () => {
   const GeneralForm = () => {
@@ -16,16 +16,18 @@ const FormSections = () => {
           <Input type="text" name="location" labelName="Location" placeholder="15 Rue de Belzunce, 75010 Paris, France" />
           <Input type="textarea" name="summary" labelName="Summary / Profile" minLength="50"
           maxLength="300" placeholder={summaryForJohnDoe} />
-          <Input type="text" name="skills" labelName="Skills" placeholder="Web Developer">
-            <select name="expertise" id="expertise" className="mt-1 block w-[50%] px-3 py-2
-          bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
-            focus:border-gray-400 sm:text-sm">
-              <option selected value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-              <option value="expert">Expert</option>
-            </select>
+
+          <Input type="text" name="skill" labelName="Skills" placeholder="Web Developer"
+          additionalStyles="pb-2" >
+            <Select name="expertise" values={["beginner", "intermediate", "advanced", "expert"]} />
           </ Input>
+
+          <Input type="text" name="skill2" placeholder="Artist" additionalStyles="pt-0 pb-3">
+            <Select name="expertise" values={["beginner", "intermediate", "advanced", "expert"]} />
+          </ Input>
+
+          <AddBtn />
+
         </form>
       </div>
     );
@@ -35,9 +37,11 @@ const FormSections = () => {
     return (
       <div className="flex flex-col mb-2">
         <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-3">
-          <button type="button" className="font-bold text-3xl">General</button>
-          <button type="button" className="border-x-2 border-gray-300 px-3 h-7 flex items-end">Education</button>
-          <button type="button" className="">Experiences</button>
+          <button type="button" className="font-bold text-3xl" aria-selected="true"
+          role="tab">General</button>
+          <button type="button" className="border-x-2 border-gray-300 px-3 h-7 flex items-end"
+          role="tab">Education</button>
+          <button type="button" className="" role="tab">Experiences</button>
         </div>
       </div>
     );
