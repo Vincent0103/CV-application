@@ -5,6 +5,6 @@
 @layer utilities {
   .min-height {
     height: 80vh;
-    height: min(80vh, 100%);
+    height: min(80vh, 91%);
   }
 }

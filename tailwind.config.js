@@ -1,3 +1,5 @@
+import tailwindScrollbar from "tailwind-scrollbar";
+
 export default {
   content: [
     "./index.html",
@@ -11,9 +13,12 @@ export default {
         primary: "#B8A4C5",
         secondary: "#6A4344",
         accent: "#A99178",
+        "bar-color": "rgba(0, 0, 0, .15)",
       }
     },
   },
-  plugins: [],
+  plugins: [
+    tailwindScrollbar({ nocompatible: true }),
+  ],
 }
 

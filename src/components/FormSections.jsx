@@ -8,7 +8,8 @@ const FormSections = () => {
     return (
       <div className="min-height max-w-full relative bg-[#ebebeb] rounded-xl border-2 border-gray-300
         shadow-xl overflow-hidden">
-        <div className="max-h-full min-w-full overflow-y-scroll">
+        <div className="max-h-full min-w-full overflow-y-scroll scrollbar-thin scrollbar-thumb-bar-color
+        scrollbar-track-transparent scrollbar-thumb-rounded-full">
           <form>
             <div className="flex">
               <Input type="text" name="name" labelName="Name" placeholder="John" hasAutoFocus={true} />
