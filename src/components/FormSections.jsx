@@ -3,9 +3,10 @@ import Input, { Select, AddBtn } from "./Utils";
 const FormSections = () => {
   const GeneralForm = () => {
     const summaryForJohnDoe = "I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.";
+    const hobbiesForJohnDoe = "In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.";
 
     return (
-      <div className="h-full w-full bg-[#ebebeb] rounded-xl border-2 border-gray-300 shadow-xl">
+      <div className="h-min w-full bg-[#ebebeb] rounded-xl border-2 border-gray-300 shadow-xl">
         <form>
           <div className="flex">
             <Input type="text" name="name" labelName="Name" placeholder="John" hasAutoFocus={true} />
@@ -17,17 +18,34 @@ const FormSections = () => {
           <Input type="textarea" name="summary" labelName="Summary / Profile" minLength="50"
           maxLength="300" placeholder={summaryForJohnDoe} />
 
-          <Input type="text" name="skill" labelName="Skills" placeholder="Web Developer"
-          additionalStyles="pb-2" >
-            <Select name="expertise" values={["beginner", "intermediate", "advanced", "expert"]} />
-          </ Input>
+          <div>
+            <Input type="text" name="skill" labelName="Skills" placeholder="Web Developer"
+            additionalStyles="pb-2" >
+              <Select name="expertise" values={["beginner", "intermediate", "advanced", "expert"]} />
+            </ Input>
 
-          <Input type="text" name="skill2" placeholder="Artist" additionalStyles="pt-0 pb-3">
-            <Select name="expertise" values={["beginner", "intermediate", "advanced", "expert"]} />
-          </ Input>
+            <Input type="text" name="skill1" placeholder="Artist" additionalStyles="pt-0 pb-3">
+              <Select name="expertise1" values={["beginner", "intermediate", "advanced", "expert"]} />
+            </ Input>
 
-          <AddBtn />
+            <AddBtn />
+          </div>
 
+          <div>
+            <Input type="text" name="language" labelName="Languages" placeholder="French"
+            additionalStyles="pb-2" >
+              <Select name="fluency" values={["beginner", "intermediate", "advanced", "fluent"]} />
+            </ Input>
+
+            <Input type="text" name="language1" placeholder="English" additionalStyles="pt-0 pb-3">
+              <Select name="fluency1" values={["beginner", "intermediate", "advanced", "fluent"]} />
+            </ Input>
+
+            <AddBtn />
+          </div>
+
+          <Input type="textarea" name="hobbies" labelName="Hobbies" minLength="50"
+          maxLength="300" placeholder={hobbiesForJohnDoe} />
         </form>
       </div>
     );
@@ -46,6 +64,10 @@ const FormSections = () => {
       </div>
     );
   }
+
+  // const NextFormBtn = () => {
+  //   return ()
+  // }
 
   return (
     <div className="w-[50%]">
