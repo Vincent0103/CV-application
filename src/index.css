@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .min-height {
+    height: 80vh;
+    height: min(80vh, 100%);
+  }
+}
