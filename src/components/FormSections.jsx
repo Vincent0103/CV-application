@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Input, { Select, AddBtn } from "./Utils";
 
 const FormSections = () => {
@@ -14,9 +14,9 @@ const FormSections = () => {
     }, []);
 
     return (
-      <div className="min-height max-w-full relative bg-[#ebebeb] rounded-xl border-2 border-gray-300
+      <div className="max-h-[80vh] max-w-full relative bg-[#ebebeb] rounded-xl border-2 border-gray-300
         shadow-xl overflow-hidden">
-        <div onScroll={handleScroll} className="max-h-full min-w-full overflow-y-scroll scrollbar-thin
+        <div onScroll={handleScroll} className="max-h-[80vh] min-w-full overflow-y-scroll scrollbar-thin
         scrollbar-thumb-bar-color scrollbar-track-transparent scrollbar-thumb-rounded-full">
           { children }
         </div>
@@ -108,7 +108,7 @@ const FormSections = () => {
   }
 
   return (
-    <div className="w-[50%] max-h-full">
+    <div className="max-w-[40%] max-h-full">
       <FormSliderBtns />
       <GeneralForm />
       <NextFormBtn />

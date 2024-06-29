@@ -4,7 +4,12 @@
 
 @layer utilities {
   .min-height {
-    height: 80vh;
-    height: min(80vh, 91%);
+    max-height: 80vh;
+    /* height: min(80vh, 91%); */
+  }
+
+  .min-CV-height {
+    height: 95vh;
+    height: min(95vh, 29.7cm);
   }
 }
