@@ -3,13 +3,12 @@
 @tailwind utilities;
 
 @layer utilities {
-  .min-height {
-    max-height: 80vh;
-    /* height: min(80vh, 91%); */
-  }
-
   .min-CV-height {
     height: 95vh;
     height: min(95vh, 29.7cm);
+  }
+
+  .font-serif {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   }
 }

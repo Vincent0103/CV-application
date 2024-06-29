@@ -53,7 +53,7 @@ const FormSections = ({ children }) => {
   }
 
   return (
-    <div className="max-w-[40%] max-h-full">
+    <div className="max-w-[50%] h-min sticky top-0">
       <FormSliderBtns />
       {children}
       <NextFormBtn />
