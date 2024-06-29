@@ -16,8 +16,8 @@ const GeneralForm = () => {
           <Input type="text" name="lastname" labelName="Last Name" placeholder="Doe" />
         </div>
         <Input type="email" name="email" labelName="Email" placeholder="johndoe@gmail.com" />
-        <Input type="tel" name="tel" labelName="Phone Number" placeholder="07 49 88 98 23" />
-        <Input type="text" name="location" labelName="Location" placeholder="15 Rue de Belzunce, 75010 Paris, France" />
+        <Input type="tel" name="tel" labelName="Phone Number" placeholder="06 32 73 12 98" />
+        <Input type="text" name="location" labelName="Location" placeholder="75010 Paris, France" />
         <Input type="textarea" name="summary" labelName="Summary / Profile" minLength="20"
         maxLength="300" placeholder={summaryForJohnDoe} />
 
