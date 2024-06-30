@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import PlusIcon from "../assets/icons/plus.svg";
 
-const Input = ({ children, type, name, labelName, placeholder,
-  minLength, maxLength, hasAutoFocus=false, additionalStyles="" }) => {
+const Input = ({ children, type, name, labelName, placeholder, handleChange,
+  value, minLength, maxLength, hasAutoFocus=false, additionalStyles="" }) => {
 
   const classes = `mt-1 block w-full px-3 py-2
   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
@@ -10,8 +10,9 @@ const Input = ({ children, type, name, labelName, placeholder,
     invalid:border-rose-500`;
 
   const input = (type !== "textarea")
-  ? <input type={type} name={name} id={name} className={classes} placeholder={placeholder}
-    autoFocus={hasAutoFocus} />
+  ? <input type={type} name={name} id={name} className={classes}
+  placeholder={placeholder} autoFocus={hasAutoFocus} value={value}
+  onChange={(e) => handleChange(e, name)} />
   : <textarea name={name} id={name} rows="6" className={classes} placeholder={placeholder}
     minLength={minLength} maxLength={maxLength}
     autoFocus={hasAutoFocus} >
