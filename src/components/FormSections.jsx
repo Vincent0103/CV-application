@@ -27,11 +27,11 @@ const FormSections = ({ children }) => {
     return (
       <div className="flex flex-col mb-2">
         <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-3">
-          <button type="button" className="font-bold text-3xl" aria-selected="true"
+          <button type="button" className="font-bold text-3xl h-[35px]" aria-selected="true"
           role="tab">General</button>
-          <button type="button" className="border-x-2 border-gray-300 px-3 h-7 flex items-end"
+          <button type="button" className="border-x-2 border-gray-300 px-3"
           role="tab">Education</button>
-          <button type="button" className="" role="tab">Experiences</button>
+          <button type="button" role="tab">Experiences</button>
         </div>
       </div>
     );
@@ -53,7 +53,7 @@ const FormSections = ({ children }) => {
   }
 
   return (
-    <div className="max-w-[50%] h-min sticky top-0">
+    <div className="max-w-[40%] h-min sticky top-0">
       <FormSliderBtns />
       {children}
       <NextFormBtn />
