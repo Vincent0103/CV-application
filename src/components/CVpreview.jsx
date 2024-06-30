@@ -14,12 +14,12 @@ const CVpreview = () => {
           <h3 className="font-bold text-2xl p-2 text-center">Skills</h3>
           <ul>
           <li className="p-2 flex justify-between gap-4">
-              <p className="pl-10">Web Developer</p>
-              <p className="pr-10">Expert</p>
+              <p className="pl-5">Web Developer</p>
+              <p className="pr-5">Expert</p>
             </li>
             <li className="p-2 flex justify-between gap-4">
-              <p className="pl-10">Artist</p>
-              <p className="pr-10">Advanced</p>
+              <p className="pl-5">Artist</p>
+              <p className="pr-5">Advanced</p>
             </li>
           </ul>
         </div>
@@ -28,12 +28,12 @@ const CVpreview = () => {
           <h3 className="font-bold text-2xl p-2 text-center">Languages</h3>
           <ul>
             <li className="p-2 flex justify-between gap-4">
-              <p className="pl-10">French</p>
-              <p className="pr-10">Fluent</p>
+              <p className="pl-5">French</p>
+              <p className="pr-5">Fluent</p>
             </li>
             <li className="p-2 flex justify-between gap-4">
-              <p className="pl-10">English</p>
-              <p className="pr-10">Advanced</p>
+              <p className="pl-5">English</p>
+              <p className="pr-5">Advanced</p>
             </li>
           </ul>
         </div>
@@ -49,8 +49,8 @@ const CVpreview = () => {
   const SecondaryContainer = () => {
     return (
       <div className="bg-white h-full w-[67%] px-4">
-        <h1 className="text-5xl font-black text-zinc-700 py-2">Vincent Kanagasundaram</h1>
-        <div className="flex justify-between py-2">
+        <h1 className="text-5xl font-black text-zinc-700 py-3">John Doe</h1>
+        <div className="flex justify-between py-3">
           <p className="flex gap-1 justify-center items-center">
             <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>mailbox-open-outline</title><path d="M14,11H20V15H18V13H14V11M18,4H8A5,5 0 0,0 3,9V18H1V20H21A2,2 0 0,0 23,18V9A5,5 0 0,0 18,4M11,18H5V9A3,3 0 0,1 8,6A3,3 0 0,1 11,9V18M21,18H13V9C13,7.92 12.65,6.86 12,6H18A3,3 0 0,1 21,9V18Z" /></svg>
             johndoe@gmail.com
@@ -64,6 +64,12 @@ const CVpreview = () => {
             75010, Paris
           </p>
         </div>
+        <hr />
+        <h3 className="font-extrabold text-2xl py-3">Summary</h3>
+        <p className="">
+          In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends,
+          and volunteering at local community centers.
+        </p>
       </div>
     );
   }
