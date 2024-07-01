@@ -8,7 +8,7 @@ function App() {
     name: '',
     lastName: '',
     email: '',
-    tel: '',
+    phoneNumber: '',
     location: '',
     summary: '',
     skills: [
