@@ -1,43 +1,48 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const Input = ({
-  children, type, name, labelName, placeholder, handleChange,
-  value, minLength, maxLength, dataKey, hasAutoFocus = false, additionalStyles = '',
-  category = null, innerObjectId = null,
+const InputOrTextarea = ({
+  type, name, classes, placeholder, hasAutoFocus, value, handleChange,
+}) => {
+  const commonProps = {
+    name,
+    id: name,
+    className: classes,
+    placeholder,
+    autoFocus: hasAutoFocus,
+    value,
+    onChange: handleChange,
+  };
+
+  return ((type !== 'textarea')
+    ? (<input type={type} {...commonProps} />)
+    : (<textarea rows="6" {...commonProps}></textarea>));
+};
+
+const LabelAndInput = ({
+  children, type, name, labelName, placeholder, value, handleChange, dataKey,
+  hasAutoFocus = false, additionalStyles = '', category = null, innerObjectId = null,
 }) => {
   const classes = `mt-1 block w-full px-3 py-2
   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
-    focus:border-gray-400 sm:text-sm invalid:outline-none invalid:ring-rose-500
-    invalid:border-rose-500`;
+  focus:border-gray-400 sm:text-sm invalid:outline-none invalid:ring-rose-500
+  invalid:border-rose-500`;
 
   const handleChangeParameterized = (e) => handleChange(e, dataKey, [category, innerObjectId]);
 
-  const input = ((type !== 'textarea')
-
-    ? <input type={type} name={name} id={name} className={classes}
-  placeholder={placeholder} autoFocus={hasAutoFocus} value={value}
-  onChange={handleChangeParameterized} />
-
-    : <textarea name={name} id={name} rows="6" className={classes} placeholder={placeholder}
-  minLength={minLength} maxLength={maxLength} value={value} autoFocus={hasAutoFocus}
-  onChange={handleChangeParameterized} >
-  </textarea>);
+  const input = <InputOrTextarea type={type} name={name} classes={classes}
+  placeholder={placeholder} hasAutoFocus={hasAutoFocus} value={value}
+  handleChange={handleChangeParameterized}/>;
 
   return (
     <div className={`p-4 w-full${additionalStyles && ` ${additionalStyles}`}`}>
       {labelName && <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>}
-      {
-        (children)
-          ? <div className="flex gap-4">{input}{children}</div>
-          : input
-      }
+      {(children) ? <div className="flex gap-4">{input}{children}</div> : input}
     </div>
   );
 };
 
 const Select = ({
-  name, values, dataKey, handleChange, selectedValue,
-  category = null, innerObjectId = null,
+  name, values, dataKey, selectedValue, category = null, innerObjectId = null, handleChange,
 }) => {
   const classes = `mt-1 block w-[50%] px-3 py-2
     bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
@@ -48,7 +53,7 @@ const Select = ({
   return (
     <select name={name} id={name} className={classes}
     value={selectedValue} onChange={handleChangeParameterized}>
-      <option value="" disabled selected>Choose {category}</option>
+      <option value="" disabled>{category[0].toUpperCase() + category.slice(1)}</option>
       {values.map((value) => <option key={uuidv4()} value={value}>
         {value[0].toUpperCase() + value.slice(1)}
       </option>)}
@@ -69,5 +74,5 @@ const AddBtn = () => {
   );
 };
 
-export default Input;
+export default LabelAndInput;
 export { Select, AddBtn };

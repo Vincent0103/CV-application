@@ -1,28 +1,4 @@
-import { useState, useCallback } from 'react';
-
-const FormContainer = ({ fadingBottomContainer, children }) => {
-  const [isFadingVisible, setIsFadingVisible] = useState(true);
-
-  const handleScroll = useCallback((e) => {
-    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-
-    if (scrollTop + clientHeight >= scrollHeight - 10) setIsFadingVisible(false);
-    else setIsFadingVisible(true);
-  }, []);
-
-  return (
-    <div className="max-h-[80vh] max-w-full relative bg-[#ebebeb] rounded-xl border-2 border-gray-300
-      shadow-xl overflow-hidden">
-      <div onScroll={handleScroll} className="max-h-[80vh] min-w-full overflow-y-scroll scrollbar-thin
-      scrollbar-thumb-bar-color scrollbar-track-transparent scrollbar-thumb-rounded-full">
-        { children }
-      </div>
-      {isFadingVisible && fadingBottomContainer};
-    </div>
-  );
-};
-
-const FormSections = ({ children }) => {
+const CVcustomizer = ({ children }) => {
   const FormSliderBtns = () => (
       <div className="flex flex-col mb-2">
         <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-3">
@@ -59,5 +35,4 @@ const FormSections = ({ children }) => {
   );
 };
 
-export default FormSections;
-export { FormContainer };
+export default CVcustomizer;
