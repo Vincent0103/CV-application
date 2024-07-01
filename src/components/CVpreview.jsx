@@ -1,8 +1,7 @@
-import profilePicture from "../assets/IMG_0250.jpg";
+import profilePicture from '../assets/IMG_0250.jpg';
 
 const CVpreview = ({ generalInformations }) => {
-  const PrimaryContainer = () => {
-    return (
+  const PrimaryContainer = () => (
       <div className="bg-slate-800 h-full w-[33%] text-white flex
       flex-col items-center">
         <div className="self-stretch flex justify-center items-center p-6">
@@ -14,12 +13,12 @@ const CVpreview = ({ generalInformations }) => {
           <h3 className="font-bold text-2xl p-2 text-center">Skills</h3>
           <ul>
           <li className="p-2 flex justify-between gap-4">
-              <p className="pl-5">Web Developer</p>
-              <p className="pr-5">Expert</p>
+              <p className="pl-5">{ generalInformations.skills[0].skill }</p>
+              <p className="pr-5">{ generalInformations.skills[0].expertise }</p>
             </li>
             <li className="p-2 flex justify-between gap-4">
-              <p className="pl-5">Artist</p>
-              <p className="pr-5">Advanced</p>
+              <p className="pl-5">{ generalInformations.skills[1].skill }</p>
+              <p className="pr-5">{ generalInformations.skills[1].expertise }</p>
             </li>
           </ul>
         </div>
@@ -28,27 +27,24 @@ const CVpreview = ({ generalInformations }) => {
           <h3 className="font-bold text-2xl p-2 text-center">Languages</h3>
           <ul>
             <li className="p-2 flex justify-between gap-4">
-              <p className="pl-5">French</p>
-              <p className="pr-5">Fluent</p>
+              <p className="pl-5">{ generalInformations.languages[0].language }</p>
+              <p className="pr-5">{ generalInformations.languages[0].fluency }</p>
             </li>
             <li className="p-2 flex justify-between gap-4">
-              <p className="pl-5">English</p>
-              <p className="pr-5">Advanced</p>
+              <p className="pl-5">{ generalInformations.languages[1].language }</p>
+              <p className="pr-5">{ generalInformations.languages[1].fluency }</p>
             </li>
           </ul>
         </div>
         <hr className="border-t-1 my-2 border-white w-[90%]"/>
         <div className="self-stretch flex flex-col items-center">
           <h3 className="font-bold text-2xl p-2 text-center">Hobbies</h3>
-          <p className="w-[90%]">In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.</p>
+          <p className="w-[90%]">{ generalInformations.hobbies }</p>
         </div>
       </div>
-    );
-  }
+  );
 
-  const SecondaryContainer = () => {
-
-    return (
+  const SecondaryContainer = () => (
       <div className="bg-white h-full w-[67%] px-4">
         <h1 className="text-5xl font-black text-zinc-700 py-3">{generalInformations.name} {generalInformations.lastName}</h1>
         <div className="flex justify-between py-3">
@@ -67,13 +63,9 @@ const CVpreview = ({ generalInformations }) => {
         </div>
         <hr />
         <h3 className="font-extrabold text-2xl py-3">Summary</h3>
-        <p className="">
-          In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends,
-          and volunteering at local community centers.
-        </p>
+        <p className="">{generalInformations.summary}</p>
       </div>
-    );
-  }
+  );
 
   return (
     <div className={`bg-white w-[60%] max-h-[29.7cm] aspect-[0.707] shadow-lg rounded-md self-start
@@ -82,6 +74,6 @@ const CVpreview = ({ generalInformations }) => {
       <SecondaryContainer />
     </div>
   );
-}
+};
 
 export default CVpreview;

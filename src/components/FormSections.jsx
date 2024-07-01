@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
 const FormContainer = ({ fadingBottomContainer, children }) => {
   const [isFadingVisible, setIsFadingVisible] = useState(true);
@@ -19,12 +19,11 @@ const FormContainer = ({ fadingBottomContainer, children }) => {
       </div>
       {isFadingVisible && fadingBottomContainer};
     </div>
-  )
-}
+  );
+};
 
 const FormSections = ({ children }) => {
-  const FormSliderBtns = () => {
-    return (
+  const FormSliderBtns = () => (
       <div className="flex flex-col mb-2">
         <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-3">
           <button type="button" className="font-bold text-3xl h-[35px]" aria-selected="true"
@@ -34,8 +33,7 @@ const FormSections = ({ children }) => {
           <button type="button" role="tab">Experiences</button>
         </div>
       </div>
-    );
-  }
+  );
 
   const NextFormBtn = () => {
     const rightArrow = <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 transition-transform translate-y-[1px] group-hover:translate-x-0.5" height={24} width={24} fill="white" viewBox="0 0 24 24"><path d="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" /></svg>;
@@ -49,8 +47,8 @@ const FormSections = ({ children }) => {
           {rightArrow}
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="max-w-[40%] h-min sticky top-0">
@@ -59,7 +57,7 @@ const FormSections = ({ children }) => {
       <NextFormBtn />
     </div>
   );
-}
+};
 
 export default FormSections;
 export { FormContainer };
