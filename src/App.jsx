@@ -5,19 +5,19 @@ import CVpreview from './components/CVpreview.jsx';
 
 function App() {
   const [generalInformations, setGeneralInformations] = useState({
-    name: 'John',
-    lastName: 'Doe',
+    name: '',
+    lastName: '',
     email: '',
     tel: '',
     location: '',
     summary: '',
     skills: [
-      { id: 0, skill: 'Web Developer', expertise: 'Expert' },
-      { id: 1, skill: 'Artist', expertise: 'Intermediate' },
+      { id: 0, skill: '', expertise: '' },
+      { id: 1, skill: '', expertise: '' },
     ],
     languages: [
-      { id: 0, language: 'French', fluency: 'Fluent' },
-      { id: 1, language: 'English', fluency: 'Advanced' },
+      { id: 0, language: '', fluency: '' },
+      { id: 1, language: '', fluency: '' },
     ],
     hobbies: '',
   });

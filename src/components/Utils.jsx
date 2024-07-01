@@ -48,6 +48,7 @@ const Select = ({
   return (
     <select name={name} id={name} className={classes}
     value={selectedValue} onChange={handleChangeParameterized}>
+      <option value="" disabled selected>Choose {category}</option>
       {values.map((value) => <option key={uuidv4()} value={value}>
         {value[0].toUpperCase() + value.slice(1)}
       </option>)}

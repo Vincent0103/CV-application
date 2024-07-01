@@ -11,7 +11,7 @@ const GeneralForm = ({ generalInformations, setGeneralInformations }) => {
   const handleChange = (e, key, [category = null, innerObjectId = null]) => {
     if (!(key in generalInformations)) return;
 
-    if (category && innerObjectId !== null) {
+    if (category !== null && innerObjectId !== null) {
       setGeneralInformations((prevState) => ({
         ...prevState,
         [key]: prevState[key].map((entry) => (
@@ -24,8 +24,6 @@ const GeneralForm = ({ generalInformations, setGeneralInformations }) => {
         [key]: e.target.value,
       }));
     }
-
-    console.log(generalInformations);
   };
 
   return (
@@ -58,9 +56,8 @@ const GeneralForm = ({ generalInformations, setGeneralInformations }) => {
           value={generalInformations.skills[0].skill} category={'skill'} innerObjectId={0}>
 
             <Select name="expertise1" values={['Beginner', 'Intermediate', 'Advanced', 'Expert']}
-            handleChange={handleChange} dataKey={'skills'}
-            selectedValue={generalInformations.skills[0].expertise} category={'expertise'}
-            innerObjectId={0}/>
+            handleChange={handleChange} dataKey={'skills'} category={'expertise'}
+            selectedValue={generalInformations.skills[0].expertise} innerObjectId={0}/>
 
           </ Input>
 
