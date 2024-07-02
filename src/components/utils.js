@@ -1,10 +1,16 @@
-const objectSplice = (obj, start, end) => Object.entries(obj).slice(start, end);
+const objectSplice = (obj, start, end) => {
+  if (start >= end) return [];
+  if (start < 0 || end > obj.length) return obj;
+  return Object.entries(obj).slice(start, end);
+};
 
 const toTitle = (camelCaseString) => camelCaseString
+  // Replace hyphens with spaces
+  .replace(/-/g, ' ')
   // Insert a space before all caps
-  .replace(/([A-Z])/g, ' $1')
-  // Uppercase the first character
-  .replace(/^./, (str) => str.toUpperCase())
+  .replace(/([a-z])([A-Z])/g, '$1 $2')
+  // Uppercase the first character of each word
+  .replace(/\b\w/g, (char) => char.toUpperCase())
   .trim();
 
 const typeGiver = (category) => {
