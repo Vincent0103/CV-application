@@ -2,25 +2,10 @@ import { useState } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
+import general from './components/data/data.js';
 
 function App() {
-  const [generalInformations, setGeneralInformations] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    location: '',
-    summary: '',
-    skills: [
-      { id: 0, skill: '', expertise: '' },
-      { id: 1, skill: '', expertise: '' },
-    ],
-    languages: [
-      { id: 0, language: '', fluency: '' },
-      { id: 1, language: '', fluency: '' },
-    ],
-    hobbies: '',
-  });
+  const [generalInformations, setGeneralInformations] = useState(general);
 
   const handleChange = (e, key, [category = null, innerObjectId = null]) => {
     if (!(key in generalInformations)) return;
