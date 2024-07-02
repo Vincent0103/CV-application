@@ -25,11 +25,27 @@ function App() {
     }
   };
 
+  const handleClick = (key) => {
+    if (!(key in generalInformations)) return;
+    if (!Array.isArray(generalInformations[key])) return;
+
+    const target = [...generalInformations[key]];
+    const entryKeys = Object.keys(target[0]);
+    const lastId = target[target.length - 1].id;
+    target.push({ id: lastId + 1, [entryKeys[1]]: '', [entryKeys[2]]: '' });
+
+    setGeneralInformations((prevState) => ({
+      ...prevState,
+      [key]: [...target],
+    }));
+  };
+
   return (
     <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
       <CVcustomizer>
-        <GeneralForm generalInformations={generalInformations} handleChange={handleChange} />
+        <GeneralForm generalInformations={generalInformations} handleChange={handleChange}
+        handleClick={handleClick} />
       </CVcustomizer>
       <CVpreview generalInformations={generalInformations} />
     </div>

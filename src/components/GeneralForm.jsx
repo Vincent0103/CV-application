@@ -2,7 +2,7 @@ import objectSplice, { toTitle, typeGiver } from './utils.js';
 import FormContainer from './FormContainer.jsx';
 import LabelAndInput, { Select, AddBtn } from './FormElements.jsx';
 
-const GeneralForm = ({ generalInformations, handleChange }) => {
+const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
   const summaryForJohnDoe = 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.';
   const hobbiesForJohnDoe = 'In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.';
 
@@ -66,11 +66,11 @@ const GeneralForm = ({ generalInformations, handleChange }) => {
         {addGeneralInputs(generalInformations, 2, 6, false)}
         <div>
           {addGeneralInputsAndSelects(generalInformations.skills, 'skills', ['skill', 'expertise'])}
-          <AddBtn />
+          <AddBtn handleClick={handleClick} dataKey={'skills'} />
         </div>
         <div>
           {addGeneralInputsAndSelects(generalInformations.languages, 'languages', ['language', 'fluency'])}
-          <AddBtn />
+          <AddBtn handleClick={handleClick} dataKey={'languages'} />
         </div>
         {addGeneralInputs(generalInformations, 8, 9, false)}
 

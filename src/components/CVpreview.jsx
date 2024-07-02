@@ -14,7 +14,7 @@ const CVpreview = ({ generalInformations }) => {
     </ul>
   );
 
-  const SectionContainer = ({ heading, children, containerStyles }) => (
+  const SectionContainer = ({ heading, children, containerStyles, hasHr }) => (
     <div className={`self-stretch ${containerStyles}`}>
       { heading && <h3 className="font-bold text-2xl p-2 text-center">{ heading }</h3>}
       { children }
