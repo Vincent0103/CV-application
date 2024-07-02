@@ -7,14 +7,17 @@ const CVpreview = ({ generalInformations }) => {
       {obj.map((item, index) => (
         <li key={index} className="p-2 px-7 flex justify-between gap-4">
           {Object.keys(item).map((innerItem, i) => (
-            innerItem !== 'id' && <p key={i}>{ item[innerItem] }</p>
+            innerItem !== 'id' && innerItem !== 'placeholder'
+            && <p key={i}>{ item[innerItem] }</p>
           ))}
         </li>
       ))}
     </ul>
   );
 
-  const SectionContainer = ({ heading, children, containerStyles, hasHr }) => (
+  const SectionContainer = ({
+    heading, children, containerStyles, hasHr,
+  }) => (
     <div className={`self-stretch ${containerStyles}`}>
       { heading && <h3 className="font-bold text-2xl p-2 text-center">{ heading }</h3>}
       { children }

@@ -29,5 +29,7 @@ const typeGiver = (category) => {
   return types[category] || null;
 };
 
+const getRandomItem = (array) => array[Math.round(Math.random() * (array.length - 1))];
+
 export default objectSplice;
-export { toTitle, typeGiver };
+export { toTitle, typeGiver, getRandomItem };

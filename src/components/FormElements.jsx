@@ -24,8 +24,7 @@ const LabelAndInput = ({
 }) => {
   const classes = `mt-1 block w-full px-3 py-2
   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
-  focus:border-gray-400 sm:text-sm invalid:outline-none invalid:ring-rose-500
-  invalid:border-rose-500`;
+  focus:border-gray-400 sm:text-sm`;
 
   const handleChangeParameterized = (e) => handleChange(e, dataKey, [category, innerObjectId]);
 
@@ -36,7 +35,7 @@ const LabelAndInput = ({
   return (
     <div className={`p-4 w-full${additionalStyles && ` ${additionalStyles}`}`}>
       {labelName && <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>}
-      {(children) ? <div className="flex gap-4">{input}{children}</div> : input}
+      {(children) ? <div className="flex gap-3">{input}{children}</div> : input}
     </div>
   );
 };
@@ -76,5 +75,18 @@ const AddBtn = ({ handleClick, dataKey }) => {
   );
 };
 
+const RemoveBtn = ({ handleClick, dataKey, removingEntryId }) => {
+  const CloseIcon = <svg className='transition-transform group-hover:rotate-180' xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24"><title>close-circle-outline</title><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z" /></svg>;
+  const handleClickParameterized = () => handleClick(dataKey, removingEntryId);
+
+  return (
+    <div className='mt-1 flex flex-col justify-center items-center
+  bg-red-500 border border-red-600 rounded-md shadow-sm focus:outline-none focus:ring-red-800
+  focus:border-red-800 px-1 cursor-pointer group' onClick={handleClickParameterized}>
+      {CloseIcon}
+    </div>
+  );
+};
+
 export default LabelAndInput;
-export { Select, AddBtn };
+export { Select, AddBtn, RemoveBtn };

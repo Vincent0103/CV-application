@@ -1,6 +1,7 @@
-import objectSplice, { toTitle, typeGiver } from './utils.js';
+import objectSplice, { toTitle, typeGiver, getRandomItem } from './utils.js';
 import FormContainer from './FormContainer.jsx';
-import LabelAndInput, { Select, AddBtn } from './FormElements.jsx';
+import LabelAndInput, { Select, AddBtn, RemoveBtn } from './FormElements.jsx';
+import { randomStrings } from './data/data.js';
 
 const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
   const summaryForJohnDoe = 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.';
@@ -16,8 +17,6 @@ const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
     phoneNumber: '06 32 73 12 98',
     location: '75010 Paris, France',
     summary: summaryForJohnDoe,
-    skills: ['Web Developer', 'Artist'],
-    languages: ['French', 'English'],
     hobbies: hobbiesForJohnDoe,
   };
 
@@ -38,23 +37,25 @@ const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
   );
 
   const addGeneralInputsAndSelects = (obj, category, [innerCategory, innerOption]) => (
-    obj.map((_, index) => (
-      <LabelAndInput key={index} type="text" name={`${innerCategory}${index}`}
-      labelName={(index !== 0) ? '' : toTitle(category)}
-      placeholder={(index < placeholders[category].length)
-        ? placeholders[category][index]
-        : ''}
-      additionalStyles={(index !== 0) ? 'pt-0 pb-3' : 'pb-2'}
-      handleChange={handleChange} dataKey={category}
-      value={generalInformations[category][index][innerCategory]} category={innerCategory}
-      innerObjectId={index}>
-        <Select name={`${innerOption}${index}`}
-        values={['Beginner', 'Intermediate', 'Advanced', 'Fluent']}
+    obj.map((_, index) => {
+      const entry = generalInformations[category][index];
+
+      return <LabelAndInput key={index} type="text" name={`${innerCategory}${index}`}
+        labelName={(index !== 0) ? '' : toTitle(category)}
+        placeholder={entry.placeholder}
+        additionalStyles={(index !== 0) ? 'pt-0 pb-3' : 'pb-2'}
         handleChange={handleChange} dataKey={category}
-        selectedValue={generalInformations[category][index][innerOption]} category={innerOption}
-        innerObjectId={index}/>
-      </ LabelAndInput>
-    ))
+        value={entry[innerCategory]} category={innerCategory}
+        innerObjectId={index}>
+          <Select name={`${innerOption}${index}`}
+          values={['Beginner', 'Intermediate', 'Advanced', 'Fluent']}
+          handleChange={handleChange} dataKey={category}
+          selectedValue={entry[innerOption]} category={innerOption}
+          innerObjectId={index}/>
+          {index > 0
+          && <RemoveBtn handleClick={handleClick} dataKey={category} removingEntryId={index} />}
+        </ LabelAndInput>;
+    })
   );
 
   return (

@@ -2,7 +2,8 @@ import { useState } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
-import general from './components/data/data.js';
+import general, { randomStrings } from './components/data/data.js';
+import { getRandomItem } from './components/utils.js';
 
 function App() {
   const [generalInformations, setGeneralInformations] = useState(general);
@@ -25,14 +26,19 @@ function App() {
     }
   };
 
-  const handleClick = (key) => {
+  const handleClick = (key, removingEntryId) => {
     if (!(key in generalInformations)) return;
     if (!Array.isArray(generalInformations[key])) return;
 
     const target = [...generalInformations[key]];
-    const entryKeys = Object.keys(target[0]);
-    const lastId = target[target.length - 1].id;
-    target.push({ id: lastId + 1, [entryKeys[1]]: '', [entryKeys[2]]: '' });
+    if (typeof removingEntryId === 'number') {
+      const indexOfRemovingEntry = target.indexOf((item) => item.id === removingEntryId);
+      target.splice(indexOfRemovingEntry, 1);
+    } else {
+      const entryKeys = Object.keys(target[0]);
+      const lastId = target[target.length - 1].id;
+      target.push({ id: lastId + 1, [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings[key])});
+    }
 
     setGeneralInformations((prevState) => ({
       ...prevState,
