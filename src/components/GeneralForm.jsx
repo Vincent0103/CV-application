@@ -1,7 +1,8 @@
 import objectSplice, { toTitle, typeGiver, getRandomItem } from './utils.js';
 import FormContainer from './FormContainer.jsx';
-import LabelAndInput, { Select, AddBtn, RemoveBtn } from './FormElements.jsx';
-import { randomStrings } from './data/data.js';
+import SectionContainer, {
+  InputContainer, Label, Select, AddBtn, RemoveBtn,
+} from './FormElements.jsx';
 
 const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
   const summaryForJohnDoe = 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.';
@@ -22,40 +23,43 @@ const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
 
   const addGeneralInputs = (data, start, end, autoFocus = false) => (
     objectSplice(data, start, end).map((item, index) => (
-      <LabelAndInput
-        key={index}
-        type={typeGiver(item[0])}
-        name={item[0]}
-        labelName={toTitle(item[0])}
-        placeholder={placeholders[item[0]]}
-        hasAutoFocus={autoFocus && index === 0}
-        handleChange={handleChange}
-        dataKey={item[0]}
-        value={item[1]}
-      />
+      <SectionContainer key={index}>
+        <Label name={item[0]} labelName={toTitle(item[0])}/>
+        <InputContainer
+          type={typeGiver(item[0])}
+          name={item[0]}
+          labelName={toTitle(item[0])}
+          placeholder={placeholders[item[0]]}
+          hasAutoFocus={autoFocus && index === 0}
+          handleChange={handleChange}
+          dataKey={item[0]}
+          value={item[1]}
+        />
+      </SectionContainer>
     ))
   );
 
   const addGeneralInputsAndSelects = (obj, category, [innerCategory, innerOption]) => (
-    obj.map((_, index) => {
-      const entry = generalInformations[category][index];
+    <SectionContainer>
+      <Label name={`${innerCategory}0`} labelName={toTitle(category)}/>
+      {obj.map((_, index) => {
+        const entry = generalInformations[category][index];
 
-      return <LabelAndInput key={index} type="text" name={`${innerCategory}${index}`}
-        labelName={(index !== 0) ? '' : toTitle(category)}
-        placeholder={entry.placeholder}
-        additionalStyles={(index !== 0) ? 'pt-0 pb-3' : 'pb-2'}
-        handleChange={handleChange} dataKey={category}
-        value={entry[innerCategory]} category={innerCategory}
-        innerObjectId={index}>
-          <Select name={`${innerOption}${index}`}
-          values={['Beginner', 'Intermediate', 'Advanced', 'Fluent']}
+        return <InputContainer key={index} type="text" name={`${innerCategory}${index}`}
+          placeholder={entry.placeholder}
+          additionalStyles={(index === obj.length - 1) ? 'pt-0 pb-0' : 'pb-2'}
           handleChange={handleChange} dataKey={category}
-          selectedValue={entry[innerOption]} category={innerOption}
-          innerObjectId={index}/>
-          {index > 0
-          && <RemoveBtn handleClick={handleClick} dataKey={category} removingEntryId={index} />}
-        </ LabelAndInput>;
-    })
+          value={entry[innerCategory]} category={innerCategory}
+          innerObjectId={index}>
+            <Select name={`${innerOption}${index}`}
+            values={['Beginner', 'Intermediate', 'Advanced', 'Fluent']}
+            handleChange={handleChange} dataKey={category}
+            selectedValue={entry[innerOption]} category={innerOption}
+            innerObjectId={index}/>
+            <RemoveBtn handleClick={handleClick} dataKey={category} removingEntryId={index} />
+          </ InputContainer>;
+      })}
+    </SectionContainer>
   );
 
   return (

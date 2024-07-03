@@ -37,7 +37,9 @@ function App() {
     } else {
       const entryKeys = Object.keys(target[0]);
       const lastId = target[target.length - 1].id;
-      target.push({ id: lastId + 1, [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings[key])});
+      target.push({
+        id: lastId + 1, [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings[key]),
+      });
     }
 
     setGeneralInformations((prevState) => ({

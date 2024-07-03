@@ -18,8 +18,16 @@ const InputOrTextarea = ({
     : (<textarea rows="6" {...commonProps}></textarea>));
 };
 
-const LabelAndInput = ({
-  children, type, name, labelName, placeholder, value, handleChange, dataKey,
+const SectionContainer = ({ children }) => (
+  <div className='p-4 w-full'>
+    {children}
+  </div>
+);
+
+const Label = ({ name, labelName }) => <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>;
+
+const InputContainer = ({
+  children, type, name, placeholder, value, handleChange, dataKey,
   hasAutoFocus = false, additionalStyles = '', category = null, innerObjectId = null,
 }) => {
   const classes = `mt-1 block w-full px-3 py-2
@@ -32,12 +40,7 @@ const LabelAndInput = ({
   placeholder={placeholder} hasAutoFocus={hasAutoFocus} value={value}
   handleChange={handleChangeParameterized}/>;
 
-  return (
-    <div className={`p-4 w-full${additionalStyles && ` ${additionalStyles}`}`}>
-      {labelName && <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>}
-      {(children) ? <div className="flex gap-3">{input}{children}</div> : input}
-    </div>
-  );
+  return (children) ? <div className={`flex gap-3 ${additionalStyles}`}>{input}{children}</div> : input;
 };
 
 const Select = ({
@@ -80,13 +83,16 @@ const RemoveBtn = ({ handleClick, dataKey, removingEntryId }) => {
   const handleClickParameterized = () => handleClick(dataKey, removingEntryId);
 
   return (
-    <div className='mt-1 flex flex-col justify-center items-center
-  bg-red-500 border border-red-600 rounded-md shadow-sm focus:outline-none focus:ring-red-800
+    <div tabIndex="0" role="button" aria-label="Remove skill"
+    className='mt-1 flex flex-col justify-center items-center bg-red-500 border
+    border-red-600 rounded-md shadow-sm focus:outline-none focus:ring-red-800
   focus:border-red-800 px-1 cursor-pointer group' onClick={handleClickParameterized}>
       {CloseIcon}
     </div>
   );
 };
 
-export default LabelAndInput;
-export { Select, AddBtn, RemoveBtn };
+export default SectionContainer;
+export {
+  InputContainer, Label, Select, AddBtn, RemoveBtn,
+};
