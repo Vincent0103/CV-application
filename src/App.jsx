@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
@@ -6,6 +7,7 @@ import general, { randomStrings } from './components/data/data.js';
 import { getRandomItem } from './components/utils.js';
 
 function App() {
+  const [lastKeys, setLastKeys] = useState({});
   const [generalInformations, setGeneralInformations] = useState(general);
 
   const handleChange = (e, key, [category = null, innerObjectId = null]) => {
@@ -26,19 +28,26 @@ function App() {
     }
   };
 
-  const handleClick = (key, removingEntryId) => {
+  const handleClick = (key, id = null) => {
     if (!(key in generalInformations)) return;
     if (!Array.isArray(generalInformations[key])) return;
 
     const target = [...generalInformations[key]];
-    if (typeof removingEntryId === 'number') {
-      const indexOfRemovingEntry = target.indexOf((item) => item.id === removingEntryId);
+
+    const isRemovingEntry = !!id;
+    if (isRemovingEntry) {
+      const indexOfRemovingEntry = target.findIndex((item) => item.id === id);
       target.splice(indexOfRemovingEntry, 1);
+      if (!(key in lastKeys)) {
+        setLastKeys({
+          ...lastKeys,
+          [key]: Object.keys(target[0]),
+        });
+      }
     } else {
-      const entryKeys = Object.keys(target[0]);
-      const lastId = target[target.length - 1].id;
+      const entryKeys = lastKeys[key] || Object.keys(target[0]);
       target.push({
-        id: lastId + 1, [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings[key]),
+        id: uuidv4(), [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings[key]),
       });
     }
 

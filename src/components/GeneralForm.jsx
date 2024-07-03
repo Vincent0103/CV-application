@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import objectSplice, { toTitle, typeGiver, getRandomItem } from './utils.js';
 import FormContainer from './FormContainer.jsx';
 import SectionContainer, {
@@ -22,21 +23,24 @@ const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
   };
 
   const addGeneralInputs = (data, start, end, autoFocus = false) => (
-    objectSplice(data, start, end).map((item, index) => (
-      <SectionContainer key={index}>
-        <Label name={item[0]} labelName={toTitle(item[0])}/>
-        <InputContainer
-          type={typeGiver(item[0])}
-          name={item[0]}
-          labelName={toTitle(item[0])}
-          placeholder={placeholders[item[0]]}
-          hasAutoFocus={autoFocus && index === 0}
-          handleChange={handleChange}
-          dataKey={item[0]}
-          value={item[1]}
-        />
-      </SectionContainer>
-    ))
+    objectSplice(data, start, end).map((item, index) => {
+      const [key, value] = item;
+      return (
+        <SectionContainer key={index}>
+          <Label name={key} labelName={toTitle(key)}/>
+          <InputContainer
+            type={typeGiver(key)}
+            name={key}
+            labelName={toTitle(key)}
+            placeholder={placeholders[key]}
+            hasAutoFocus={autoFocus && index === 0}
+            handleChange={handleChange}
+            dataKey={key}
+            value={value}
+          />
+        </SectionContainer>
+      );
+    })
   );
 
   const addGeneralInputsAndSelects = (obj, category, [innerCategory, innerOption]) => (
@@ -45,7 +49,7 @@ const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
       {obj.map((_, index) => {
         const entry = generalInformations[category][index];
 
-        return <InputContainer key={index} type="text" name={`${innerCategory}${index}`}
+        return <InputContainer key={uuidv4()} type="text" name={`${innerCategory}${index}`}
           placeholder={entry.placeholder}
           additionalStyles={(index === obj.length - 1) ? 'pt-0 pb-0' : 'pb-2'}
           handleChange={handleChange} dataKey={category}
@@ -56,7 +60,8 @@ const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
             handleChange={handleChange} dataKey={category}
             selectedValue={entry[innerOption]} category={innerOption}
             innerObjectId={index}/>
-            <RemoveBtn handleClick={handleClick} dataKey={category} removingEntryId={index} />
+            <RemoveBtn handleClick={handleClick} dataKey={category}
+            dataId={entry.id} innerCategory={innerCategory} />
           </ InputContainer>;
       })}
     </SectionContainer>
@@ -71,11 +76,11 @@ const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
         {addGeneralInputs(generalInformations, 2, 6, false)}
         <div>
           {addGeneralInputsAndSelects(generalInformations.skills, 'skills', ['skill', 'expertise'])}
-          <AddBtn handleClick={handleClick} dataKey={'skills'} />
+          <AddBtn handleClick={handleClick} dataKey={'skills'} innerCategory={'skill'} />
         </div>
         <div>
           {addGeneralInputsAndSelects(generalInformations.languages, 'languages', ['language', 'fluency'])}
-          <AddBtn handleClick={handleClick} dataKey={'languages'} />
+          <AddBtn handleClick={handleClick} dataKey={'languages'} innerCategory={'language'} />
         </div>
         {addGeneralInputs(generalInformations, 8, 9, false)}
 

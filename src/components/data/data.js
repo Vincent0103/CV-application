@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { getRandomItem } from '../utils';
 
 const randomStrings = {
@@ -55,18 +56,18 @@ const general = {
   summary: '',
   skills: [
     {
-      id: 0, skill: '', expertise: '', placeholder: getRandomItem(randomStrings.skills),
+      id: uuidv4(), skill: '', expertise: '', placeholder: getRandomItem(randomStrings.skills),
     },
     {
-      id: 1, skill: '', expertise: '', placeholder: getRandomItem(randomStrings.skills),
+      id: uuidv4(), skill: '', expertise: '', placeholder: getRandomItem(randomStrings.skills),
     },
   ],
   languages: [
     {
-      id: 0, language: '', fluency: '', placeholder: getRandomItem(randomStrings.languages),
+      id: uuidv4(), language: '', fluency: '', placeholder: getRandomItem(randomStrings.languages),
     },
     {
-      id: 1, language: '', fluency: '', placeholder: getRandomItem(randomStrings.languages),
+      id: uuidv4(), language: '', fluency: '', placeholder: getRandomItem(randomStrings.languages),
     },
   ],
   hobbies: '',
