@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import objectSplice, { typeGiver, toTitle } from './utils';
+import { typeGiver, toTitle } from './utils';
 
 const Label = ({ name, labelName }) => <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>;
 
@@ -96,8 +96,8 @@ const SectionContainer = ({ children }) => (
 );
 
 const FormElements = (placeholders, handleInputChange, handleAddOrRemoveBtnClick) => {
-  const addInputs = (data, start, end, autoFocus = false) => (
-    objectSplice(data, start, end).map((item, index) => {
+  const addInputs = (dataArray, autoFocus = false) => (
+    dataArray.map((item, index) => {
       const [key, value] = item;
       return (
         <SectionContainer key={index}>

@@ -1,5 +1,6 @@
 import FormContainer from './FormContainer.jsx';
 import FormElements, { AddBtn } from './FormElements.jsx';
+import objectSplice from './utils.js';
 
 const GeneralForm = ({ generalInformations, handleInputChange, handleAddOrRemoveBtnClick }) => {
   const summaryForJohnDoe = 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.';
@@ -24,9 +25,11 @@ const GeneralForm = ({ generalInformations, handleInputChange, handleAddOrRemove
     <FormContainer fadingBottomContainer={fadingBottomContainer}>
       <form>
         <div className="flex">
-          {formElements.addInputs(generalInformations, 0, 2, true)}
+          {/* add name and last name inputs */}
+          {formElements.addInputs(objectSplice(generalInformations, 0, 2), true)}
         </div>
-        {formElements.addInputs(generalInformations, 2, 6, false)}
+        {/* add email, phone number, location, summary inputs */}
+        {formElements.addInputs(objectSplice(generalInformations, 2, 6), false)}
         <div>
           {formElements.addInputsAndSelects(generalInformations, 'skills', ['skill', 'expertise'])}
           <AddBtn handleClick={handleAddOrRemoveBtnClick} dataKey={'skills'} innerCategory={'skill'} />
@@ -35,7 +38,8 @@ const GeneralForm = ({ generalInformations, handleInputChange, handleAddOrRemove
           {formElements.addInputsAndSelects(generalInformations, 'languages', ['language', 'fluency'])}
           <AddBtn handleClick={handleAddOrRemoveBtnClick} dataKey={'languages'} innerCategory={'language'} />
         </div>
-        {formElements.addInputs(generalInformations, 8, 9, false)}
+        {/* add hobbies input */}
+        {formElements.addInputs(objectSplice(generalInformations, 8, 9), false)}
 
       </form>
     </FormContainer>
