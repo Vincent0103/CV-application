@@ -49,17 +49,17 @@ const GeneralForm = ({ generalInformations, handleChange, handleClick }) => {
       {obj.map((_, index) => {
         const entry = generalInformations[category][index];
 
-        return <InputContainer key={uuidv4()} type="text" name={`${innerCategory}${index}`}
+        return <InputContainer key={index} type="text" name={`${innerCategory}${index}`}
           placeholder={entry.placeholder}
           additionalStyles={(index === obj.length - 1) ? 'pt-0 pb-0' : 'pb-2'}
           handleChange={handleChange} dataKey={category}
           value={entry[innerCategory]} category={innerCategory}
-          innerObjectId={index}>
+          innerObjectId={entry.id}>
             <Select name={`${innerOption}${index}`}
             values={['Beginner', 'Intermediate', 'Advanced', 'Fluent']}
             handleChange={handleChange} dataKey={category}
             selectedValue={entry[innerOption]} category={innerOption}
-            innerObjectId={index}/>
+            innerObjectId={entry.id}/>
             <RemoveBtn handleClick={handleClick} dataKey={category}
             dataId={entry.id} innerCategory={innerCategory} />
           </ InputContainer>;
