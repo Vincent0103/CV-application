@@ -31,15 +31,7 @@ const typeGiver = (category) => {
 
 const getRandomItem = (array) => array[Math.round(Math.random() * (array.length - 1))];
 
-const autoIncrementerId = () => {
-  let currentId = -1;
-  return () => {
-    currentId += 1;
-    return currentId;
-  };
-};
-
 export default objectSplice;
 export {
-  toTitle, typeGiver, getRandomItem, autoIncrementerId,
+  toTitle, typeGiver, getRandomItem,
 };

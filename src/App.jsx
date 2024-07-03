@@ -7,6 +7,7 @@ import general, { randomStrings } from './components/data/data.js';
 import { getRandomItem } from './components/utils.js';
 
 function App() {
+  const [currentlyShowingForm, setCurrentlyShowingForm] = useState(0);
   const [lastKeys, setLastKeys] = useState({});
   const [generalInformations, setGeneralInformations] = useState(general);
 
@@ -57,12 +58,20 @@ function App() {
     }));
   };
 
+  const handleNextBtnClick = () => {
+    const FIRST_INDEX = 0;
+    const forms = ['general', 'education', 'experiences'];
+    if (currentlyShowingForm < FIRST_INDEX || currentlyShowingForm > forms.length) return;
+    setCurrentlyShowingForm(currentlyShowingForm + 1);
+  };
+
   return (
     <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
-      <CVcustomizer>
-        <GeneralForm generalInformations={generalInformations} handleChange={handleChange}
-        handleClick={handleClick} />
+      <CVcustomizer handleNextBtnClick={handleNextBtnClick}
+      currentlyShowingForm={currentlyShowingForm}>
+        <GeneralForm generalInformations={generalInformations} handleInputChange={handleChange}
+        handleAddOrRemoveBtnClick={handleClick} />
       </CVcustomizer>
       <CVpreview generalInformations={generalInformations} />
     </div>
