@@ -122,7 +122,7 @@ const FormElements = (
     })
   );
 
-  const addInputsAndSelects = (object, category, [innerCategory, innerOption]) => {
+  const addInputsAndSelects = (object, category, [innerCategory, innerOption], options) => {
     const subObject = object[category];
 
     return (
@@ -138,7 +138,7 @@ const FormElements = (
             value={entry[innerCategory]} category={innerCategory}
             innerObjectId={entry.id}>
             <Select name={`${innerOption}${index}`}
-              values={['Beginner', 'Intermediate', 'Advanced', 'Fluent']}
+              values={options}
               handleChange={handleInputChange} dataKey={category}
               selectedValue={entry[innerOption]} category={innerOption}
               innerObjectId={entry.id} />

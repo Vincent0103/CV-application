@@ -29,6 +29,8 @@ const GeneralForm = ({
     handleImgChange,
   );
 
+  const skillsOptions = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  const languagesOptions = ['Beginner', 'Intermediate', 'Advanced', 'Fluent'];
   return (
     <FormContainer fadingBottomContainer={fadingBottomContainer}>
       <form>
@@ -41,11 +43,21 @@ const GeneralForm = ({
         {/* add email, phone number, location, summary inputs */}
         {formElements.addInputs(objectSplice(generalInformations, 3, 7), false)}
         <div>
-          {formElements.addInputsAndSelects(generalInformations, 'skills', ['skill', 'expertise'])}
+          {formElements.addInputsAndSelects(
+            generalInformations,
+            'skills',
+            ['skill', 'expertise'],
+            skillsOptions,
+          )}
           <formElements.AddBtn dataKey={'skills'} innerCategory={'skill'} />
         </div>
         <div>
-          {formElements.addInputsAndSelects(generalInformations, 'languages', ['language', 'fluency'])}
+          {formElements.addInputsAndSelects(
+            generalInformations,
+            'languages',
+            ['language', 'fluency'],
+            languagesOptions,
+          )}
           <formElements.AddBtn dataKey={'languages'} innerCategory={'language'} />
         </div>
         {/* add hobbies input */}

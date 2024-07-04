@@ -1,56 +1,80 @@
-import objectSplice from './utils';
+import objectSplice, { ArrayOfInputObjectEmptiness } from './utils';
 
 const CVpreview = ({ generalInformations }) => {
-  const ListSection = ({ obj }) => (
+  const ListSection = ({ obj, arrayOfInputObjectEmptiness }) => (
     <ul>
-      {obj.map((item, index) => (
-        <li key={index} className="p-2 px-7 flex justify-between gap-4">
-          {Object.keys(item).map((innerItem, i) => (
-            innerItem !== 'id' && innerItem !== 'placeholder'
-            && <p key={i}>{ item[innerItem] }</p>
-          ))}
-        </li>
-      ))}
+      {obj.map((item, index) => {
+        const isInputEmpty = arrayOfInputObjectEmptiness.isInputObjectEmpty(item, 1, 3);
+        return (
+          !isInputEmpty
+          && <li key={index} className="p-2 px-7 flex justify-between gap-4">
+            {Object.keys(item).map((innerItem, i) => (
+              innerItem !== 'id' && innerItem !== 'placeholder'
+              && <p key={i}>{ item[innerItem] }</p>
+            ))}
+          </li>
+        );
+      })}
     </ul>
   );
 
   const SectionContainer = ({
-    heading, children, containerStyles, hasHr,
-  }) => (
-    <div className={`self-stretch ${containerStyles}`}>
-      { heading && <h3 className="font-bold text-2xl p-2 text-center">{ heading }</h3>}
-      { children }
-    </div>
-  );
+    heading, category, containerStyles, children, arrayOfInputObjectEmptiness, hasHr = true,
+  }) => {
+    const item = generalInformations[category];
+    const hr = (hasHr) ? <SectionHr /> : '';
+
+    const component = (
+      !arrayOfInputObjectEmptiness?.isEmpty()
+      && <>
+        <div className={`self-stretch ${containerStyles}`}>
+          { heading && <h3 className="font-bold text-2xl p-2 text-center">{ heading }</h3>}
+          { children }
+        </div>
+        {hr}
+      </>
+    );
+
+    return (item && component);
+  };
 
   const SectionHr = () => <hr className="border-t-1 my-2 border-white w-[90%]"/>;
 
-  const PrimaryContainer = () => (
+  const PrimaryContainer = () => {
+    const arrays = [generalInformations.skills, generalInformations.languages];
+
+    const emptinessFunctions = [ArrayOfInputObjectEmptiness(arrays[0], [1, 3]),
+      ArrayOfInputObjectEmptiness(arrays[1], [1, 3])];
+
+    return (
       <div className="bg-slate-800 h-full w-[33%] text-white flex
       flex-col items-center">
 
-        <SectionContainer containerStyles={'flex justify-center items-center p-6'}>
+        <SectionContainer category={'profilePicture'} containerStyles={'flex justify-center items-center p-6'}>
           <img src={generalInformations.profilePicture} alt="Your custom profile picture"
           className="h-32 w-32 object-cover object-center rounded-full shadow-lg"/>
         </SectionContainer>
-        <SectionHr />
 
-        <SectionContainer heading={'Skills'}>
-          <ListSection obj={generalInformations.skills} />
+        <SectionContainer heading={'Skills'} category={'skills'}
+        arrayOfInputObjectEmptiness={emptinessFunctions[0]}>
+          <ListSection obj={generalInformations.skills}
+          arrayOfInputObjectEmptiness={emptinessFunctions[0]} />
         </SectionContainer>
-        <SectionHr />
 
-        <SectionContainer heading={'Languages'}>
-          <ListSection obj={generalInformations.languages} />
+        <SectionContainer heading={'Languages'} category={'languages'}
+        arrayOfInputObjectEmptiness={emptinessFunctions[1]}>
+          <ListSection obj={generalInformations.languages}
+          arrayOfInputObjectEmptiness={emptinessFunctions[1]} />
         </SectionContainer>
-        <SectionHr />
 
-        <SectionContainer heading={'Hobbies'} containerStyles='flex flex-col items-center'>
+        <SectionContainer heading={'Hobbies'} category={'hobbies'} containerStyles='flex flex-col items-center'
+        hasHr={false}>
           <p className="w-[90%]">{ generalInformations.hobbies }</p>
         </SectionContainer>
 
       </div>
-  );
+    );
+  };
 
   const svgs = {
     email: <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>mailbox-open-outline</title><path d="M14,11H20V15H18V13H14V11M18,4H8A5,5 0 0,0 3,9V18H1V20H21A2,2 0 0,0 23,18V9A5,5 0 0,0 18,4M11,18H5V9A3,3 0 0,1 8,6A3,3 0 0,1 11,9V18M21,18H13V9C13,7.92 12.65,6.86 12,6H18A3,3 0 0,1 21,9V18Z" /></svg>,
@@ -60,24 +84,40 @@ const CVpreview = ({ generalInformations }) => {
 
   const FlexItems = ({ obj }) => (
     obj.map((item, index) => (
-      <p key={index} className="flex gap-1 justify-center items-center">
+      item[1]
+      && <p key={index} className="flex gap-1 justify-center items-center">
         {svgs[item[0]]}
         {item[1]}
       </p>
     ))
   );
 
-  const SecondaryContainer = () => (
+  const SecondaryContainer = () => {
+    const { summary } = generalInformations;
+
+    const obj = generalInformations;
+
+    return (
       <div className="bg-white h-full w-[67%] px-4">
-        <h1 className="text-5xl font-black text-zinc-700 py-3">{generalInformations.name} {generalInformations.lastName}</h1>
-        <div className="flex justify-between py-3">
-          <FlexItems obj={objectSplice(generalInformations, 2, 5)} />
-        </div>
-        <hr />
-        <h3 className="font-extrabold text-2xl py-3">Summary</h3>
-        <p className="">{generalInformations.summary}</p>
+        {(obj.name || obj.lastName)
+        && <h1 className="text-5xl font-black text-zinc-700 py-3">{obj.name} {obj.lastName}</h1>}
+        {(obj.email || obj.phoneNumber || obj.email)
+        && <>
+            <div className="flex justify-between py-3">
+              <FlexItems obj={objectSplice(obj, 3, 6)} />
+            </div>
+            <hr />
+          </>
+        }
+        {(obj.summary)
+        && <>
+            <h3 className="font-extrabold text-2xl py-3">Summary</h3>
+            <p className="">{obj.summary}</p>
+          </>
+        }
       </div>
-  );
+    );
+  };
 
   return (
     <div className={`bg-white w-[60%] max-h-[29.7cm] aspect-[0.707] shadow-lg rounded-md self-start

@@ -32,7 +32,18 @@ const typeGiver = (category) => {
 
 const getRandomItem = (array) => array[Math.round(Math.random() * (array.length - 1))];
 
+const ArrayOfInputObjectEmptiness = (obj, inputableIndexesRange) => {
+  const [start, end] = inputableIndexesRange;
+
+  const isInputObjectEmpty = (entry) => !objectSplice(entry, start, end)
+    .find(([_, value]) => !!value);
+
+  const isEmpty = () => obj.every((entry) => isInputObjectEmpty(entry));
+
+  return { isEmpty, isInputObjectEmpty };
+};
+
 export default objectSplice;
 export {
-  toTitle, typeGiver, getRandomItem,
+  toTitle, typeGiver, getRandomItem, ArrayOfInputObjectEmptiness,
 };
