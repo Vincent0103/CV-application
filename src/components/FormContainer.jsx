@@ -14,7 +14,7 @@ const FormContainer = ({ fadingBottomContainer, children }) => {
     <div className="max-h-[80vh] max-w-full relative bg-[#ebebeb] rounded-xl border-2 border-gray-300
       shadow-xl overflow-hidden">
       <div onScroll={handleScroll} className="max-h-[80vh] min-w-full overflow-y-scroll scrollbar-thin
-      scrollbar-thumb-bar-color scrollbar-track-transparent scrollbar-thumb-rounded-full">
+      scrollbar-track-transparent scrollbar-thumb-rounded-full">
         { children }
       </div>
       {isFadingVisible && fadingBottomContainer};

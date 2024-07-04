@@ -48,6 +48,7 @@ const randomStrings = {
 };
 
 const general = {
+  profilePicture: '',
   name: '',
   lastName: '',
   email: '',

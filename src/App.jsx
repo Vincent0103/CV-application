@@ -29,6 +29,21 @@ function App() {
     }
   };
 
+  const handleImgChange = (e) => {
+    const { files } = e.target;
+    if (files.length <= 0) return;
+
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setGeneralInformations({
+        ...generalInformations,
+        profilePicture: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleClick = (key, id = null) => {
     if (!(key in generalInformations)) return;
     if (!Array.isArray(generalInformations[key])) return;
@@ -71,7 +86,7 @@ function App() {
       <CVcustomizer handleNextBtnClick={handleNextBtnClick}
       currentlyShowingForm={currentlyShowingForm}>
         <GeneralForm generalInformations={generalInformations} handleInputChange={handleChange}
-        handleAddOrRemoveBtnClick={handleClick} />
+        handleAddOrRemoveBtnClick={handleClick} handleImgChange={handleImgChange} />
       </CVcustomizer>
       <CVpreview generalInformations={generalInformations} />
     </div>

@@ -3,6 +3,29 @@ import { typeGiver, toTitle } from './utils';
 
 const Label = ({ name, labelName }) => <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>;
 
+const InputImg = ({ handleImgChange, name, classes }) => (
+  <input type='file' accept='image/*' id={name} name={name}
+  onChange={handleImgChange} className={classes}/>
+);
+
+const InputOrTextarea = ({
+  type, name, classes, placeholder, hasAutoFocus, value, handleChange,
+}) => {
+  const commonProps = {
+    name,
+    id: name,
+    className: classes,
+    placeholder,
+    autoFocus: hasAutoFocus,
+    value,
+    onChange: handleChange,
+  };
+
+  return ((type !== 'textarea')
+    ? (<input type={type} {...commonProps} />)
+    : (<textarea rows="6" {...commonProps}></textarea>));
+};
+
 const InputContainer = ({
   children, type, name, placeholder, value, handleChange, dataKey,
   hasAutoFocus = false, additionalStyles = '', category = null, innerObjectId = null,
@@ -11,13 +34,21 @@ const InputContainer = ({
   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
   focus:border-gray-400 sm:text-sm`;
 
-  const handleChangeParameterized = (e) => handleChange(e, dataKey, [category, innerObjectId]);
+  const handleChangeParameterized = (e) => ((type !== 'file')
+    ? handleChange(e, dataKey, [category, innerObjectId])
+    : handleChange(e));
 
-  const input = <InputOrTextarea type={type} name={name} classes={classes}
+  const inputOrTextareaComponent = <InputOrTextarea type={type} name={name} classes={classes}
   placeholder={placeholder} hasAutoFocus={hasAutoFocus} value={value}
   handleChange={handleChangeParameterized}/>;
 
-  return (children) ? <div className={`flex gap-3 ${additionalStyles}`}>{input}{children}</div> : input;
+  const inputImg = <InputImg handleImgChange={handleChangeParameterized} name={name}
+   classes={classes} />;
+
+  const input = (type !== 'file') ? inputOrTextareaComponent : inputImg;
+  const flexInputs = <div className={`flex gap-3 ${additionalStyles}`}>{input}{children}</div>;
+
+  return (children) ? flexInputs : input;
 };
 
 const Select = ({
@@ -56,44 +87,33 @@ const RemoveBtn = ({
   );
 };
 
-const InputOrTextarea = ({
-  type, name, classes, placeholder, hasAutoFocus, value, handleChange,
-}) => {
-  const commonProps = {
-    name,
-    id: name,
-    className: classes,
-    placeholder,
-    autoFocus: hasAutoFocus,
-    value,
-    onChange: handleChange,
-  };
-
-  return ((type !== 'textarea')
-    ? (<input type={type} {...commonProps} />)
-    : (<textarea rows="6" {...commonProps}></textarea>));
-};
-
 const SectionContainer = ({ children }) => (
   <div className='p-4 w-full'>
     {children}
   </div>
 );
 
-const FormElements = (placeholders, handleInputChange, handleAddOrRemoveBtnClick) => {
+const FormElements = (
+  placeholders,
+  handleInputChange,
+  handleAddOrRemoveBtnClick,
+  handleFileChange,
+) => {
   const addInputs = (dataArray, autoFocus = false) => (
     dataArray.map((item, index) => {
       const [key, value] = item;
+      const type = typeGiver(key);
+      const handleChange = (type !== 'file') ? handleInputChange : handleFileChange;
       return (
         <SectionContainer key={index}>
           <Label name={key} labelName={toTitle(key)} />
           <InputContainer
-            type={typeGiver(key)}
+            type={type}
             name={key}
             labelName={toTitle(key)}
             placeholder={placeholders[key]}
             hasAutoFocus={autoFocus && index === 0}
-            handleChange={handleInputChange}
+            handleChange={handleChange}
             dataKey={key}
             value={value}
           />

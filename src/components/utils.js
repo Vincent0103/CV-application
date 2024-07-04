@@ -18,6 +18,7 @@ const typeGiver = (category) => {
     name: 'text',
     lastName: 'text',
     location: 'text',
+    profilePicture: 'file',
     skills: 'text',
     languages: 'text',
     email: 'email',

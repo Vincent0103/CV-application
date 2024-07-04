@@ -18,7 +18,7 @@ const CVcustomizer = ({ children, handleNextBtnClick, currentlyShowingForm }) =>
       <div className="flex max-w-full justify-center">
         <div tabIndex="0" role="button" aria-label="Add new skill" onClick={handleClick}
         className="bg-black max-w-48 h-[37.28px] rounded-md flex justify-center items-center cursor-pointer
-        my-4 group" dataCurrentForm={currentForm} >
+        my-4 group" data-current-form={currentForm} >
           <p className="text-white text-xl font-semibold p-4 pr-2">Education</p>
           {rightArrow}
         </div>

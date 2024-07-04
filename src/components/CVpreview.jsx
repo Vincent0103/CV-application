@@ -1,4 +1,3 @@
-import profilePicture from '../assets/IMG_0250.jpg';
 import objectSplice from './utils';
 
 const CVpreview = ({ generalInformations }) => {
@@ -31,7 +30,7 @@ const CVpreview = ({ generalInformations }) => {
       flex-col items-center">
 
         <SectionContainer containerStyles={'flex justify-center items-center p-6'}>
-          <img src={profilePicture} alt="Your custom profile picture"
+          <img src={generalInformations.profilePicture} alt="Your custom profile picture"
           className="h-32 w-32 object-cover object-center rounded-full shadow-lg"/>
         </SectionContainer>
         <SectionHr />
