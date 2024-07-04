@@ -1,15 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
+import FormContainer from './components/FormContainer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
-import general, { randomStrings } from './components/data/data.js';
-import { getRandomItem } from './components/utils.js';
+import general, { randomStrings, education } from './components/data/data';
+import { getRandomItem } from './components/utils';
 
 function App() {
-  const [currentlyShowingForm, setCurrentlyShowingForm] = useState(0);
+  const [currentlyShowingFormIndex, setCurrentlyShowingFormIndex] = useState(0);
   const [lastKeys, setLastKeys] = useState({});
   const [generalInformations, setGeneralInformations] = useState(general);
+  const [educationInformations, setEducationInformations] = useState(education);
 
   const handleChange = (e, key, [category = null, innerObjectId = null]) => {
     if (!(key in generalInformations)) return;
@@ -63,7 +65,7 @@ function App() {
     } else {
       const entryKeys = lastKeys[key] || Object.keys(target[0]);
       target.push({
-        id: uuidv4(), [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings[key]),
+        id: uuidv4(), [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings.general[key]),
       });
     }
 
@@ -76,17 +78,22 @@ function App() {
   const handleNextBtnClick = () => {
     const FIRST_INDEX = 0;
     const forms = ['general', 'education', 'experiences'];
-    if (currentlyShowingForm < FIRST_INDEX || currentlyShowingForm > forms.length) return;
-    setCurrentlyShowingForm(currentlyShowingForm + 1);
+    if (currentlyShowingFormIndex < FIRST_INDEX || currentlyShowingFormIndex > forms.length) return;
+    setCurrentlyShowingFormIndex(currentlyShowingFormIndex + 1);
   };
+
+  const fadingBottomContainer = <div className="absolute -bottom-1 w-full h-24 bg-gradient-to-t from-white
+  pointer-events-none"></div>;
 
   return (
     <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
       <CVcustomizer handleNextBtnClick={handleNextBtnClick}
-      currentlyShowingForm={currentlyShowingForm}>
-        <GeneralForm generalInformations={generalInformations} handleInputChange={handleChange}
-        handleAddOrRemoveBtnClick={handleClick} handleImgChange={handleImgChange} />
+      currentlyShowingFormIndex={currentlyShowingFormIndex}>
+        <FormContainer fadingBottomContainer={fadingBottomContainer}>
+          <GeneralForm generalInformations={generalInformations} handleInputChange={handleChange}
+          handleAddOrRemoveBtnClick={handleClick} handleImgChange={handleImgChange} />
+        </FormContainer>
       </CVcustomizer>
       <CVpreview generalInformations={generalInformations} />
     </div>

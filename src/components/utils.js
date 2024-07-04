@@ -32,13 +32,13 @@ const typeGiver = (category) => {
 
 const getRandomItem = (array) => array[Math.round(Math.random() * (array.length - 1))];
 
-const ArrayOfInputObjectEmptiness = (obj, inputableIndexesRange) => {
+const ArrayOfInputObjectEmptiness = (array, inputableIndexesRange) => {
   const [start, end] = inputableIndexesRange;
 
   const isInputObjectEmpty = (entry) => !objectSplice(entry, start, end)
     .find(([_, value]) => !!value);
 
-  const isEmpty = () => obj.every((entry) => isInputObjectEmpty(entry));
+  const isEmpty = () => array.every((entry) => isInputObjectEmpty(entry));
 
   return { isEmpty, isInputObjectEmpty };
 };

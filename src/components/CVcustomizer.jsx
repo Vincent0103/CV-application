@@ -1,4 +1,4 @@
-const CVcustomizer = ({ children, handleNextBtnClick, currentlyShowingForm }) => {
+const CVcustomizer = ({ children, handleNextBtnClick, currentlyShowingFormIndex }) => {
   const FormSliderBtns = () => (
       <div className="flex flex-col mb-2">
         <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-3">
@@ -11,14 +11,14 @@ const CVcustomizer = ({ children, handleNextBtnClick, currentlyShowingForm }) =>
       </div>
   );
 
-  const NextFormBtn = ({ handleClick, currentForm }) => {
+  const NextFormBtn = ({ handleClick, currentFormIndex }) => {
     const rightArrow = <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 transition-transform translate-y-[1px] group-hover:translate-x-0.5" height={24} width={24} fill="white" viewBox="0 0 24 24"><path d="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" /></svg>;
 
     return (
       <div className="flex max-w-full justify-center">
         <div tabIndex="0" role="button" aria-label="Add new skill" onClick={handleClick}
         className="bg-black max-w-48 h-[37.28px] rounded-md flex justify-center items-center cursor-pointer
-        my-4 group" data-current-form={currentForm} >
+        my-4 group" data-current-form-index={currentFormIndex} >
           <p className="text-white text-xl font-semibold p-4 pr-2">Education</p>
           {rightArrow}
         </div>
@@ -30,7 +30,7 @@ const CVcustomizer = ({ children, handleNextBtnClick, currentlyShowingForm }) =>
     <div className="max-w-[40%] h-min sticky top-0">
       <FormSliderBtns />
       {children}
-      <NextFormBtn handleClick={handleNextBtnClick} currentForm={currentlyShowingForm} />
+      <NextFormBtn handleClick={handleNextBtnClick} currentFormIndex={currentlyShowingFormIndex} />
     </div>
   );
 };
