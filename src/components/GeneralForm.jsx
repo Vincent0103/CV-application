@@ -32,11 +32,11 @@ const GeneralForm = ({ generalInformations, handleInputChange, handleAddOrRemove
         {formElements.addInputs(objectSplice(generalInformations, 2, 6), false)}
         <div>
           {formElements.addInputsAndSelects(generalInformations, 'skills', ['skill', 'expertise'])}
-          <AddBtn handleClick={handleAddOrRemoveBtnClick} dataKey={'skills'} innerCategory={'skill'} />
+          <formElements.AddBtn dataKey={'skills'} innerCategory={'skill'} />
         </div>
         <div>
           {formElements.addInputsAndSelects(generalInformations, 'languages', ['language', 'fluency'])}
-          <AddBtn handleClick={handleAddOrRemoveBtnClick} dataKey={'languages'} innerCategory={'language'} />
+          <formElements.AddBtn dataKey={'languages'} innerCategory={'language'} />
         </div>
         {/* add hobbies input */}
         {formElements.addInputs(objectSplice(generalInformations, 8, 9), false)}
