@@ -70,13 +70,17 @@ const FormContainer = ({
     experiences: experiencesRef,
   };
 
+  const DEFAULT_GENERAL_FORM_HEIGHT = 1275;
+  const currentFormContainerHeight = refMapping[currentlyVisibleElement].current?.offsetHeight
+  || DEFAULT_GENERAL_FORM_HEIGHT;
+
   // eslint-disable-next-line consistent-return
   return (
     <div className="max-h-full max-w-full relative bg-[#ebebeb] rounded-xl border-2 border-gray-300
       shadow-xl overflow-hidden">
-      <div style={{ maxHeight: `${refMapping[currentlyVisibleElement].current?.offsetHeight}px` }}
+      <div style={{ height: `${currentFormContainerHeight}px` }}
       onScroll={handleScroll} className={`max-h-[80vh] min-w-full overflow-y-scroll scrollbar-thin
-      scrollbar-track-transparent scrollbar-thumb-rounded-full transition-max-height`}>
+      scrollbar-track-transparent scrollbar-thumb-rounded-full transition-max-height transition-height`}>
         <div ref={generalRef} className={(movingSide !== 'idle') ? upcomingClasses.general : classes.general}
         onTransitionEnd={handleTransitionEnd}>
           { generalChild }
