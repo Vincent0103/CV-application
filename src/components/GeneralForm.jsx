@@ -1,6 +1,5 @@
-import FormContainer from './FormContainer.jsx';
 import FormElements from './FormElements.jsx';
-import objectSplice from './utils.js';
+import objectSplice from './utils';
 
 const GeneralForm = ({
   generalInformations, handleInputChange, handleAddOrRemoveBtnClick,
@@ -8,9 +7,6 @@ const GeneralForm = ({
 }) => {
   const summaryForJohnDoe = 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.';
   const hobbiesForJohnDoe = 'In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.';
-
-  const fadingBottomContainer = <div className="absolute -bottom-1 w-full h-24 bg-gradient-to-t from-white
-  pointer-events-none"></div>;
 
   const placeholders = {
     name: 'John',
@@ -31,13 +27,14 @@ const GeneralForm = ({
 
   const skillsOptions = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
   const languagesOptions = ['Beginner', 'Intermediate', 'Advanced', 'Fluent'];
+
   return (
     <form>
       {/* add profile picture input */}
       {formElements.addInputs(objectSplice(generalInformations, 0, 1), true)}
       <div className="flex">
         {/* add name and last name inputs */}
-        {formElements.addInputs(objectSplice(generalInformations, 1, 3), true)}
+        {formElements.addInputs(objectSplice(generalInformations, 1, 3), false)}
       </div>
       {/* add email, phone number, location, summary inputs */}
       {formElements.addInputs(objectSplice(generalInformations, 3, 7), false)}

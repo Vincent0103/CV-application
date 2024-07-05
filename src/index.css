@@ -11,4 +11,17 @@
   .font-sans {
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
+
+  .super-ease-out {
+    transition-timing-function: cubic-bezier(0.615, 0.015, 0.960, 0.645);
+  }
+
+  .transition-max-height {
+    transition: max-height 1s;
+  }
+
+  .transition-height {
+    transition: height 1s;
+  }
+
 }

@@ -3,9 +3,9 @@ import { typeGiver, toTitle } from './utils';
 
 const Label = ({ name, labelName }) => <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>;
 
-const InputImg = ({ handleImgChange, name, classes }) => (
+const InputImg = ({ handleImgChange, name, hasAutoFocus, classes }) => (
   <input type='file' accept='image/*' id={name} name={name}
-  onChange={handleImgChange} className={classes}/>
+  onChange={handleImgChange} autoFocus={hasAutoFocus} className={classes}/>
 );
 
 const InputOrTextarea = ({
@@ -43,7 +43,7 @@ const InputContainer = ({
   handleChange={handleChangeParameterized}/>;
 
   const inputImg = <InputImg handleImgChange={handleChangeParameterized} name={name}
-   classes={classes} />;
+   classes={classes} hasAutoFocus={hasAutoFocus} />;
 
   const input = (type !== 'file') ? inputOrTextareaComponent : inputImg;
   const flexInputs = <div className={`flex gap-3 ${additionalStyles}`}>{input}{children}</div>;
@@ -112,7 +112,7 @@ const FormElements = (
             name={key}
             labelName={toTitle(key)}
             placeholder={placeholders[key]}
-            hasAutoFocus={autoFocus && index === 0}
+            hasAutoFocus={autoFocus}
             handleChange={handleChange}
             dataKey={key}
             value={value}

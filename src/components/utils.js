@@ -1,4 +1,4 @@
-const objectSplice = (obj, start, end) => {
+const objectSplice = (obj, start = 0, end = Object.entries(obj).length) => {
   if (start >= end) return [];
   if (start < 0 || end > obj.length) return obj;
   return Object.entries(obj).slice(start, end);
@@ -43,7 +43,43 @@ const ArrayOfInputObjectEmptiness = (array, inputableIndexesRange) => {
   return { isEmpty, isInputObjectEmpty };
 };
 
+const classesHandler = () => {
+  const baseClasses = 'absolute top-0 w-full max-h-full';
+
+  const positionClasses = {
+    left: '-left-full pointer-events-none',
+    center: '',
+    right: 'left-full pointer-events-none',
+  };
+
+  const getClasses = (position) => `${(position === 'center') ? baseClasses.replace(/\babsolute\b/, 'relative') : baseClasses} ${positionClasses[position] || ''}`;
+
+  const classesOnMove = {
+    left: getClasses('left'),
+    center: getClasses('center'),
+    right: getClasses('right'),
+  };
+
+  const getMovableClasses = () => classesOnMove;
+
+  const getUpcomingClasses = (currentClasses, movingSide) => {
+    const transitionClasses = (movingSide === 'left')
+      ? 'transition-transform -translate-x-full duration-1000'
+      : 'transition-transform translate-x-full duration-1000';
+
+    const upcomingClasses = {
+      [classesOnMove.center]: [`${transitionClasses} ${classesOnMove.center}`, classesOnMove.left],
+      [classesOnMove.left]: [classesOnMove.left, classesOnMove.right],
+      [classesOnMove.right]: [`${transitionClasses} ${classesOnMove.right}`, classesOnMove.center],
+    };
+
+    return upcomingClasses[currentClasses];
+  };
+
+  return { getMovableClasses, getUpcomingClasses };
+};
+
 export default objectSplice;
 export {
-  toTitle, typeGiver, getRandomItem, ArrayOfInputObjectEmptiness,
+  toTitle, typeGiver, getRandomItem, ArrayOfInputObjectEmptiness, classesHandler,
 };

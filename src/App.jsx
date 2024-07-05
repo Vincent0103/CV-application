@@ -3,17 +3,18 @@ import { useState } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import FormContainer from './components/FormContainer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
+import EducationForm from './components/EducationForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
 import general, { randomStrings, education } from './components/data/data';
 import { getRandomItem } from './components/utils';
 
 function App() {
-  const [currentlyShowingFormIndex, setCurrentlyShowingFormIndex] = useState(0);
+  const [moveForms, setMoveForms] = useState('idle');
   const [lastKeys, setLastKeys] = useState({});
   const [generalInformations, setGeneralInformations] = useState(general);
   const [educationInformations, setEducationInformations] = useState(education);
 
-  const handleChange = (e, key, [category = null, innerObjectId = null]) => {
+  const handleGeneralChange = (e, key, [category = null, innerObjectId = null]) => {
     if (!(key in generalInformations)) return;
 
     if (category !== null && innerObjectId !== null) {
@@ -29,6 +30,15 @@ function App() {
         [key]: e.target.value,
       }));
     }
+  };
+
+  const handleEducationChange = (e, key) => {
+    if (!(key in educationInformations)) return;
+
+    setEducationInformations((prevState) => ({
+      ...prevState,
+      [key]: e.target.value,
+    }));
   };
 
   const handleImgChange = (e) => {
@@ -75,11 +85,13 @@ function App() {
     }));
   };
 
-  const handleNextBtnClick = () => {
-    const FIRST_INDEX = 0;
-    const forms = ['general', 'education', 'experiences'];
-    if (currentlyShowingFormIndex < FIRST_INDEX || currentlyShowingFormIndex > forms.length) return;
-    setCurrentlyShowingFormIndex(currentlyShowingFormIndex + 1);
+  const handleMovingSide = (movingSide) => {
+    setMoveForms(movingSide);
+  };
+
+  const handleNextBtnClick = (movingSide) => {
+    if (!'idle left right'.includes(movingSide)) return;
+    handleMovingSide(movingSide);
   };
 
   const fadingBottomContainer = <div className="absolute -bottom-1 w-full h-24 bg-gradient-to-t from-white
@@ -88,11 +100,18 @@ function App() {
   return (
     <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
-      <CVcustomizer handleNextBtnClick={handleNextBtnClick}
-      currentlyShowingFormIndex={currentlyShowingFormIndex}>
-        <FormContainer fadingBottomContainer={fadingBottomContainer}>
-          <GeneralForm generalInformations={generalInformations} handleInputChange={handleChange}
-          handleAddOrRemoveBtnClick={handleClick} handleImgChange={handleImgChange} />
+      <CVcustomizer handleNextBtnClick={handleNextBtnClick}>
+        <FormContainer fadingBottomContainer={fadingBottomContainer}
+        childrenRelatedData={['general', 'education', 'experiences']}
+        handleMovingSide={handleMovingSide} movingSide={moveForms}>
+
+          <GeneralForm generalInformations={generalInformations}
+          handleInputChange={handleGeneralChange} handleAddOrRemoveBtnClick={handleClick}
+          handleImgChange={handleImgChange} />
+
+          <EducationForm educationInformations={educationInformations}
+          handleChange={handleEducationChange}
+          />
         </FormContainer>
       </CVcustomizer>
       <CVpreview generalInformations={generalInformations} />
