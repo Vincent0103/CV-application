@@ -64,8 +64,8 @@ const classesHandler = () => {
 
   const getUpcomingClasses = (currentClasses, movingSide) => {
     const transitionClasses = (movingSide === 'left')
-      ? 'transition-transform -translate-x-full duration-1000'
-      : 'transition-transform translate-x-full duration-1000';
+      ? 'transition-transform -translate-x-full duration-500'
+      : 'transition-transform translate-x-full duration-500';
 
     const upcomingClasses = {
       [classesOnMove.center]: [`${transitionClasses} ${classesOnMove.center}`, classesOnMove.left],

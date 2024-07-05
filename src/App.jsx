@@ -4,12 +4,14 @@ import CVcustomizer from './components/CVcustomizer.jsx';
 import FormContainer from './components/FormContainer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
 import EducationForm from './components/EducationForm.jsx';
+import ExperiencesForm from './components/ExperiencesForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
 import general, { randomStrings, education } from './components/data/data';
 import { getRandomItem } from './components/utils';
 
 function App() {
   const [moveForms, setMoveForms] = useState('idle');
+  const [currentlyVisibleElement, setCurrentlyVisibleElement] = useState('general');
   const [lastKeys, setLastKeys] = useState({});
   const [generalInformations, setGeneralInformations] = useState(general);
   const [educationInformations, setEducationInformations] = useState(education);
@@ -91,6 +93,9 @@ function App() {
 
   const handleNextBtnClick = (movingSide) => {
     if (!'idle left right'.includes(movingSide)) return;
+    if (currentlyVisibleElement === 'general') setCurrentlyVisibleElement('education');
+    else if (currentlyVisibleElement === 'education') setCurrentlyVisibleElement('experiences');
+    else if (currentlyVisibleElement === 'experiences') setCurrentlyVisibleElement('general');
     handleMovingSide(movingSide);
   };
 
@@ -100,10 +105,12 @@ function App() {
   return (
     <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
-      <CVcustomizer handleNextBtnClick={handleNextBtnClick}>
+      <CVcustomizer handleNextBtnClick={handleNextBtnClick}
+      currentlyVisibleElement={currentlyVisibleElement}>
         <FormContainer fadingBottomContainer={fadingBottomContainer}
         childrenRelatedData={['general', 'education', 'experiences']}
-        handleMovingSide={handleMovingSide} movingSide={moveForms}>
+        handleMovingSide={handleMovingSide} movingSide={moveForms}
+        currentlyVisibleElement={currentlyVisibleElement}>
 
           <GeneralForm generalInformations={generalInformations}
           handleInputChange={handleGeneralChange} handleAddOrRemoveBtnClick={handleClick}
@@ -112,6 +119,8 @@ function App() {
           <EducationForm educationInformations={educationInformations}
           handleChange={handleEducationChange}
           />
+
+          <ExperiencesForm />
         </FormContainer>
       </CVcustomizer>
       <CVpreview generalInformations={generalInformations} />

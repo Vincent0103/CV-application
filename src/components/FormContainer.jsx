@@ -1,11 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { classesHandler } from './utils';
 
 // eslint-disable-next-line react/display-name
 const FormContainer = ({
   fadingBottomContainer, childrenRelatedData, movingSide,
-  handleMovingSide, children,
+  handleMovingSide, currentlyVisibleElement, children,
 }) => {
+  const generalRef = useRef(null);
+  const educationRef = useRef(null);
+  const experiencesRef = useRef(null);
+
   const handleClasses = classesHandler();
   const classesOnMove = handleClasses.getMovableClasses();
 
@@ -16,7 +20,7 @@ const FormContainer = ({
   });
   const [isFadingVisible, setIsFadingVisible] = useState(true);
 
-  if (React.Children.count(children) > 3) return;
+  if (React.Children.count(children) !== 3) return;
 
   const formSections = 'general education experiences';
   if (childrenRelatedData.join(' ') !== formSections) return;
@@ -60,20 +64,27 @@ const FormContainer = ({
   const educationChild = children[1];
   const experiencesChild = children[2];
 
+  const refMapping = {
+    general: generalRef,
+    education: educationRef,
+    experiences: experiencesRef,
+  };
+
   // eslint-disable-next-line consistent-return
   return (
     <div className="max-h-full max-w-full relative bg-[#ebebeb] rounded-xl border-2 border-gray-300
       shadow-xl overflow-hidden">
-      <div onScroll={handleScroll} className="max-h-[80vh] min-w-full overflow-y-scroll scrollbar-thin
-      scrollbar-track-transparent scrollbar-thumb-rounded-full transition-max-height">
-        <div className={(movingSide !== 'idle') ? upcomingClasses.general : classes.general}
+      <div style={{ maxHeight: `${refMapping[currentlyVisibleElement].current?.offsetHeight}px` }}
+      onScroll={handleScroll} className={`max-h-[80vh] min-w-full overflow-y-scroll scrollbar-thin
+      scrollbar-track-transparent scrollbar-thumb-rounded-full transition-max-height`}>
+        <div ref={generalRef} className={(movingSide !== 'idle') ? upcomingClasses.general : classes.general}
         onTransitionEnd={handleTransitionEnd}>
           { generalChild }
         </div>
-        <div className={(movingSide !== 'idle') ? upcomingClasses.education : classes.education}>
+        <div ref={educationRef} className={(movingSide !== 'idle') ? upcomingClasses.education : classes.education}>
           { educationChild }
         </div>
-        <div className={(movingSide !== 'idle') ? upcomingClasses.experiences : classes.experiences}>
+        <div ref={experiencesRef} className={(movingSide !== 'idle') ? upcomingClasses.experiences : classes.experiences}>
           { experiencesChild }
         </div>
       </div>

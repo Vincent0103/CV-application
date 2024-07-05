@@ -17,11 +17,11 @@
   }
 
   .transition-max-height {
-    transition: max-height 1s;
+    transition: max-height .5s;
   }
 
   .transition-height {
-    transition: height 1s;
+    transition: height .5s;
   }
 
 }
