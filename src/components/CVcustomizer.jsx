@@ -1,15 +1,24 @@
-const CVcustomizer = ({ children, handleNextBtnClick }) => {
-  const FormSliderBtns = () => (
+const CVcustomizer = ({ handleNextBtnClick, currentlyVisibleElement, children }) => {
+  const FormSliderBtns = () => {
+    const getClasses = (isActive) => {
+      const activeTextClasses = 'font-bold text-3xl h-[35px]';
+      const inactiveTextClasses = 'font-normal text-base h-6';
+
+      return (isActive) ? activeTextClasses : inactiveTextClasses;
+    };
+
+    return (
       <div className="flex flex-col mb-2">
         <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-3">
-          <button type="button" className="font-bold text-3xl h-[35px]" aria-selected="true"
+          <button type="button" className={`${getClasses(currentlyVisibleElement === 'general')}`} aria-selected="true"
           role="tab">General</button>
-          <button type="button" className="border-x-2 border-gray-300 px-3"
+          <button type="button" className={`${getClasses(currentlyVisibleElement === 'education')} border-x-2 border-gray-300 px-3`}
           role="tab">Education</button>
-          <button type="button" role="tab">Experiences</button>
+          <button type="button" className={`${getClasses(currentlyVisibleElement === 'experiences')}`} role="tab">Experiences</button>
         </div>
       </div>
-  );
+    );
+  };
 
   const NextFormBtn = () => {
     const rightArrow = <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 transition-transform translate-y-[1px] group-hover:translate-x-0.5" height={24} width={24} fill="white" viewBox="0 0 24 24"><path d="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" /></svg>;

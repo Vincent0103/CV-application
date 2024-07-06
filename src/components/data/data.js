@@ -114,4 +114,6 @@ const education = [
 ];
 
 export default general;
-export { randomStrings, education, generalPlaceholders, educationPlaceholders };
+export {
+  randomStrings, education, generalPlaceholders, educationPlaceholders,
+};

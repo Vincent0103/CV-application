@@ -37,12 +37,9 @@ function App() {
   const handleEducationChange = (e, key, educationId) => {
     if (!(key in educationInformations[0])) return;
 
-    const educationObj = educationInformations.find((item) => item.id === educationId);
-    educationObj[key] = e.target.value;
-    setEducationInformations((prevState) => ([
-      ...prevState,
-      educationObj,
-    ]));
+    const index = educationInformations.findIndex((item) => item.id === educationId);
+    educationInformations[index][key] = e.target.value;
+    setEducationInformations([...educationInformations]);
   };
 
   const handleImgChange = (e) => {
@@ -121,7 +118,7 @@ function App() {
           <ExperiencesForm />
         </FormContainer>
       </CVcustomizer>
-      <CVpreview generalInformations={generalInformations} />
+      <CVpreview generalInformations={generalInformations} educationInformations={educationInformations} />
     </div>
   );
 }

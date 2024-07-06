@@ -1,6 +1,6 @@
 import objectSplice, { ArrayOfInputObjectEmptiness } from './utils';
 
-const CVpreview = ({ generalInformations }) => {
+const CVpreview = ({ generalInformations, educationInformations }) => {
   const ListSection = ({ obj, arrayOfInputObjectEmptiness }) => (
     <ul>
       {obj.map((item, index) => {
@@ -93,28 +93,43 @@ const CVpreview = ({ generalInformations }) => {
   );
 
   const SecondaryContainer = () => {
-    const { summary } = generalInformations;
-
-    const obj = generalInformations;
+    const generalObj = generalInformations;
+    const educationArray = educationInformations;
+    const emptinessFunction = ArrayOfInputObjectEmptiness(educationInformations, [1, 6]);
 
     return (
       <div className="bg-white h-full w-[67%] px-4">
-        {(obj.name || obj.lastName)
-        && <h1 className="text-5xl font-black text-zinc-700 py-3">{obj.name} {obj.lastName}</h1>}
-        {(obj.email || obj.phoneNumber || obj.email)
+        {(generalObj.name || generalObj.lastName)
+        && <h1 className="text-5xl font-black text-zinc-700 py-3">{generalObj.name} {generalObj.lastName}</h1>}
+        {(generalObj.email || generalObj.phoneNumber || generalObj.email)
         && <>
             <div className="flex justify-between py-3">
-              <FlexItems obj={objectSplice(obj, 3, 6)} />
+              <FlexItems generalObj={objectSplice(generalObj, 3, 6)} />
             </div>
             <hr />
           </>
         }
-        {(obj.summary)
+        {(generalObj.summary)
         && <>
             <h3 className="font-extrabold text-2xl py-3">Summary</h3>
-            <p className="">{obj.summary}</p>
+            <p>{generalObj.summary}</p>
           </>
         }
+        {(!emptinessFunction.isEmpty())
+        && <>
+            <h3 className='font-extrabold text-2xl py-3'>Education</h3>
+            {educationArray.map((item, index) => (
+              !emptinessFunction.isInputObjectEmpty(item)
+              &&
+              <div key={index}>
+                <h4 className='font-bold text-xl pb-1'>{item.schoolName}</h4>
+                <p>{item.studyName}</p>
+                <p>{item.date}</p>
+                <p>{item.location}</p>
+                <p>{item.diplomas}</p>
+              </div>
+            ))}
+          </>}
       </div>
     );
   };
