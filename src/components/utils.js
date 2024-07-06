@@ -48,7 +48,7 @@ const ArrayOfInputObjectEmptiness = (array, inputableIndexesRange) => {
 };
 
 const classesHandler = () => {
-  const baseClasses = 'absolute top-0 w-full max-h-[80vh]';
+  const baseClasses = 'absolute top-0 w-full';
 
   const positionClasses = {
     left: '-left-full pointer-events-none',
