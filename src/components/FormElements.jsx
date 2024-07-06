@@ -43,7 +43,7 @@ const InputContainer = ({
         : handleChange(e));
     }
     if (dataForm === 'education') {
-      return () => handleChange(e, dataKey, innerObjectId);
+      return handleChange(e, dataKey, innerObjectId);
     }
   };
 

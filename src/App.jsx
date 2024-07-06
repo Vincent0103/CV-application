@@ -35,17 +35,14 @@ function App() {
   };
 
   const handleEducationChange = (e, key, educationId) => {
-    if (!(key in educationInformations)) return;
+    if (!(key in educationInformations[0])) return;
 
-    setEducationInformations((prevState) => {
-      const educationObj = prevState.find((item) => item.id === educationId);
-      educationObj[key] = e.target.value;
-
-      return {
-        ...prevState,
-        educationObj,
-      };
-    });
+    const educationObj = educationInformations.find((item) => item.id === educationId);
+    educationObj[key] = e.target.value;
+    setEducationInformations((prevState) => ([
+      ...prevState,
+      educationObj,
+    ]));
   };
 
   const handleImgChange = (e) => {

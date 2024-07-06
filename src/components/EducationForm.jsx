@@ -1,12 +1,12 @@
 import FormElements from './FormElements.jsx';
-import objectSplice, { getRandomItem } from './utils';
-import { randomStrings } from './data/data';
+import objectSplice from './utils';
+import { randomStrings, educationPlaceholders } from './data/data';
 
 const EducationForm = ({
   educationInformations,
   handleInputChange,
 }) => {
-  const formElements = FormElements(getRandomItem(randomStrings.education), handleInputChange);
+  const formElements = FormElements(educationPlaceholders, handleInputChange);
 
   const inputsData = educationInformations[0];
   const { id } = inputsData;
