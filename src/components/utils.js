@@ -48,7 +48,7 @@ const ArrayOfInputObjectEmptiness = (array, inputableIndexesRange) => {
 };
 
 const classesHandler = () => {
-  const baseClasses = 'absolute top-0 w-full max-h-full';
+  const baseClasses = 'absolute top-0 w-full max-h-[80vh]';
 
   const positionClasses = {
     left: '-left-full pointer-events-none',
@@ -67,17 +67,24 @@ const classesHandler = () => {
   const getMovableClasses = () => classesOnMove;
 
   const getUpcomingClasses = (currentClasses, movingSide) => {
-    const transitionClasses = (movingSide === 'left')
+    const transitionClasses = (movingSide === 'right')
       ? 'transition-transform -translate-x-full duration-500'
       : 'transition-transform translate-x-full duration-500';
 
     const upcomingClasses = {
-      [classesOnMove.center]: [`${transitionClasses} ${classesOnMove.center}`, classesOnMove.left],
-      [classesOnMove.left]: [classesOnMove.left, classesOnMove.right],
-      [classesOnMove.right]: [`${transitionClasses} ${classesOnMove.right}`, classesOnMove.center],
+      right: {
+        [classesOnMove.center]: [`${transitionClasses} ${classesOnMove.center}`, classesOnMove.left],
+        [classesOnMove.left]: [classesOnMove.left, classesOnMove.right],
+        [classesOnMove.right]: [`${transitionClasses} ${classesOnMove.right}`, classesOnMove.center],
+      },
+      left: {
+        [classesOnMove.center]: [`${transitionClasses} ${classesOnMove.center}`, classesOnMove.right],
+        [classesOnMove.left]: [`${transitionClasses} ${classesOnMove.left}`, classesOnMove.center],
+        [classesOnMove.right]: [classesOnMove.right, classesOnMove.left],
+      },
     };
 
-    return upcomingClasses[currentClasses];
+    return upcomingClasses[movingSide][currentClasses];
   };
 
   return { getMovableClasses, getUpcomingClasses };

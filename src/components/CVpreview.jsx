@@ -83,15 +83,13 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
   };
 
   const FlexItems = ({ obj }) => (
-    obj.map((item, index) => (
-      item[1]
-      && <p key={index} className="flex gap-1 justify-center items-center">
-        {svgs[item[0]]}
-        {item[1]}
+    obj.map(([key, item], index) => (
+      item && <p key={index} className="flex gap-1 justify-center items-center">
+        {svgs[key]}
+        {item}
       </p>
     ))
   );
-
   const SecondaryContainer = () => {
     const generalObj = generalInformations;
     const educationArray = educationInformations;
@@ -104,7 +102,7 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
         {(generalObj.email || generalObj.phoneNumber || generalObj.email)
         && <>
             <div className="flex justify-between py-3">
-              <FlexItems generalObj={objectSplice(generalObj, 3, 6)} />
+              <FlexItems obj={objectSplice(generalObj, 3, 6)} />
             </div>
             <hr />
           </>
@@ -120,8 +118,7 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
             <h3 className='font-extrabold text-2xl py-3'>Education</h3>
             {educationArray.map((item, index) => (
               !emptinessFunction.isInputObjectEmpty(item)
-              &&
-              <div key={index}>
+              && <div key={index}>
                 <h4 className='font-bold text-xl pb-1'>{item.schoolName}</h4>
                 <p>{item.studyName}</p>
                 <p>{item.date}</p>

@@ -90,18 +90,28 @@ function App() {
     setMoveForms(movingSide);
   };
 
-  const handleNextBtnClick = (movingSide) => {
+  const handleFormSwitcherBtn = (movingSide) => {
     if (!'idle left right'.includes(movingSide)) return;
-    if (currentlyVisibleElement === 'general') setCurrentlyVisibleElement('education');
-    else if (currentlyVisibleElement === 'education') setCurrentlyVisibleElement('experiences');
-    else if (currentlyVisibleElement === 'experiences') setCurrentlyVisibleElement('general');
+
+    const movingSideMap = {
+      left: {
+        experiences: 'education',
+        education: 'general',
+      },
+      right: {
+        general: 'education',
+        education: 'experiences',
+      },
+    };
+
     handleMovingSide(movingSide);
+    setCurrentlyVisibleElement(movingSideMap[movingSide][currentlyVisibleElement]);
   };
 
   return (
     <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
-      <CVcustomizer handleNextBtnClick={handleNextBtnClick}
+      <CVcustomizer handleFormSwitcherBtn={handleFormSwitcherBtn}
       currentlyVisibleElement={currentlyVisibleElement}>
         <FormContainer childrenRelatedData={['general', 'education', 'experiences']}
         handleMovingSide={handleMovingSide} movingSide={moveForms}
@@ -118,7 +128,8 @@ function App() {
           <ExperiencesForm />
         </FormContainer>
       </CVcustomizer>
-      <CVpreview generalInformations={generalInformations} educationInformations={educationInformations} />
+      <CVpreview generalInformations={generalInformations}
+      educationInformations={educationInformations} />
     </div>
   );
 }
