@@ -3,7 +3,9 @@ import { typeGiver, toTitle } from './utils';
 
 const Label = ({ name, labelName }) => <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>;
 
-const InputImg = ({ handleImgChange, name, hasAutoFocus, classes }) => (
+const InputImg = ({
+  handleImgChange, name, hasAutoFocus, classes,
+}) => (
   <input type='file' accept='image/*' id={name} name={name}
   onChange={handleImgChange} autoFocus={hasAutoFocus} className={classes}/>
 );
@@ -27,16 +29,23 @@ const InputOrTextarea = ({
 };
 
 const InputContainer = ({
-  children, type, name, placeholder, value, handleChange, dataKey,
+  children, type, name, placeholder, value, handleChange, dataKey, dataForm = 'general',
   hasAutoFocus = false, additionalStyles = '', category = null, innerObjectId = null,
 }) => {
   const classes = `mt-1 block w-full px-3 py-2
   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
   focus:border-gray-400 sm:text-sm`;
 
-  const handleChangeParameterized = (e) => ((type !== 'file')
-    ? handleChange(e, dataKey, [category, innerObjectId])
-    : handleChange(e));
+  const handleChangeParameterized = (e) => {
+    if (dataForm === 'general') {
+      return ((type !== 'file')
+        ? handleChange(e, dataKey, [category, innerObjectId])
+        : handleChange(e));
+    }
+    if (dataForm === 'education') {
+      return () => handleChange(e, dataKey, innerObjectId);
+    }
+  };
 
   const inputOrTextareaComponent = <InputOrTextarea type={type} name={name} classes={classes}
   placeholder={placeholder} hasAutoFocus={hasAutoFocus} value={value}
@@ -46,6 +55,7 @@ const InputContainer = ({
    classes={classes} hasAutoFocus={hasAutoFocus} />;
 
   const input = (type !== 'file') ? inputOrTextareaComponent : inputImg;
+
   const flexInputs = <div className={`flex gap-3 ${additionalStyles}`}>{input}{children}</div>;
 
   return (children) ? flexInputs : input;
@@ -99,11 +109,18 @@ const FormElements = (
   handleAddOrRemoveBtnClick,
   handleFileChange,
 ) => {
-  const addInputs = (dataArray, autoFocus = false) => (
-    dataArray.map((item, index) => {
+  const addInputs = (
+    dataEntries,
+    autoFocus = false,
+    dataForm = 'general',
+    idToApplyForEachItem = null,
+  ) => (
+    dataEntries.map((item, index) => {
+      const itemId = idToApplyForEachItem;
       const [key, value] = item;
       const type = typeGiver(key);
       const handleChange = (type !== 'file') ? handleInputChange : handleFileChange;
+
       return (
         <SectionContainer key={index}>
           <Label name={key} labelName={toTitle(key)} />
@@ -115,7 +132,9 @@ const FormElements = (
             hasAutoFocus={autoFocus}
             handleChange={handleChange}
             dataKey={key}
+            dataForm={dataForm}
             value={value}
+            innerObjectId={(itemId) || ''}
           />
         </SectionContainer>
       );

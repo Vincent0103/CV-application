@@ -25,6 +25,10 @@ const typeGiver = (category) => {
     phoneNumber: 'tel',
     summary: 'textarea',
     hobbies: 'textarea',
+    schoolName: 'text',
+    studyName: 'text',
+    date: 'date',
+    diplomas: 'text',
   };
 
   return types[category] || null;
@@ -48,7 +52,7 @@ const classesHandler = () => {
 
   const positionClasses = {
     left: '-left-full pointer-events-none',
-    center: '',
+    center: 'pointer-events-auto',
     right: 'left-full pointer-events-none',
   };
 

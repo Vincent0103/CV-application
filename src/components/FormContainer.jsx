@@ -1,11 +1,9 @@
-import React, {
-  useRef, useEffect, useState, useCallback,
-} from 'react';
+import React, { useRef, useState } from 'react';
 import { classesHandler } from './utils';
 
 // eslint-disable-next-line react/display-name
 const FormContainer = ({
-  fadingBottomContainer, childrenRelatedData, movingSide,
+  childrenRelatedData, movingSide,
   handleMovingSide, currentlyVisibleElement, children,
 }) => {
   const containerRef = useRef(null);
@@ -27,10 +25,6 @@ const FormContainer = ({
     education: educationRef,
     experiences: experiencesRef,
   };
-
-  const DEFAULT_GENERAL_FORM_HEIGHT = 1275;
-  const currentFormContainerHeight = refMapping[currentlyVisibleElement].current?.offsetHeight
-  || DEFAULT_GENERAL_FORM_HEIGHT;
 
   if (React.Children.count(children) !== 3) return;
 
@@ -70,6 +64,10 @@ const FormContainer = ({
   const generalChild = children[0];
   const educationChild = children[1];
   const experiencesChild = children[2];
+
+  const DEFAULT_GENERAL_FORM_HEIGHT = 1275;
+  const currentFormContainerHeight = refMapping[currentlyVisibleElement].current?.offsetHeight
+  || DEFAULT_GENERAL_FORM_HEIGHT;
 
   // eslint-disable-next-line consistent-return
   return (

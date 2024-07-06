@@ -146,6 +146,7 @@ const general = {
 
 const education = [
   {
+    id: uuidv4(),
     schoolName: '',
     studyName: '',
     date: '',
@@ -153,6 +154,7 @@ const education = [
     diplomas: '',
   },
   {
+    id: uuidv4(),
     schoolName: '',
     studyName: '',
     date: '',

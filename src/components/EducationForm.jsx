@@ -4,16 +4,17 @@ import { randomStrings } from './data/data';
 
 const EducationForm = ({
   educationInformations,
-  handleChange,
+  handleInputChange,
 }) => {
-  const formElements = FormElements(getRandomItem(randomStrings.education), handleChange);
+  const formElements = FormElements(getRandomItem(randomStrings.education), handleInputChange);
 
   const inputsData = educationInformations[0];
+  const { id } = inputsData;
 
   return (
     <form>
       {/* add school name, study name, date, diplomas, location  */}
-      {formElements.addInputs(objectSplice(inputsData), false)}
+      {formElements.addInputs(objectSplice(inputsData, 1), false, 'education', id)}
     </form>
   );
 };

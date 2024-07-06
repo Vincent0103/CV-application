@@ -34,13 +34,18 @@ function App() {
     }
   };
 
-  const handleEducationChange = (e, key) => {
+  const handleEducationChange = (e, key, educationId) => {
     if (!(key in educationInformations)) return;
 
-    setEducationInformations((prevState) => ({
-      ...prevState,
-      [key]: e.target.value,
-    }));
+    setEducationInformations((prevState) => {
+      const educationObj = prevState.find((item) => item.id === educationId);
+      educationObj[key] = e.target.value;
+
+      return {
+        ...prevState,
+        educationObj,
+      };
+    });
   };
 
   const handleImgChange = (e) => {
@@ -99,16 +104,12 @@ function App() {
     handleMovingSide(movingSide);
   };
 
-  const fadingBottomContainer = <div className="absolute -bottom-1 w-full h-24 bg-gradient-to-t from-white
-  pointer-events-none"></div>;
-
   return (
     <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
       <CVcustomizer handleNextBtnClick={handleNextBtnClick}
       currentlyVisibleElement={currentlyVisibleElement}>
-        <FormContainer fadingBottomContainer={fadingBottomContainer}
-        childrenRelatedData={['general', 'education', 'experiences']}
+        <FormContainer childrenRelatedData={['general', 'education', 'experiences']}
         handleMovingSide={handleMovingSide} movingSide={moveForms}
         currentlyVisibleElement={currentlyVisibleElement}>
 
@@ -117,7 +118,7 @@ function App() {
           handleImgChange={handleImgChange} />
 
           <EducationForm educationInformations={educationInformations}
-          handleChange={handleEducationChange}
+          handleInputChange={handleEducationChange}
           />
 
           <ExperiencesForm />
