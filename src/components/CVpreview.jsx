@@ -43,8 +43,8 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
   const PrimaryContainer = () => {
     const arrays = [generalInformations.skills, generalInformations.languages];
 
-    const emptinessFunctions = [ArrayOfInputObjectEmptiness(arrays[0], [1, 3]),
-      ArrayOfInputObjectEmptiness(arrays[1], [1, 3])];
+    const emptinessFunctions = [ArrayOfInputObjectEmptiness(arrays[0], ['skill', 'expertise']),
+      ArrayOfInputObjectEmptiness(arrays[1], ['language', 'fluency'])];
 
     return (
       <div className="bg-slate-800 h-full w-[33%] text-white flex
@@ -93,16 +93,16 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
   const SecondaryContainer = () => {
     const generalObj = generalInformations;
     const educationArray = educationInformations;
-    const emptinessFunction = ArrayOfInputObjectEmptiness(educationInformations, [1, 6]);
+    const emptinessFunction = ArrayOfInputObjectEmptiness(educationInformations, ['schoolName', 'schoolSummary']);
 
     return (
       <div className="bg-white h-full w-[67%] px-4">
         {(generalObj.name || generalObj.lastName)
         && <h1 className="text-5xl font-black text-zinc-700 py-3">{generalObj.name} {generalObj.lastName}</h1>}
-        {(generalObj.email || generalObj.phoneNumber || generalObj.email)
+        {(generalObj.email || generalObj.phoneNumber || generalObj.location)
         && <>
             <div className="flex justify-between py-3">
-              <FlexItems obj={objectSplice(generalObj, 3, 6)} />
+              <FlexItems obj={objectSplice(generalObj, ['email', 'location'])} />
             </div>
             <hr />
           </>

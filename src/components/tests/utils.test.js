@@ -17,7 +17,7 @@ describe('objectSplice fn', () => {
   });
 
   it('correctly returns the first three properties of the object', () => {
-    const result = objectSplice(inputObject, 0, 3);
+    const result = objectSplice(inputObject, ['name', 'location']);
     expect(result).toEqual([
       ['name', 'John'],
       ['lastName', 'Doe'],
@@ -26,21 +26,28 @@ describe('objectSplice fn', () => {
   });
 
   it('correctly returns the last two properties of the object', () => {
-    const result = objectSplice(inputObject, 4, inputObject.length);
+    const result = objectSplice(inputObject, ['languages', 'email']);
     expect(result).toEqual([
       ['languages', 'English'],
       ['email', ''],
     ]);
   });
 
-  it('should return an empty object if end index is less than start index', () => {
-    const result = objectSplice(inputObject, 3, 2);
-    expect(result).toEqual([]);
+  it('should throw an error if end index is less than start index', () => {
+    const errorThrowingFunction = () => objectSplice(inputObject, ['skills', 'location']);
+    expect(errorThrowingFunction).toThrowError('Cannot have the index of the starting key greater than the ending key index');
   });
 
-  it('should handle out of bounds indices', () => {
-    const result = objectSplice(inputObject, -1, 10);
-    expect(result).toEqual(inputObject);
+  it('should throw an error for keys that does not exist', () => {
+    const errorThrowingFunction = () => objectSplice(inputObject, ['mario', 'gets called']);
+    expect(errorThrowingFunction).toThrowError('startKey or endKey not found in the object.');
+  });
+
+  it('should handle correctly if the endingKey isn\'t given', () => {
+    const result = objectSplice(inputObject, ['skills', false]);
+    expect(result).toEqual([
+      ['skills', 'JavaScript'],
+    ]);
   });
 });
 
@@ -77,3 +84,5 @@ describe('typeGiver fn', () => {
     expect(result).toBeNull();
   });
 });
+
+describe('');

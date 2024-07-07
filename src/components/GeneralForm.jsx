@@ -31,13 +31,13 @@ const GeneralForm = ({
   return (
     <form>
       {/* add profile picture input */}
-      {formElements.addInputs(objectSplice(generalInformations, 0, 1), true)}
+      {formElements.addInputs(objectSplice(generalInformations, ['profilePicture', false]), true)}
       <div className="flex">
         {/* add name and last name inputs */}
-        {formElements.addInputs(objectSplice(generalInformations, 1, 3), false)}
+        {formElements.addInputs(objectSplice(generalInformations, ['name', 'lastName']), false)}
       </div>
       {/* add email, phone number, location, summary inputs */}
-      {formElements.addInputs(objectSplice(generalInformations, 3, 7), false)}
+      {formElements.addInputs(objectSplice(generalInformations, ['email', 'summary']), false)}
       <div>
         {formElements.addInputsAndSelects(
           generalInformations,
@@ -57,7 +57,7 @@ const GeneralForm = ({
         <formElements.AddBtn dataKey={'languages'} innerCategory={'language'} />
       </div>
       {/* add hobbies input */}
-      {formElements.addInputs(objectSplice(generalInformations, 9, 10), false)}
+      {formElements.addInputs(objectSplice(generalInformations, ['hobbies', false]), false)}
 
     </form>
   );

@@ -1,7 +1,18 @@
-const objectSplice = (obj, start = 0, end = Object.entries(obj).length) => {
-  if (start >= end) return [];
-  if (start < 0 || end > obj.length) return obj;
-  return Object.entries(obj).slice(start, end);
+const objectSplice = (obj, [startKey, endKey]) => {
+  const keys = Object.keys(obj);
+  const startingIndex = keys.indexOf(startKey);
+  const endingIndex = keys.indexOf(endKey);
+
+  if (startingIndex === -1 || (endKey && endingIndex === -1)) {
+    throw new Error('startKey or endKey not found in the object.');
+  } if (endKey && startingIndex >= endingIndex) {
+    throw new Error('Cannot have the index of the starting key greater than the ending key index');
+  }
+
+  const slicedEnd = (endKey) ? endingIndex + 1 : startingIndex + 1;
+  const slicedKeys = keys.slice(startingIndex, slicedEnd);
+  const slicedEntries = slicedKeys.map((key) => [key, obj[key]]);
+  return slicedEntries;
 };
 
 const toTitle = (camelCaseString) => camelCaseString
@@ -27,7 +38,8 @@ const typeGiver = (category) => {
     hobbies: 'textarea',
     schoolName: 'text',
     studyName: 'text',
-    date: 'date',
+    from: 'date',
+    to: 'date',
     diplomas: 'text',
   };
 
@@ -36,10 +48,10 @@ const typeGiver = (category) => {
 
 const getRandomItem = (array) => array[Math.round(Math.random() * (array.length - 1))];
 
-const ArrayOfInputObjectEmptiness = (array, inputableIndexesRange) => {
-  const [start, end] = inputableIndexesRange;
+const ArrayOfInputObjectEmptiness = (array, inputableKeysRanges) => {
+  const [startKey, endKey] = inputableKeysRanges;
 
-  const isInputObjectEmpty = (entry) => !objectSplice(entry, start, end)
+  const isInputObjectEmpty = (entry) => !objectSplice(entry, [startKey, endKey])
     .find(([_, value]) => !!value);
 
   const isEmpty = () => array.every((entry) => isInputObjectEmpty(entry));

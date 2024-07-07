@@ -99,17 +99,23 @@ const education = [
     id: uuidv4(),
     schoolName: '',
     studyName: '',
-    date: '',
+    studyDate: {
+      from: '',
+      to: '',
+    },
     location: '',
-    diplomas: '',
+    schoolSummary: '',
   },
   {
     id: uuidv4(),
     schoolName: '',
     studyName: '',
-    date: '',
+    studyDate: {
+      from: '',
+      to: '',
+    },
     location: '',
-    diplomas: '',
+    schoolSummary: '',
   },
 ];
 

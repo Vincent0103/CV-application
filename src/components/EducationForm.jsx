@@ -1,6 +1,6 @@
 import FormElements from './FormElements.jsx';
 import objectSplice from './utils';
-import { randomStrings, educationPlaceholders } from './data/data';
+import { educationPlaceholders } from './data/data';
 
 const EducationForm = ({
   educationInformations,
@@ -11,10 +11,18 @@ const EducationForm = ({
   const inputsData = educationInformations[0];
   const { id } = inputsData;
 
+  const dateInput = inputsData.studyDate;
+
   return (
     <form>
-      {/* add school name, study name, date, diplomas, location  */}
-      {formElements.addInputs(objectSplice(inputsData, 1), false, 'education', id)}
+      {/* add school name, study name  */}
+      {formElements.addInputs(objectSplice(inputsData, ['schoolName', 'studyName']), false, 'education', id)}
+      <div className='flex'>
+      {/* add date input  */}
+        {formElements.addInputs(Object.entries(dateInput), false, 'education', id)}
+      </div>
+      {/* add date input  */}
+      {formElements.addInputs(objectSplice(inputsData, ['location', 'schoolSummary']), false, 'education', id)}
     </form>
   );
 };
