@@ -1,5 +1,5 @@
 import FormElements from './FormElements.jsx';
-import objectSplice from './utils';
+import getItemsFromRange from './utils';
 
 const GeneralForm = ({
   generalInformations, handleInputChange, handleAddOrRemoveBtnClick,
@@ -31,13 +31,13 @@ const GeneralForm = ({
   return (
     <form>
       {/* add profile picture input */}
-      {formElements.addInputs(objectSplice(generalInformations, ['profilePicture', false]), true)}
+      {formElements.addInputs(getItemsFromRange(generalInformations, ['profilePicture', false]), true)}
       <div className="flex">
         {/* add name and last name inputs */}
-        {formElements.addInputs(objectSplice(generalInformations, ['name', 'lastName']), false)}
+        {formElements.addInputs(getItemsFromRange(generalInformations, ['name', 'lastName']), false)}
       </div>
       {/* add email, phone number, location, summary inputs */}
-      {formElements.addInputs(objectSplice(generalInformations, ['email', 'summary']), false)}
+      {formElements.addInputs(getItemsFromRange(generalInformations, ['email', 'summary']), false)}
       <div>
         {formElements.addInputsAndSelects(
           generalInformations,
@@ -57,7 +57,7 @@ const GeneralForm = ({
         <formElements.AddBtn dataKey={'languages'} innerCategory={'language'} />
       </div>
       {/* add hobbies input */}
-      {formElements.addInputs(objectSplice(generalInformations, ['hobbies', false]), false)}
+      {formElements.addInputs(getItemsFromRange(generalInformations, ['hobbies', false]), false)}
 
     </form>
   );

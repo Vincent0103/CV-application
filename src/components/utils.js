@@ -1,4 +1,4 @@
-const objectSplice = (obj, [startKey, endKey]) => {
+const getItemsFromRange = (obj, [startKey, endKey]) => {
   const keys = Object.keys(obj);
   const startingIndex = keys.indexOf(startKey);
   const endingIndex = keys.indexOf(endKey);
@@ -51,8 +51,8 @@ const getRandomItem = (array) => array[Math.round(Math.random() * (array.length 
 const ArrayOfInputObjectEmptiness = (array, inputableKeysRanges) => {
   const [startKey, endKey] = inputableKeysRanges;
 
-  const isInputObjectEmpty = (entry) => !objectSplice(entry, [startKey, endKey])
-    .find(([_, value]) => !!value);
+  const isInputObjectEmpty = (entry) => getItemsFromRange(entry, [startKey, endKey])
+    .every(([_, value]) => value === '');
 
   const isEmpty = () => array.every((entry) => isInputObjectEmpty(entry));
 
@@ -78,23 +78,29 @@ const classesHandler = () => {
 
   const getMovableClasses = () => classesOnMove;
 
-  const getUpcomingClasses = (currentClasses, movingSide) => {
-    const transitionClasses = (movingSide === 'right')
-      ? 'transition-transform -translate-x-full duration-500'
-      : 'transition-transform translate-x-full duration-500';
+  const transitionClasses = {
+    right: 'transition-transform -translate-x-full duration-500',
+    left: 'transition-transform translate-x-full duration-500',
+  };
 
+  const getUpcomingClasses = (currentClasses, movingSide) => {
     const upcomingClasses = {
       right: {
-        [classesOnMove.center]: [`${transitionClasses} ${classesOnMove.center}`, classesOnMove.left],
+        [classesOnMove.center]: [`${transitionClasses[movingSide]} ${classesOnMove.center}`, classesOnMove.left],
         [classesOnMove.left]: [classesOnMove.left, classesOnMove.right],
-        [classesOnMove.right]: [`${transitionClasses} ${classesOnMove.right}`, classesOnMove.center],
+        [classesOnMove.right]: [`${transitionClasses[movingSide]} ${classesOnMove.right}`, classesOnMove.center],
       },
       left: {
-        [classesOnMove.center]: [`${transitionClasses} ${classesOnMove.center}`, classesOnMove.right],
-        [classesOnMove.left]: [`${transitionClasses} ${classesOnMove.left}`, classesOnMove.center],
+        [classesOnMove.center]: [`${transitionClasses[movingSide]} ${classesOnMove.center}`, classesOnMove.right],
+        [classesOnMove.left]: [`${transitionClasses[movingSide]} ${classesOnMove.left}`, classesOnMove.center],
         [classesOnMove.right]: [classesOnMove.right, classesOnMove.left],
       },
     };
+
+    if (!(movingSide in upcomingClasses)) {
+      throw Error(`The key ${movingSide} is not a valid key in upcomingClasses. Ensure that movingSide is one of the expected keys: ['left', 'right']`);
+    }
+    if (!(currentClasses in upcomingClasses[movingSide])) throw Error('Given bad classes format in getUpcomingClasses()');
 
     return upcomingClasses[movingSide][currentClasses];
   };
@@ -102,7 +108,7 @@ const classesHandler = () => {
   return { getMovableClasses, getUpcomingClasses };
 };
 
-export default objectSplice;
+export default getItemsFromRange;
 export {
   toTitle, typeGiver, getRandomItem, ArrayOfInputObjectEmptiness, classesHandler,
 };
