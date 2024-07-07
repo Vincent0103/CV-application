@@ -106,17 +106,6 @@ const education = [
     location: '',
     schoolSummary: '',
   },
-  {
-    id: uuidv4(),
-    schoolName: '',
-    studyName: '',
-    studyDate: {
-      from: '',
-      to: '',
-    },
-    location: '',
-    schoolSummary: '',
-  },
 ];
 
 export default general;

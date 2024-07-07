@@ -28,6 +28,8 @@ const GeneralForm = ({
   const skillsOptions = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
   const languagesOptions = ['Beginner', 'Intermediate', 'Advanced', 'Fluent'];
 
+  const addBtn = formElements.addBtn();
+
   return (
     <form>
       {/* add profile picture input */}
@@ -39,22 +41,22 @@ const GeneralForm = ({
       {/* add email, phone number, location, summary inputs */}
       {formElements.addInputs(getItemsFromRange(generalInformations, ['email', 'summary']), false)}
       <div>
-        {formElements.addInputsAndSelects(
+        {formElements.addGeneralInputsAndSelects(
           generalInformations,
           'skills',
           ['skill', 'expertise'],
           skillsOptions,
         )}
-        <formElements.AddBtn dataKey={'skills'} innerCategory={'skill'} />
+        <addBtn.General dataKey={'skills'} innerCategory={'skill'} />
       </div>
       <div>
-        {formElements.addInputsAndSelects(
+        {formElements.addGeneralInputsAndSelects(
           generalInformations,
           'languages',
           ['language', 'fluency'],
           languagesOptions,
         )}
-        <formElements.AddBtn dataKey={'languages'} innerCategory={'language'} />
+        <addBtn.General dataKey={'languages'} innerCategory={'language'} />
       </div>
       {/* add hobbies input */}
       {formElements.addInputs(getItemsFromRange(generalInformations, ['hobbies', false]), false)}

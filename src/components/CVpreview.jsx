@@ -93,7 +93,7 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
   const SecondaryContainer = () => {
     const generalObj = generalInformations;
     const educationArray = educationInformations;
-    const emptinessFunction = ArrayOfInputObjectEmptiness(educationInformations, ['schoolName', 'schoolSummary']);
+    const emptinessFunction = ArrayOfInputObjectEmptiness(educationArray, ['schoolName', 'schoolSummary']);
 
     return (
       <div className="bg-white h-full w-[67%] px-4">

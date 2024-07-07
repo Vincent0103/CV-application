@@ -7,14 +7,18 @@ import EducationForm from './components/EducationForm.jsx';
 import ExperiencesForm from './components/ExperiencesForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
 import general, { randomStrings, education } from './components/data/data';
-import { getRandomItem } from './components/utils';
+import { getRandomItem, getState } from './components/utils';
 
 function App() {
   const [moveForms, setMoveForms] = useState('idle');
   const [currentlyVisibleElement, setCurrentlyVisibleElement] = useState('general');
-  const [lastKeys, setLastKeys] = useState({});
   const [generalInformations, setGeneralInformations] = useState(general);
   const [educationInformations, setEducationInformations] = useState(education);
+
+  const formDefaultInformations = {
+    general: { ...general },
+    education: { ...education[0] },
+  };
 
   const handleGeneralChange = (e, key, [category = null, innerObjectId = null]) => {
     if (!(key in generalInformations)) return;
@@ -57,33 +61,40 @@ function App() {
     reader.readAsDataURL(file);
   };
 
-  const handleClick = (key, id = null) => {
-    if (!(key in generalInformations)) return;
-    if (!Array.isArray(generalInformations[key])) return;
+  const handleClick = (formName, key, id = null) => {
+    const [informations, setInformations] = getState(
+      formName,
+      [generalInformations, setGeneralInformations],
+      [educationInformations, setEducationInformations],
+    );
 
-    const target = [...generalInformations[key]];
+    if (formName === 'general') {
+      if (!(key in informations)) return;
+      if (!Array.isArray(informations[key])) return;
 
-    const isRemovingEntry = !!id;
-    if (isRemovingEntry) {
-      const indexOfRemovingEntry = target.findIndex((item) => item.id === id);
-      target.splice(indexOfRemovingEntry, 1);
-      if (!(key in lastKeys)) {
-        setLastKeys({
-          ...lastKeys,
-          [key]: Object.keys(target[0]),
+      const target = [...informations[key]];
+
+      const isRemovingEntry = !!id;
+      if (isRemovingEntry) {
+        const indexOfRemovingEntry = target.findIndex((item) => item.id === id);
+        target.splice(indexOfRemovingEntry, 1);
+      } else {
+        const entryKeys = Object.keys(formDefaultInformations.general[key][0]);
+        target.push({
+          id: uuidv4(), [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings.general[key]),
         });
       }
-    } else {
-      const entryKeys = lastKeys[key] || Object.keys(target[0]);
-      target.push({
-        id: uuidv4(), [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings.general[key]),
-      });
-    }
 
-    setGeneralInformations((prevState) => ({
-      ...prevState,
-      [key]: [...target],
-    }));
+      setInformations((prevState) => ({
+        ...prevState,
+        [key]: [...target],
+      }));
+    } else if (formName === 'education') {
+      setInformations((prevState) => ([
+        ...prevState,
+        { ...formDefaultInformations.education },
+      ]));
+    }
   };
 
   const handleMovingSide = (movingSide) => {
@@ -122,7 +133,7 @@ function App() {
           handleImgChange={handleImgChange} />
 
           <EducationForm educationInformations={educationInformations}
-          handleInputChange={handleEducationChange}
+          handleInputChange={handleEducationChange} handleAddOrRemoveBtnClick={handleClick}
           />
 
           <ExperiencesForm />

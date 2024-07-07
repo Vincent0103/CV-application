@@ -115,7 +115,17 @@ const classesHandler = () => {
   return { getMovableClasses, getUpcomingClasses };
 };
 
+const getState = (name, ...infoPairs) => {
+  const stateMap = {
+    general: infoPairs[0],
+    education: infoPairs[1],
+    experiences: infoPairs[2],
+  };
+
+  return stateMap[name] || infoPairs[0];
+};
+
 export default getItemsFromRange;
 export {
-  toTitle, typeGiver, getRandomItem, ArrayOfInputObjectEmptiness, classesHandler,
+  toTitle, typeGiver, getRandomItem, ArrayOfInputObjectEmptiness, classesHandler, getState,
 };
