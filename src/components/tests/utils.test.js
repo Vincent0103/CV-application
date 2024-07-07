@@ -162,6 +162,31 @@ describe('ArrayOfInputObjectEmptiness fn', () => {
     it('returns false if one of the input entry value is false', () => {
       expect(languagesFn.isInputObjectEmpty(languages[3])).toBeFalsy();
     });
+
+    it('returns correct value if an item of the input object is itself an object', () => {
+      const items = languages[2];
+      languages[2] = {
+        ...items,
+        skill: '',
+        fluency: {
+          inUSA: '',
+          inEuropeanCountries: '',
+        },
+      };
+
+      expect(languagesFn.isInputObjectEmpty(languages[2])).toBeTruthy();
+
+      languages[2] = {
+        ...items,
+        skills: '',
+        fluency: {
+          inUSA: false,
+          inEuropeanCountries: '',
+        },
+      };
+
+      expect(languagesFn.isInputObjectEmpty(languages[2])).toBeFalsy();
+    });
   });
 
   describe('isEmpty', () => {

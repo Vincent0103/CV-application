@@ -63,8 +63,8 @@ const educationPlaceholders = {
   schoolName: 'University of Example',
   studyName: 'Bachelor of Science in Computer Science',
   date: 'August 2015 - May 2019',
-  location: 'Example City, Country',
-  diplomas: 'Summa Cum Laude',
+  location: 'Rio de Janeiro, Brazil',
+  schoolSummary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
 };
 
 const general = {

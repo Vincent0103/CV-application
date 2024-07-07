@@ -40,7 +40,7 @@ const typeGiver = (category) => {
     studyName: 'text',
     from: 'date',
     to: 'date',
-    diplomas: 'text',
+    schoolSummary: 'textarea',
   };
 
   return types[category] || null;
@@ -52,7 +52,14 @@ const ArrayOfInputObjectEmptiness = (array, inputableKeysRanges) => {
   const [startKey, endKey] = inputableKeysRanges;
 
   const isInputObjectEmpty = (entry) => getItemsFromRange(entry, [startKey, endKey])
-    .every(([_, value]) => value === '');
+    .every(([_, value]) => {
+      if (typeof value !== 'object') return value === '';
+
+      // if the value is an object check if all the inner values of the object are empty
+      const keys = Object.keys(value);
+      const firstAndLastKeys = [keys[0], keys[keys.length - 1]];
+      return ArrayOfInputObjectEmptiness([value], firstAndLastKeys).isEmpty();
+    });
 
   const isEmpty = () => array.every((entry) => isInputObjectEmpty(entry));
 
