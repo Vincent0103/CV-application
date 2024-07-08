@@ -93,14 +93,14 @@ const classesHandler = () => {
   const getUpcomingClasses = (currentClasses, movingSide) => {
     const upcomingClasses = {
       right: {
-        [classesOnMove.center]: [`${transitionClasses[movingSide]} ${classesOnMove.center}`, classesOnMove.left],
-        [classesOnMove.left]: [classesOnMove.left, classesOnMove.right],
-        [classesOnMove.right]: [`${transitionClasses[movingSide]} ${classesOnMove.right}`, classesOnMove.center],
+        [classesOnMove.center]: classesOnMove.left,
+        [classesOnMove.left]: classesOnMove.right,
+        [classesOnMove.right]: classesOnMove.center,
       },
       left: {
-        [classesOnMove.center]: [`${transitionClasses[movingSide]} ${classesOnMove.center}`, classesOnMove.right],
-        [classesOnMove.left]: [`${transitionClasses[movingSide]} ${classesOnMove.left}`, classesOnMove.center],
-        [classesOnMove.right]: [classesOnMove.right, classesOnMove.left],
+        [classesOnMove.center]: classesOnMove.right,
+        [classesOnMove.left]: classesOnMove.center,
+        [classesOnMove.right]: classesOnMove.left,
       },
     };
 

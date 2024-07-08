@@ -142,7 +142,7 @@ const FormElements = (
 
     const Education = () => {
       const formName = 'education';
-      const handleClickParameterized = () => handleAddOrRemoveBtnClick(formName, formName, dataId);
+      const handleClickParameterized = () => handleAddOrRemoveBtnClick(formName, formName);
 
       return <Btn ariaLabel={formName} handleClick={handleClickParameterized} />;
     };

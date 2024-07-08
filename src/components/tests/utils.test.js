@@ -240,41 +240,30 @@ describe('classesHandler module', () => {
         center: classes.left,
         right: classes.center,
       };
-
-      transitionClasses = {
-        right: 'transition-transform -translate-x-full duration-500',
-        left: 'transition-transform translate-x-full duration-500',
-      };
     });
 
     it('returns the correct classes when moving on the left side', () => {
       const movingSide = 'left';
-      expect(handleClasses.getUpcomingClasses(currentClasses1.left, movingSide)).toEqual(
-        [`${transitionClasses[movingSide]} ${classes.left}`, classes.center],
-      );
+      expect(handleClasses.getUpcomingClasses(currentClasses1.left, movingSide))
+        .toEqual(classes.center);
 
-      expect(handleClasses.getUpcomingClasses(currentClasses1.right, movingSide)).toEqual(
-        [classes.right, classes.left],
-      );
+      expect(handleClasses.getUpcomingClasses(currentClasses1.right, movingSide))
+        .toEqual(classes.left);
 
-      expect(handleClasses.getUpcomingClasses(currentClasses2.right, movingSide)).toEqual(
-        [`${transitionClasses[movingSide]} ${classes.center}`, classes.right],
-      );
+      expect(handleClasses.getUpcomingClasses(currentClasses2.right, movingSide))
+        .toEqual(classes.right);
     });
 
     it('returns the correct classes when moving on the right side', () => {
       const movingSide = 'right';
-      expect(handleClasses.getUpcomingClasses(currentClasses1.center, movingSide)).toEqual(
-        [`${transitionClasses[movingSide]} ${classes.center}`, classes.left],
-      );
+      expect(handleClasses.getUpcomingClasses(currentClasses1.center, movingSide))
+        .toEqual(classes.left);
 
-      expect(handleClasses.getUpcomingClasses(currentClasses1.left, movingSide)).toEqual(
-        [classes.left, classes.right],
-      );
+      expect(handleClasses.getUpcomingClasses(currentClasses1.left, movingSide))
+        .toEqual(classes.right);
 
-      expect(handleClasses.getUpcomingClasses(currentClasses2.left, movingSide)).toEqual(
-        [`${transitionClasses[movingSide]} ${classes.right}`, classes.center],
-      );
+      expect(handleClasses.getUpcomingClasses(currentClasses2.left, movingSide))
+        .toEqual(classes.center);
     });
 
     it('throws an error if the movingSide form is invalid', () => {
