@@ -2,7 +2,7 @@ import {
   vi, describe, it, expect, beforeEach,
 } from 'vitest';
 import objectSplice, {
-  toTitle, typeGiver, ArrayOfInputObjectEmptiness, classesHandler,
+  toTitle, toSpacedLowerCase, typeGiver, ArrayOfInputObjectEmptiness, classesHandler,
 } from '../utils';
 
 describe('objectSplice fn', () => {
@@ -62,6 +62,18 @@ describe('toTitle fn', () => {
   it('converts camelCase strings to title case', () => {
     const results = testStrings.map((str) => toTitle(str));
     expect(results).toEqual(['John Smith', 'Mar', 'Epic Suffer', 'Indeed Dot Com', 'W3AG', '']);
+  });
+});
+
+describe('toSpacedLowerCase fn', () => {
+  let testStrings;
+  beforeEach(() => {
+    testStrings = ['johnSmith', 'mar', 'Epic Suffer', 'indeed-dot-com', 'W3AG', ''];
+  });
+
+  it('converts camelCase strings to spaced lowercase strings', () => {
+    const results = testStrings.map((str) => toSpacedLowerCase(str));
+    expect(results).toEqual(['john smith', 'mar', 'epic suffer', 'indeed dot com', 'w3ag', '']);
   });
 });
 
