@@ -40,7 +40,6 @@ function App() {
 
   const handleEducationChange = (e, key, educationId) => {
     if (!(key in educationInformations[0])) return;
-    console.log(educationInformations);
 
     const index = educationInformations.findIndex((item) => item.id === educationId);
     educationInformations[index][key] = e.target.value;
