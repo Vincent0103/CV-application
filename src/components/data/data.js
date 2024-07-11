@@ -108,7 +108,12 @@ const education = [
   },
 ];
 
+// Creating a deep copy so whenever the states change, it doesn't get updated
+const defaultGeneral = { ...general };
+const defaultEducation = { ...education[0] };
+
 export default general;
 export {
-  randomStrings, education, generalPlaceholders, educationPlaceholders,
+  randomStrings, education, generalPlaceholders,
+  educationPlaceholders, defaultGeneral, defaultEducation,
 };

@@ -6,7 +6,7 @@ import GeneralForm from './components/GeneralForm.jsx';
 import EducationForm from './components/EducationForm.jsx';
 import ExperiencesForm from './components/ExperiencesForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
-import general, { randomStrings, education } from './components/data/data';
+import general, { randomStrings, education, defaultGeneral, defaultEducation } from './components/data/data';
 import { getRandomItem, getState } from './components/utils';
 
 function App() {
@@ -16,8 +16,8 @@ function App() {
   const [educationInformations, setEducationInformations] = useState(education);
 
   const formDefaultInformations = {
-    general: { ...general },
-    education: { ...education[0] },
+    general: defaultGeneral,
+    education: defaultEducation,
   };
 
   const handleGeneralChange = (e, key, [category = null, innerObjectId = null]) => {

@@ -118,7 +118,7 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
             <h3 className='font-extrabold text-2xl py-3'>Education</h3>
             {educationArray.map((item, index) => (
               !emptinessFunction.isInputObjectEmpty(item)
-              && <div key={index}>
+              && <div key={index} className='py-2'>
                 <h4 className='font-bold text-xl pb-1'>{item.schoolName}</h4>
                 <p>{item.studyName}</p>
                 <p>{item.date}</p>
