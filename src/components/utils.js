@@ -24,6 +24,14 @@ const toTitle = (camelCaseString) => camelCaseString
   .replace(/\b\w/g, (char) => char.toUpperCase())
   .trim();
 
+const toSpacedLowerCase = (camelCaseString) => camelCaseString
+  // Replace hyphens with spaces
+  .replace(/-/g, ' ')
+  // Insert a space before all caps
+  .replace(/([a-z])([A-Z])/g, '$1 $2')
+  // Lowercase all characters
+  .toLowerCase();
+
 const typeGiver = (category) => {
   const types = {
     name: 'text',
@@ -122,5 +130,6 @@ const getState = (name, ...infoPairs) => {
 
 export default getEntriesFromRange;
 export {
-  toTitle, typeGiver, getRandomItem, ArrayOfInputObjectEmptiness, classesHandler, getState,
+  toTitle, toSpacedLowerCase, typeGiver, getRandomItem,
+  ArrayOfInputObjectEmptiness, classesHandler, getState,
 };

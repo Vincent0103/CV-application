@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { typeGiver, toTitle } from './utils';
+import { typeGiver, toTitle, toSpacedLowerCase } from './utils';
 
 const Label = ({ name, labelName }) => <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>;
 
@@ -89,7 +89,8 @@ const SectionContainer = ({ children }) => (
 );
 
 const Form = ({
-  children, formName, placeholders, handleInputChange, handleAddOrRemoveBtnClick, handleFileChange,
+  children, formName, placeholders, handleInputChange,
+  handleAddOrRemoveBtnClick, handleFileChange, formStyling,
 }) => {
   const cloneChildrenWithProps = (currentChildren) => React.Children
     .map(currentChildren, (child) => {
@@ -106,7 +107,7 @@ const Form = ({
       return React.cloneElement(child, childProps);
     });
 
-  return <form>{cloneChildrenWithProps(children)}</form>;
+  return <form className={formStyling}>{cloneChildrenWithProps(children)}</form>;
 };
 
 const AddBtn = ({
@@ -186,18 +187,26 @@ const Inputs = ({
   autoFocus = false,
   dataForm = 'general',
   idToApplyForEachEntry = null,
+  nthNameAndId = '',
+  prependingTextToNameAndId = '',
+
 }) => (
   dataEntries.map((item, index) => {
     const [key, value] = item;
     const type = typeGiver(key);
     const handleChange = (type !== 'file') ? handleInputChange : handleFileChange;
 
+    let nameAndId = '';
+    if (nthNameAndId) nameAndId += `${nthNameAndId} `;
+    if (prependingTextToNameAndId) nameAndId += `${prependingTextToNameAndId} `;
+    nameAndId += toSpacedLowerCase(key);
+
     return (
       <SectionContainer key={index}>
-        <Label name={key} labelName={toTitle(key)} />
+        <Label name={nameAndId} labelName={toTitle(key)} />
         <InputContainer
           type={type}
-          nameAndId={key}
+          nameAndId={nameAndId}
           labelName={toTitle(key)}
           placeholder={placeholders[key]}
           hasAutoFocus={autoFocus}

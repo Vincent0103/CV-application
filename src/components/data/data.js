@@ -64,7 +64,7 @@ const educationPlaceholders = {
   studyName: 'Bachelor of Science in Computer Science',
   date: 'August 2015 - May 2019',
   location: 'Rio de Janeiro, Brazil',
-  schoolSummary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
+  summary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
 };
 
 const general = {
@@ -104,7 +104,7 @@ const education = [
       to: '',
     },
     location: '',
-    schoolSummary: '',
+    summary: '',
   },
 ];
 
