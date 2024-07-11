@@ -15,8 +15,4 @@
   .super-ease-out {
     transition-timing-function: cubic-bezier(0.615, 0.015, 0.960, 0.645);
   }
-
-  .transition-max-height {
-    transition: max-height .5s, height .5s;
-  }
 }

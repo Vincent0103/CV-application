@@ -1,4 +1,4 @@
-import getItemsFromRange, { ArrayOfInputObjectEmptiness } from './utils';
+import getEntriesFromRange, { ArrayOfInputObjectEmptiness } from './utils';
 
 const CVpreview = ({ generalInformations, educationInformations }) => {
   const ListSection = ({ obj, arrayOfInputObjectEmptiness }) => (
@@ -102,7 +102,7 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
         {(generalObj.email || generalObj.phoneNumber || generalObj.location)
         && <>
             <div className="flex justify-between py-3">
-              <FlexItems obj={getItemsFromRange(generalObj, ['email', 'location'])} />
+              <FlexItems obj={getEntriesFromRange(generalObj, ['email', 'location'])} />
             </div>
             <hr />
           </>

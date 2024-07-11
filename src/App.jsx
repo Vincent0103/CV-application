@@ -40,6 +40,7 @@ function App() {
 
   const handleEducationChange = (e, key, educationId) => {
     if (!(key in educationInformations[0])) return;
+    console.log(educationInformations);
 
     const index = educationInformations.findIndex((item) => item.id === educationId);
     educationInformations[index][key] = e.target.value;
@@ -90,9 +91,13 @@ function App() {
         [key]: [...target],
       }));
     } else if (formName === 'education') {
+      const newEducation = {
+        ...formDefaultInformations.education,
+        id: uuidv4(),
+      };
       setInformations((prevState) => ([
         ...prevState,
-        { ...formDefaultInformations.education },
+        { ...newEducation },
       ]));
     }
   };

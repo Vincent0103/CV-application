@@ -1,4 +1,4 @@
-const getItemsFromRange = (obj, [startKey, endKey]) => {
+const getEntriesFromRange = (obj, [startKey, endKey]) => {
   const keys = Object.keys(obj);
   const startingIndex = keys.indexOf(startKey);
   const endingIndex = keys.indexOf(endKey);
@@ -51,7 +51,7 @@ const getRandomItem = (array) => array[Math.round(Math.random() * (array.length 
 const ArrayOfInputObjectEmptiness = (array, inputableKeysRanges) => {
   const [startKey, endKey] = inputableKeysRanges;
 
-  const isInputObjectEmpty = (entry) => getItemsFromRange(entry, [startKey, endKey])
+  const isInputObjectEmpty = (entry) => getEntriesFromRange(entry, [startKey, endKey])
     .every(([_, value]) => {
       if (typeof value !== 'object') return value === '';
 
@@ -84,11 +84,6 @@ const classesHandler = () => {
   };
 
   const getMovableClasses = () => classesOnMove;
-
-  const transitionClasses = {
-    right: 'transition-transform -translate-x-full duration-500',
-    left: 'transition-transform translate-x-full duration-500',
-  };
 
   const getUpcomingClasses = (currentClasses, movingSide) => {
     const upcomingClasses = {
@@ -125,7 +120,7 @@ const getState = (name, ...infoPairs) => {
   return stateMap[name] || infoPairs[0];
 };
 
-export default getItemsFromRange;
+export default getEntriesFromRange;
 export {
   toTitle, typeGiver, getRandomItem, ArrayOfInputObjectEmptiness, classesHandler, getState,
 };

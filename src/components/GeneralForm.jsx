@@ -1,5 +1,5 @@
 import FormElements from './FormElements.jsx';
-import getItemsFromRange from './utils';
+import getEntriesFromRange from './utils';
 
 const GeneralForm = ({
   generalInformations, handleInputChange, handleAddOrRemoveBtnClick,
@@ -28,39 +28,37 @@ const GeneralForm = ({
   const skillsOptions = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
   const languagesOptions = ['Beginner', 'Intermediate', 'Advanced', 'Fluent'];
 
+  const entries = [
+    getEntriesFromRange(generalInformations, ['profilePicture', false]),
+    getEntriesFromRange(generalInformations, ['name', 'lastName']),
+    getEntriesFromRange(generalInformations, ['email', 'summary']),
+    getEntriesFromRange(generalInformations, ['hobbies', false]),
+  ];
+
   const addBtn = formElements.addBtn();
 
   return (
     <form>
       {/* add profile picture input */}
-      {formElements.addInputs(getItemsFromRange(generalInformations, ['profilePicture', false]), true)}
+      <formElements.Inputs dataEntries={entries[0]} autoFocus={true} />
       <div className="flex">
         {/* add name and last name inputs */}
-        {formElements.addInputs(getItemsFromRange(generalInformations, ['name', 'lastName']), false)}
+        <formElements.Inputs dataEntries={entries[1]} autoFocus={false} />
       </div>
       {/* add email, phone number, location, summary inputs */}
-      {formElements.addInputs(getItemsFromRange(generalInformations, ['email', 'summary']), false)}
+      <formElements.Inputs dataEntries={entries[2]} autoFocus={false} />
       <div>
-        {formElements.addGeneralInputsAndSelects(
-          generalInformations,
-          'skills',
-          ['skill', 'expertise'],
-          skillsOptions,
-        )}
+        <formElements.GeneralInputsAndSelects object={generalInformations} categoryName={'skills'}
+        inputtableSubCategoryKeys={['skill', 'expertise']} optionsArray={skillsOptions} />
         <addBtn.General dataKey={'skills'} innerCategory={'skill'} />
       </div>
       <div>
-        {formElements.addGeneralInputsAndSelects(
-          generalInformations,
-          'languages',
-          ['language', 'fluency'],
-          languagesOptions,
-        )}
+        <formElements.GeneralInputsAndSelects object={generalInformations} categoryName={'languages'}
+        inputtableSubCategoryKeys={['language', 'fluency']} optionsArray={languagesOptions} />
         <addBtn.General dataKey={'languages'} innerCategory={'language'} />
       </div>
       {/* add hobbies input */}
-      {formElements.addInputs(getItemsFromRange(generalInformations, ['hobbies', false]), false)}
-
+      <formElements.Inputs dataEntries={entries[3]} autoFocus={false} />
     </form>
   );
 };

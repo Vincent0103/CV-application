@@ -4,18 +4,18 @@ import { typeGiver, toTitle } from './utils';
 const Label = ({ name, labelName }) => <label htmlFor={name} className="block text-sm font-medium text-gray-700">{labelName}</label>;
 
 const InputImg = ({
-  handleImgChange, name, hasAutoFocus, classes,
+  handleImgChange, nameAndId, hasAutoFocus, classes,
 }) => (
-  <input type='file' accept='image/*' id={name} name={name}
+  <input type='file' accept='image/*' id={nameAndId} name={nameAndId}
   onChange={handleImgChange} autoFocus={hasAutoFocus} className={classes}/>
 );
 
 const InputOrTextarea = ({
-  type, name, classes, placeholder, hasAutoFocus, value, handleChange,
+  type, nameAndId, classes, placeholder, hasAutoFocus, value, handleChange,
 }) => {
   const commonProps = {
-    name,
-    id: name,
+    name: nameAndId,
+    id: nameAndId,
     className: classes,
     placeholder,
     autoFocus: hasAutoFocus,
@@ -29,7 +29,7 @@ const InputOrTextarea = ({
 };
 
 const InputContainer = ({
-  children, type, name, placeholder, value, handleChange, dataKey, dataForm = 'general',
+  children, type, nameAndId, placeholder, value, handleChange, dataKey, dataForm = 'general',
   hasAutoFocus = false, additionalStyles = '', category = null, innerObjectId = null,
 }) => {
   const classes = `mt-1 block w-full px-3 py-2
@@ -47,11 +47,11 @@ const InputContainer = ({
     }
   };
 
-  const inputOrTextareaComponent = <InputOrTextarea type={type} name={name} classes={classes}
-  placeholder={placeholder} hasAutoFocus={hasAutoFocus} value={value}
+  const inputOrTextareaComponent = <InputOrTextarea type={type} nameAndId={nameAndId}
+  classes={classes} placeholder={placeholder} hasAutoFocus={hasAutoFocus} value={value}
   handleChange={handleChangeParameterized}/>;
 
-  const inputImg = <InputImg handleImgChange={handleChangeParameterized} name={name}
+  const inputImg = <InputImg handleImgChange={handleChangeParameterized} name={nameAndId}
    classes={classes} hasAutoFocus={hasAutoFocus} />;
 
   const input = (type !== 'file') ? inputOrTextareaComponent : inputImg;
@@ -62,7 +62,7 @@ const InputContainer = ({
 };
 
 const Select = ({
-  name, values, dataKey, selectedValue, category = null, innerObjectId = null, handleChange,
+  nameAndId, values, dataKey, selectedValue, category = null, innerObjectId = null, handleChange,
 }) => {
   const classes = `mt-1 block w-[50%] px-3 py-2
     bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
@@ -71,7 +71,7 @@ const Select = ({
   const handleChangeParameterized = (e) => handleChange(e, dataKey, [category, innerObjectId]);
 
   return (
-    <select name={name} id={name} className={classes}
+    <select name={nameAndId} id={nameAndId} className={classes}
     value={selectedValue} onChange={handleChangeParameterized}>
       <option value="" disabled>{category[0].toUpperCase() + category.slice(1)}</option>
       {values.map((value) => <option key={uuidv4()} value={value}>
@@ -150,24 +150,24 @@ const FormElements = (
     return { General, Education };
   };
 
-  const addInputs = (
+  const Inputs = ({
     dataEntries,
     autoFocus = false,
     dataForm = 'general',
-    idToApplyForEachItem = null,
-  ) => (
+    idToApplyForEachEntry = null,
+  }) => (
     dataEntries.map((item, index) => {
-      const itemId = idToApplyForEachItem;
+      const entryId = idToApplyForEachEntry;
       const [key, value] = item;
       const type = typeGiver(key);
       const handleChange = (type !== 'file') ? handleInputChange : handleFileChange;
 
       return (
         <SectionContainer key={index}>
-          <Label name={key} labelName={toTitle(key)} />
+          <Label name={`${key}${index}`} labelName={toTitle(key)} />
           <InputContainer
             type={type}
-            name={key}
+            nameAndId={`${key}${index}`}
             labelName={toTitle(key)}
             placeholder={placeholders[key]}
             hasAutoFocus={autoFocus}
@@ -175,35 +175,38 @@ const FormElements = (
             dataKey={key}
             dataForm={dataForm}
             value={value}
-            innerObjectId={(itemId) || ''}
+            innerObjectId={(entryId) || ''}
           />
         </SectionContainer>
       );
     })
   );
 
-  const addGeneralInputsAndSelects = (object, category, [innerCategory, innerOption], options) => {
-    const subObject = object[category];
+  const GeneralInputsAndSelects = ({
+    object, categoryName, inputtableSubCategoryKeys, optionsArray,
+  }) => {
+    const subObject = object[categoryName];
     const deleteBtn = removeBtn();
+    const [innerCategory, innerOption] = inputtableSubCategoryKeys;
 
     return (
       <SectionContainer>
-        <Label name={`${innerCategory}0`} labelName={toTitle(category)} />
+        <Label name={`${innerCategory}0`} labelName={toTitle(categoryName)} />
         {subObject.map((_, index) => {
           const entry = subObject[index];
 
-          return <InputContainer key={index} type="text" name={`${innerCategory}${index}`}
+          return <InputContainer key={index} type="text" nameAndId={`${innerCategory}${index}`}
             placeholder={entry.placeholder}
             additionalStyles={(index === subObject.length - 1) ? 'pt-0 pb-0' : 'pb-2'}
-            handleChange={handleInputChange} dataKey={category}
+            handleChange={handleInputChange} dataKey={categoryName}
             value={entry[innerCategory]} category={innerCategory}
             innerObjectId={entry.id}>
-            <Select name={`${innerOption}${index}`}
-              values={options}
-              handleChange={handleInputChange} dataKey={category}
+            <Select nameAndId={`${innerOption}${index}`}
+              values={optionsArray}
+              handleChange={handleInputChange} dataKey={categoryName}
               selectedValue={entry[innerOption]} category={innerOption}
               innerObjectId={entry.id} />
-            <deleteBtn.General dataKey={category} dataId={entry.id}
+            <deleteBtn.General dataKey={categoryName} dataId={entry.id}
             innerCategory={innerCategory} />
           </ InputContainer>;
         })}
@@ -212,7 +215,7 @@ const FormElements = (
   };
 
   return {
-    addInputs, addGeneralInputsAndSelects, addBtn, removeBtn,
+    Inputs, GeneralInputsAndSelects, addBtn, removeBtn,
   };
 };
 

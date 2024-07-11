@@ -1,5 +1,5 @@
 import FormElements from './FormElements.jsx';
-import getItemsFromRange from './utils';
+import getEntriesFromRange from './utils';
 import { educationPlaceholders } from './data/data';
 
 const EducationForm = ({
@@ -21,17 +21,23 @@ const EducationForm = ({
       {inputsData.map((item, index) => {
         const { id } = item;
         const dateInput = item.studyDate;
+        const entries = [
+          getEntriesFromRange(item, ['schoolName', 'studyName']),
+          Object.entries(dateInput),
+          getEntriesFromRange(item, ['location', 'schoolSummary']),
+        ];
+
 
         return (
           <div key={index} className=' bg-zinc-200 border-2 border-zinc-300 w-full rounded-lg shadow-sm box'>
             {/* add school name, study name  */}
-            {formElements.addInputs(getItemsFromRange(item, ['schoolName', 'studyName']), false, 'education', id)}
+            <formElements.Inputs dataEntries={entries[0]} dataForm={'education'} idToApplyForEachEntry={id} />
             <div className='flex'>
-            {/* add date input  */}
-              {formElements.addInputs(Object.entries(dateInput), false, 'education', id)}
+              {/* add date input  */}
+              <formElements.Inputs dataEntries={entries[1]} dataForm={'education'} idToApplyForEachEntry={id} />
             </div>
-            {/* add date input  */}
-            {formElements.addInputs(getItemsFromRange(item, ['location', 'schoolSummary']), false, 'education', id)}
+            {/* add school location, school summary inputs  */}
+            <formElements.Inputs dataEntries={entries[2]} dataForm={'education'} idToApplyForEachEntry={id} />
           </div>
         );
       })}

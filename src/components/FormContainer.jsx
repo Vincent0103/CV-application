@@ -40,7 +40,7 @@ const FormContainer = ({
       shadow-xl overflow-hidden">
 
       <div className={`max-h-[80vh] min-w-full overflow-x-hidden overflow-y-scroll scrollbar-thin
-      scrollbar-track-transparent scrollbar-thumb-rounded-full transition-max-height`}>
+      scrollbar-track-transparent scrollbar-thumb-rounded-full`}>
 
         <div className={classes.general}>
           { generalChild }
