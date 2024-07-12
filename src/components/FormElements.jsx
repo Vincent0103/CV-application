@@ -32,6 +32,7 @@ const InputOrTextarea = ({
 const InputContainer = ({
   children, type, nameAndId, placeholder, value, handleChange, dataKey, dataForm = 'general',
   hasAutoFocus = false, additionalStyles = '', category = null, innerObjectId = null,
+  keyInnerObject = null,
 }) => {
   const classes = `mt-1 block w-full px-3 py-2
   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
@@ -44,6 +45,7 @@ const InputContainer = ({
         : handleChange(e));
     }
     if (dataForm === 'education') {
+      if (keyInnerObject) return handleChange(e, dataKey, innerObjectId, keyInnerObject);
       return handleChange(e, dataKey, innerObjectId);
     }
   };
@@ -189,7 +191,7 @@ const Inputs = ({
   idToApplyForEachEntry = null,
   nthNameAndId = '',
   prependingTextToNameAndId = '',
-
+  keyInnerObject = null,
 }) => (
   dataEntries.map((item, index) => {
     const [key, value] = item;
@@ -215,6 +217,7 @@ const Inputs = ({
           dataForm={dataForm}
           value={value}
           innerObjectId={(idToApplyForEachEntry) || ''}
+          keyInnerObject={keyInnerObject}
         />
       </SectionContainer>
     );

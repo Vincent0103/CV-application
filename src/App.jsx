@@ -6,7 +6,9 @@ import GeneralForm from './components/GeneralForm.jsx';
 import EducationForm from './components/EducationForm.jsx';
 import ExperiencesForm from './components/ExperiencesForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
-import general, { randomStrings, education, defaultGeneral, defaultEducation } from './components/data/data';
+import general, {
+  randomStrings, education, defaultGeneral, defaultEducation,
+} from './components/data/data';
 import { getRandomItem, getState } from './components/utils';
 
 function App() {
@@ -21,7 +23,7 @@ function App() {
   };
 
   const handleGeneralChange = (e, key, [category = null, innerObjectId = null]) => {
-    if (!(key in generalInformations)) return;
+    if (!(key in formDefaultInformations.general)) return;
 
     if (category !== null && innerObjectId !== null) {
       setGeneralInformations((prevState) => ({
@@ -38,12 +40,26 @@ function App() {
     }
   };
 
-  const handleEducationChange = (e, key, educationId) => {
-    if (!(key in educationInformations[0])) return;
+  const handleEducationChange = (e, key, educationId, innerObject = null) => {
+    if (!innerObject && !(key in formDefaultInformations.education)) return;
 
     const index = educationInformations.findIndex((item) => item.id === educationId);
-    educationInformations[index][key] = e.target.value;
-    setEducationInformations([...educationInformations]);
+    const newEducationInformations = educationInformations.map((info, i) => {
+      if (i === index) {
+        const updatedInfo = { ...info };
+
+        if (innerObject) {
+          updatedInfo[innerObject] = { ...updatedInfo[innerObject], [key]: e.target.value };
+        } else {
+          updatedInfo[key] = e.target.value;
+        }
+
+        return updatedInfo;
+      }
+      return info;
+    });
+
+    setEducationInformations(newEducationInformations);
   };
 
   const handleImgChange = (e) => {
@@ -90,6 +106,7 @@ function App() {
         [key]: [...target],
       }));
     } else if (formName === 'education') {
+      console.log(formDefaultInformations.education);
       const newEducation = {
         ...formDefaultInformations.education,
         id: uuidv4(),

@@ -13,7 +13,7 @@ const Btn = ({ handleFormSwitcherBtn, movingSide, children }) => (
 const CVcustomizer = ({ handleFormSwitcherBtn, currentlyVisibleElement, children }) => {
   const FormSliderBtns = () => {
     const getClasses = (isActive) => {
-      const activeTextClasses = 'font-bold text-3xl h-[35px]';
+      const activeTextClasses = 'font-bold text-3xl h-[35px] text-shadow';
       const inactiveTextClasses = 'font-normal text-base h-6';
 
       return (isActive) ? activeTextClasses : inactiveTextClasses;

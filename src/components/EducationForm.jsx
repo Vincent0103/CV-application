@@ -30,7 +30,8 @@ const EducationForm = ({
             <div className='flex'>
               {/* add date input  */}
               <Inputs dataEntries={entries[1]} dataForm={'education'} idToApplyForEachEntry={id}
-              nthNameAndId={currentWordOrdinal}/>
+              nthNameAndId={currentWordOrdinal} prependingTextToNameAndId='study date'
+              keyInnerObject={'studyDate'}/>
             </div>
             {/* add school location, school summary inputs  */}
             <Inputs dataEntries={entries[2]} dataForm={'education'} idToApplyForEachEntry={id}
