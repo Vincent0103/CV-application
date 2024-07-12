@@ -47,6 +47,30 @@ const randomStrings = {
       'Marathi',
     ],
   },
+  experiences: {
+    jobResponsibilities: [
+      'Coordinate and manage project tasks',
+      'Ensure compliance with company policies and regulatory requirements',
+      'Collaborate with team members',
+      'Communicate effectively with clients',
+      'Maintain a high level of professionalism and confidentiality',
+      'Conduct market research and analyze trends',
+      'Develop and implement growth strategies',
+      'Train, coach, and oversee new employees',
+      'Prepare and review operational reports and schedules',
+      'Analyze internal operations and identify areas of process enhancement',
+      'Direct administrative activities',
+      'Plan and allocate resources',
+      'Arrange for maintenance and repair work and supervise the process',
+      'Review performance data',
+      'Manage relationships with key operations vendors',
+      'Track and replace office supplies',
+      'Implement marketing and advertising campaigns',
+      'Prepare marketing and advertising strategies',
+      'Plan meetings and trade shows',
+      'Support sales staff',
+    ],
+  },
 };
 
 const generalPlaceholders = {
@@ -65,6 +89,15 @@ const educationPlaceholders = {
   date: 'August 2015 - May 2019',
   location: 'Rio de Janeiro, Brazil',
   summary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
+};
+
+const experiencesPlaceholders = {
+  companyName: 'regex101',
+  positionTitle: 'Tester',
+  workDate: {
+    from: '',
+    to: '',
+  },
 };
 
 const general = {
@@ -108,12 +141,30 @@ const education = [
   },
 ];
 
+const experiences = [
+  {
+    id: uuidv4(),
+    companyName: '',
+    positionTitle: '',
+    jobResponsibilities: [
+      { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
+      { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
+    ],
+    workDate: {
+      from: '',
+      to: '',
+    },
+  },
+];
+
 // Creating a deep copy so whenever the states change, it doesn't get updated
 const defaultGeneral = { ...general };
 const defaultEducation = { ...education[0] };
+const defaultExperiences = { ...experiences[0] };
 
 export default general;
 export {
-  randomStrings, education, generalPlaceholders,
-  educationPlaceholders, defaultGeneral, defaultEducation,
+  randomStrings, education, experiences, generalPlaceholders,
+  educationPlaceholders, experiencesPlaceholders,
+  defaultGeneral, defaultEducation, defaultExperiences,
 };

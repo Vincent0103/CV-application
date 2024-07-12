@@ -7,7 +7,8 @@ import EducationForm from './components/EducationForm.jsx';
 import ExperiencesForm from './components/ExperiencesForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
 import general, {
-  randomStrings, education, defaultGeneral, defaultEducation,
+  randomStrings, education, experiences,
+  defaultGeneral, defaultEducation, defaultExperiences,
 } from './components/data/data';
 import { getRandomItem, getState } from './components/utils';
 
@@ -16,10 +17,12 @@ function App() {
   const [currentlyVisibleElement, setCurrentlyVisibleElement] = useState('general');
   const [generalInformations, setGeneralInformations] = useState(general);
   const [educationInformations, setEducationInformations] = useState(education);
+  const [experiencesInformations, setExperiencesInformations] = useState(experiences);
 
   const formDefaultInformations = {
     general: defaultGeneral,
     education: defaultEducation,
+    experiences: defaultExperiences,
   };
 
   const handleGeneralChange = (e, key, [category = null, innerObjectId = null]) => {
@@ -28,8 +31,8 @@ function App() {
     if (category !== null && innerObjectId !== null) {
       setGeneralInformations((prevState) => ({
         ...prevState,
-        [key]: prevState[key].map((entry) => (
-          (entry.id !== innerObjectId) ? entry : { ...entry, [category]: e.target.value }
+        [key]: prevState[key].map((object) => (
+          (object.id !== innerObjectId) ? object : { ...object, [category]: e.target.value }
         )),
       }));
     } else {
@@ -62,6 +65,36 @@ function App() {
     setEducationInformations(newEducationInformations);
   };
 
+  const handleExperiencesChange = (
+    e,
+    key,
+    experiencesId,
+    [category = null, innerObjectId = null],
+    innerObject = null,
+  ) => {
+    const index = experiencesInformations.findIndex((item) => item.id === experiencesId);
+    const newExperiencesInformations = experiencesInformations.map((info, i) => {
+      if (i === index) {
+        const updatedInfo = { ...info };
+
+        if (innerObject) {
+          updatedInfo[innerObject] = { ...updatedInfo[innerObject], [key]: e.target.value };
+        } else if (category !== null && innerObjectId !== null) {
+          updatedInfo[key].map((object) => (
+            (object.id !== innerObjectId) ? object : { ...object, [category]: e.target.value }
+          ));
+        } else {
+          updatedInfo[key] = e.target.value;
+        }
+
+        return updatedInfo;
+      }
+      return info;
+    });
+
+    setExperiencesInformations(newExperiencesInformations);
+  };
+
   const handleImgChange = (e) => {
     const { files } = e.target;
     if (files.length <= 0) return;
@@ -77,11 +110,12 @@ function App() {
     reader.readAsDataURL(file);
   };
 
-  const handleClick = (formName, key, id = null) => {
+  const handleClick = (formName, key, id = null, objectId = null) => {
     const [informations, setInformations] = getState(
       formName,
       [generalInformations, setGeneralInformations],
       [educationInformations, setEducationInformations],
+      [experiencesInformations, setExperiencesInformations],
     );
 
     if (formName === 'general') {
@@ -95,9 +129,12 @@ function App() {
         const indexOfRemovingEntry = target.findIndex((item) => item.id === id);
         target.splice(indexOfRemovingEntry, 1);
       } else {
-        const entryKeys = Object.keys(formDefaultInformations.general[key][0]);
+        const entryKeysToChange = Object.keys(formDefaultInformations.general[key][0]);
         target.push({
-          id: uuidv4(), [entryKeys[1]]: '', [entryKeys[2]]: '', [entryKeys[3]]: getRandomItem(randomStrings.general[key]),
+          id: uuidv4(),
+          [entryKeysToChange[1]]: '',
+          [entryKeysToChange[2]]: '',
+          [entryKeysToChange[3]]: getRandomItem(randomStrings.general[key]),
         });
       }
 
@@ -106,7 +143,6 @@ function App() {
         [key]: [...target],
       }));
     } else if (formName === 'education') {
-      console.log(formDefaultInformations.education);
       const newEducation = {
         ...formDefaultInformations.education,
         id: uuidv4(),
@@ -115,6 +151,43 @@ function App() {
         ...prevState,
         { ...newEducation },
       ]));
+    } else if (formName === 'experiences') {
+      let newExperiences;
+
+      if (objectId >= 0 && key in informations[0]) {
+        const entryKeysToChange = Object.keys(formDefaultInformations.experiences[key][0]);
+
+        const target = informations[objectId][key];
+
+        target.push({
+          id: uuidv4(),
+          [entryKeysToChange[1]]: '',
+          [entryKeysToChange[2]]: getRandomItem(randomStrings.experiences[key]),
+        });
+
+        newExperiences = {
+          ...informations[objectId],
+          [key]: [...target],
+        };
+
+        setInformations((prevState) => (
+          prevState.map((object, i) => ((i !== objectId) ? object : newExperiences))
+        ));
+      } else {
+        newExperiences = {
+          ...formDefaultInformations.experiences,
+          id: uuidv4(),
+          jobResponsibilities: [
+            { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
+            { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
+          ],
+        };
+
+        setInformations((prevState) => ([
+          ...prevState,
+          { ...newExperiences },
+        ]));
+      }
     }
   };
 
@@ -157,7 +230,9 @@ function App() {
           handleInputChange={handleEducationChange} handleAddOrRemoveBtnClick={handleClick}
           />
 
-          <ExperiencesForm />
+          <ExperiencesForm experiencesInformations={experiencesInformations}
+          handleInputChange={handleExperiencesChange} handleAddOrRemoveBtnClick={handleClick}
+          />
         </FormContainer>
       </CVcustomizer>
       <CVpreview generalInformations={generalInformations}
