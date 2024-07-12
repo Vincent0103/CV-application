@@ -139,14 +139,17 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
             <h3 className='font-extrabold text-2xl py-3'>Education</h3>
             {educationArray.map((item, index) => (
               !emptinessFunction.isInputObjectEmpty(item)
-              && <div key={index} className='py-2'>
-                <div className='flex justify-between'>
-                  <h4 className='font-bold text-xl pb-1'>{item.schoolName}</h4>
+              && <div key={index}
+              className={`${index === 0 && 'pt-0'} py-2 flex flex-col gap-3`}>
+                <div className='flex justify-between items-center'>
+                  <h4 className='font-bold text-xl'>{item.schoolName}</h4>
                   <p>{formatDate(item.studyDate.from)} - {formatDate(item.studyDate.to)}</p>
                 </div>
-                <p>{item.studyName}</p>
-                <p>{item.location}</p>
-                <p className='py-1'>{item.summary}</p>
+                <div>
+                  <p>{item.studyName}</p>
+                  <p>{item.location}</p>
+                </div>
+                <p className=''>{item.summary}</p>
               </div>
             ))}
           </>}
