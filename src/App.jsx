@@ -6,11 +6,12 @@ import GeneralForm from './components/GeneralForm.jsx';
 import EducationForm from './components/EducationForm.jsx';
 import ExperiencesForm from './components/ExperiencesForm.jsx';
 import CVpreview from './components/CVpreview.jsx';
-import general, {
-  randomStrings, education, experiences,
+import {
+  randomStrings,
+  general, education, experiences,
   defaultGeneral, defaultEducation, defaultExperiences,
 } from './components/data/data';
-import { getRandomItem, getState } from './components/utils';
+import { getRandomItem } from './components/utils';
 
 function App() {
   const [moveForms, setMoveForms] = useState('idle');
@@ -110,25 +111,17 @@ function App() {
     reader.readAsDataURL(file);
   };
 
-  const handleClick = (formName, key, id = null, objectId = null) => {
-    const [informations, setInformations] = getState(
-      formName,
-      [generalInformations, setGeneralInformations],
-      [educationInformations, setEducationInformations],
-      [experiencesInformations, setExperiencesInformations],
-    );
+  const handleFormClick = (() => {
+    const handleGeneralClick = (action, key, objectId) => {
+      if (!(key in generalInformations)) return;
+      if (!Array.isArray(generalInformations[key])) return;
 
-    if (formName === 'general') {
-      if (!(key in informations)) return;
-      if (!Array.isArray(informations[key])) return;
+      const target = [...generalInformations[key]];
 
-      const target = [...informations[key]];
-
-      const isRemovingEntry = !!id;
-      if (isRemovingEntry) {
-        const indexOfRemovingEntry = target.findIndex((item) => item.id === id);
+      if (action === 'remove') {
+        const indexOfRemovingEntry = target.findIndex((item) => item.id === objectId);
         target.splice(indexOfRemovingEntry, 1);
-      } else {
+      } else if (action === 'add') {
         const entryKeysToChange = Object.keys(formDefaultInformations.general[key][0]);
         target.push({
           id: uuidv4(),
@@ -138,26 +131,31 @@ function App() {
         });
       }
 
-      setInformations((prevState) => ({
+      setGeneralInformations((prevState) => ({
         ...prevState,
         [key]: [...target],
       }));
-    } else if (formName === 'education') {
+    };
+
+    const handleEducationClick = () => {
       const newEducation = {
         ...formDefaultInformations.education,
         id: uuidv4(),
       };
-      setInformations((prevState) => ([
+      setEducationInformations((prevState) => ([
         ...prevState,
         { ...newEducation },
       ]));
-    } else if (formName === 'experiences') {
+    };
+
+    const handleExperiencesClick = (action, key, objectId) => {
       let newExperiences;
 
-      if (objectId >= 0 && key in informations[0]) {
+      if (action === 'add' && objectId) {
+        if (!(key in experiencesInformations[0])) return;
         const entryKeysToChange = Object.keys(formDefaultInformations.experiences[key][0]);
 
-        const target = informations[objectId][key];
+        const target = experiencesInformations[objectId][key];
 
         target.push({
           id: uuidv4(),
@@ -166,14 +164,14 @@ function App() {
         });
 
         newExperiences = {
-          ...informations[objectId],
+          ...experiencesInformations[objectId],
           [key]: [...target],
         };
 
-        setInformations((prevState) => (
+        setExperiencesInformations((prevState) => (
           prevState.map((object, i) => ((i !== objectId) ? object : newExperiences))
         ));
-      } else {
+      } else if (action === 'add' && !objectId) {
         newExperiences = {
           ...formDefaultInformations.experiences,
           id: uuidv4(),
@@ -183,13 +181,31 @@ function App() {
           ],
         };
 
-        setInformations((prevState) => ([
+        setExperiencesInformations((prevState) => ([
           ...prevState,
           { ...newExperiences },
         ]));
       }
-    }
-  };
+    };
+
+    const handleClick = (formName, action, key, objectId) => {
+      switch (formName) {
+        case 'general':
+          handleGeneralClick(action, key, objectId);
+          break;
+        case 'education':
+          handleEducationClick();
+          break;
+        case 'experiences':
+          handleExperiencesClick(action, key, objectId);
+          break;
+        default:
+          throw new Error(`${formName} doesn't exist as a form data, cannot update click accordingly`);
+      }
+    };
+
+    return handleClick;
+  })();
 
   const handleMovingSide = (movingSide) => {
     setMoveForms(movingSide);
@@ -223,15 +239,15 @@ function App() {
         currentlyVisibleElement={currentlyVisibleElement}>
 
           <GeneralForm generalInformations={generalInformations}
-          handleInputChange={handleGeneralChange} handleAddOrRemoveBtnClick={handleClick}
+          handleInputChange={handleGeneralChange} handleFormClick={handleFormClick}
           handleImgChange={handleImgChange} />
 
           <EducationForm educationInformations={educationInformations}
-          handleInputChange={handleEducationChange} handleAddOrRemoveBtnClick={handleClick}
+          handleInputChange={handleEducationChange} handleFormClick={handleFormClick}
           />
 
           <ExperiencesForm experiencesInformations={experiencesInformations}
-          handleInputChange={handleExperiencesChange} handleAddOrRemoveBtnClick={handleClick}
+          handleInputChange={handleExperiencesChange} handleFormClick={handleFormClick}
           />
         </FormContainer>
       </CVcustomizer>

@@ -6,11 +6,22 @@ import { experiencesPlaceholders } from './data/data';
 const ExperiencesForm = ({
   experiencesInformations,
   handleInputChange,
-  handleAddOrRemoveBtnClick,
-}) => (
-    <Form formName={'experiences'} placeholders={experiencesPlaceholders} handleInputChange={handleInputChange}
-    handleAddOrRemoveBtnClick={handleAddOrRemoveBtnClick}
-    formStyling='flex flex-col items-center gap-4 m-2'>
+  handleFormClick,
+}) => {
+  const repeated = {
+    inputsProps: {
+      formName: 'experiences', placeholders: experiencesPlaceholders, handleInputChange,
+    },
+    experiencesMultipleInputsProps: {
+      formName: 'experiences', handleInputChange, handleFormClick,
+    },
+    addBtnProps: {
+      formName: 'experiences', handleFormClick,
+    },
+  };
+
+  return (
+    <form className='flex flex-col items-center gap-4 m-2'>
       {experiencesInformations.map((item, index) => {
         const { id } = item;
 
@@ -25,24 +36,27 @@ const ExperiencesForm = ({
         return (
           <div key={index} className=' bg-zinc-200 border-2 border-zinc-300 w-full rounded-lg shadow-sm box'>
             {/* add company name, position title inputs  */}
-            <Inputs dataEntries={entries[0]} dataForm={'education'} idToApplyForEachEntry={id}
+            <Inputs {...repeated.inputsProps} dataEntries={entries[0]} idToApplyForEachEntry={id}
             nthNameAndId={currentWordOrdinal}/>
             <div className='flex'>
               {/* add work date input  */}
-              <Inputs dataEntries={entries[1]} dataForm={'education'} idToApplyForEachEntry={id}
+              <Inputs {...repeated.inputsProps} dataEntries={entries[1]} idToApplyForEachEntry={id}
               nthNameAndId={currentWordOrdinal} prependingTextToNameAndId='work date'
               keyInnerObject={'studyDate'}/>
             </div>
             <div>
-              <ExperiencesMultipleInputs object={experiencesInformations[index]} categoryName={'jobResponsibilities'}
+              <ExperiencesMultipleInputs {...repeated.experiencesMultipleInputsProps}
+              object={experiencesInformations[index]} categoryName={'jobResponsibilities'}
               responsibilityKey={'responsibility'}/>
-              <AddBtn dataKey={'jobResponsibilities'} innerCategory={'responsibility'} objectId={index} />
+              <AddBtn {...repeated.addBtnProps} dataKey={'jobResponsibilities'}
+              innerCategory={'responsibility'} objectId={index} />
             </div>
           </div>
         );
       })}
-      <AddBtn />
-    </Form>
-);
+      <AddBtn {...repeated.addBtnProps}/>
+    </form>
+  )
+}
 
 export default ExperiencesForm;

@@ -73,30 +73,30 @@ const randomStrings = {
   },
 };
 
-const generalPlaceholders = {
-  name: 'John',
-  lastName: 'Doe',
-  email: 'johndoe@gmail.com',
-  phoneNumber: '06 32 73 12 98',
-  location: '75010 Paris, France',
-  summary: 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.',
-  hobbies: 'In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.',
-};
-
-const educationPlaceholders = {
-  schoolName: 'University of Example',
-  studyName: 'Bachelor of Science in Computer Science',
-  date: 'August 2015 - May 2019',
-  location: 'Rio de Janeiro, Brazil',
-  summary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
-};
-
-const experiencesPlaceholders = {
-  companyName: 'regex101',
-  positionTitle: 'Tester',
-  workDate: {
-    from: '',
-    to: '',
+const Placeholders = {
+  general: {
+    name: 'John',
+    lastName: 'Doe',
+    email: 'johndoe@gmail.com',
+    phoneNumber: '06 32 73 12 98',
+    location: '75010 Paris, France',
+    summary: 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.',
+    hobbies: 'In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.',
+  },
+  education: {
+    schoolName: 'University of Example',
+    studyName: 'Bachelor of Science in Computer Science',
+    date: 'August 2015 - May 2019',
+    location: 'Rio de Janeiro, Brazil',
+    summary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
+  },
+  experiences: {
+    companyName: 'regex101',
+    positionTitle: 'Tester',
+    workDate: {
+      from: '',
+      to: '',
+    },
   },
 };
 
@@ -162,9 +162,13 @@ const defaultGeneral = { ...general };
 const defaultEducation = { ...education[0] };
 const defaultExperiences = { ...experiences[0] };
 
-export default general;
+const generalPlaceholders = Placeholders.general;
+const educationPlaceholders = Placeholders.education;
+const experiencesPlaceholders = Placeholders.experiences;
+
 export {
-  randomStrings, education, experiences, generalPlaceholders,
-  educationPlaceholders, experiencesPlaceholders,
+  randomStrings,
+  general, education, experiences,
+  generalPlaceholders, educationPlaceholders, experiencesPlaceholders,
   defaultGeneral, defaultEducation, defaultExperiences,
 };

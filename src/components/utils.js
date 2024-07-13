@@ -118,18 +118,8 @@ const classesHandler = () => {
   return { getMovableClasses, getUpcomingClasses };
 };
 
-const getState = (name, ...infoPairs) => {
-  const stateMap = {
-    general: infoPairs[0],
-    education: infoPairs[1],
-    experiences: infoPairs[2],
-  };
-
-  return stateMap[name] || infoPairs[0];
-};
-
 export default getEntriesFromRange;
 export {
   toTitle, toSpacedLowerCase, typeGiver, getRandomItem,
-  ArrayOfInputObjectEmptiness, classesHandler, getState,
+  ArrayOfInputObjectEmptiness, classesHandler,
 };

@@ -1,25 +1,11 @@
-import Form, {
-  Inputs, GeneralInputsAndSelects, AddBtn,
-} from './FormElements.jsx';
+import { Inputs, GeneralInputsAndSelects, AddBtn } from './FormElements.jsx';
 import getEntriesFromRange from './utils';
+import { generalPlaceholders } from './data/data';
 
 const GeneralForm = ({
-  generalInformations, handleInputChange, handleAddOrRemoveBtnClick,
+  generalInformations, handleInputChange, handleFormClick,
   handleImgChange,
 }) => {
-  const summaryForJohnDoe = 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.';
-  const hobbiesForJohnDoe = 'In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.';
-
-  const placeholders = {
-    name: 'John',
-    lastName: 'Doe',
-    email: 'johndoe@gmail.com',
-    phoneNumber: '06 32 73 12 98',
-    location: '75010 Paris, France',
-    summary: summaryForJohnDoe,
-    hobbies: hobbiesForJohnDoe,
-  };
-
   const skillsOptions = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
   const languagesOptions = ['Beginner', 'Intermediate', 'Advanced', 'Fluent'];
 
@@ -30,30 +16,43 @@ const GeneralForm = ({
     getEntriesFromRange(generalInformations, ['hobbies', false]),
   ];
 
+  const repeated = {
+    inputsProps: {
+      formName: 'general', placeholders: generalPlaceholders, handleInputChange, handleImgChange,
+    },
+    generalInputsAndSelectsProps: {
+      formName: 'general', handleInputChange, handleFormClick,
+    },
+    addBtnProps: {
+      formName: 'general', handleFormClick,
+    },
+  };
+
   return (
-    <Form formName={'general'} placeholders={placeholders} handleInputChange={handleInputChange}
-    handleAddOrRemoveBtnClick={handleAddOrRemoveBtnClick} handleFileChange={handleImgChange}>
+    <form>
       {/* add profile picture input */}
-      <Inputs dataEntries={entries[0]} autoFocus={true} />
+      <Inputs {...repeated.inputsProps} dataEntries={entries[0]} autoFocus={true} />
       <div className="flex">
         {/* add name and last name inputs */}
-        <Inputs dataEntries={entries[1]} autoFocus={false} />
+        <Inputs {...repeated.inputsProps} dataEntries={entries[1]} autoFocus={false} />
       </div>
       {/* add email, phone number, location, summary inputs */}
-      <Inputs dataEntries={entries[2]} autoFocus={false} />
+      <Inputs {...repeated.inputsProps} dataEntries={entries[2]} autoFocus={false} />
       <div>
-        <GeneralInputsAndSelects object={generalInformations} categoryName={'skills'}
+        <GeneralInputsAndSelects {...repeated.generalInputsAndSelectsProps}
+        object={generalInformations} categoryName={'skills'}
         inputtableSubCategoryKeys={['skill', 'expertise']} optionsArray={skillsOptions} />
-        <AddBtn dataKey={'skills'} innerCategory={'skill'} />
+        <AddBtn {...repeated.addBtnProps} dataKey={'skills'} innerCategory={'skill'} />
       </div>
       <div>
-        <GeneralInputsAndSelects object={generalInformations} categoryName={'languages'}
+        <GeneralInputsAndSelects {...repeated.generalInputsAndSelectsProps}
+        object={generalInformations} categoryName={'languages'}
         inputtableSubCategoryKeys={['language', 'fluency']} optionsArray={languagesOptions} />
-        <AddBtn dataKey={'languages'} innerCategory={'language'} />
+        <AddBtn {...repeated.addBtnProps} dataKey={'languages'} innerCategory={'language'} />
       </div>
       {/* add hobbies input */}
-      <Inputs dataEntries={entries[3]} autoFocus={false} />
-    </Form>
+      <Inputs {...repeated.inputsProps} dataEntries={entries[3]} autoFocus={false} />
+    </form>
   );
 };
 
