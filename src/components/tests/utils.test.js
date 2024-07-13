@@ -1,11 +1,12 @@
 import {
   vi, describe, it, expect, beforeEach,
 } from 'vitest';
-import objectSplice, {
-  toTitle, toSpacedLowerCase, typeGiver, ArrayOfInputObjectEmptiness, classesHandler,
+import getEntriesFromRange, {
+  toTitle, isKeyInDeeplyNestedObject, toSpacedLowerCase,
+  typeGiver, ArrayOfInputObjectEmptiness, classesHandler,
 } from '../utils';
 
-describe('objectSplice fn', () => {
+describe('getEntriesFromRange fn', () => {
   let inputObject;
   beforeEach(() => {
     inputObject = {
@@ -18,8 +19,8 @@ describe('objectSplice fn', () => {
     };
   });
 
-  it('returns the first three properties of the object', () => {
-    const result = objectSplice(inputObject, ['name', 'location']);
+  it('returns the first three entries of the object', () => {
+    const result = getEntriesFromRange(inputObject, ['name', 'location']);
     expect(result).toEqual([
       ['name', 'John'],
       ['lastName', 'Doe'],
@@ -27,8 +28,8 @@ describe('objectSplice fn', () => {
     ]);
   });
 
-  it('returns the last two properties of the object', () => {
-    const result = objectSplice(inputObject, ['languages', 'email']);
+  it('returns the last two entries of the object', () => {
+    const result = getEntriesFromRange(inputObject, ['languages', 'email']);
     expect(result).toEqual([
       ['languages', 'English'],
       ['email', ''],
@@ -36,20 +37,57 @@ describe('objectSplice fn', () => {
   });
 
   it('throws an error if end index is less than start index', () => {
-    const errorThrowingFunction = () => objectSplice(inputObject, ['skills', 'location']);
+    const errorThrowingFunction = () => getEntriesFromRange(inputObject, ['skills', 'location']);
     expect(errorThrowingFunction).toThrowError('Cannot have the index of the starting key greater than the ending key index');
   });
 
   it('throws an error for keys that does not exist', () => {
-    const errorThrowingFunction = () => objectSplice(inputObject, ['mario', 'gets called']);
+    const errorThrowingFunction = () => getEntriesFromRange(inputObject, ['mario', 'gets called']);
     expect(errorThrowingFunction).toThrowError('startKey or endKey not found in the object.');
   });
 
   it('handles correctly if the endingKey isn\'t given', () => {
-    const result = objectSplice(inputObject, ['skills', false]);
+    const result = getEntriesFromRange(inputObject, ['skills', false]);
     expect(result).toEqual([
       ['skills', 'JavaScript'],
     ]);
+  });
+});
+
+describe('isKeyInDeeplyNestedObject fn', () => {
+  let inputObject;
+  beforeEach(() => {
+    inputObject = {
+      id: 'mario',
+      schoolName: '',
+      studyName: '',
+      studyDate: {
+        from: '',
+        to: '',
+      },
+      location: '',
+      summary: {
+        me: '',
+        peoples: {
+          people1: '',
+          people2: '',
+        },
+      },
+    };
+  });
+
+  it('returns true when the key when nested 2 times', () => {
+    expect(isKeyInDeeplyNestedObject(inputObject, 'from')).toBe(true);
+  });
+
+  it('returns true when the key when nested 3 times', () => {
+    expect(isKeyInDeeplyNestedObject(inputObject, 'from')).toBe(true);
+  });
+
+  it('returns false when the key isn\'t in the object', () => {
+    expect(isKeyInDeeplyNestedObject(inputObject, 'people3')).toBe(false);
+    expect(isKeyInDeeplyNestedObject(inputObject, 'people')).toBe(false);
+    expect(isKeyInDeeplyNestedObject(inputObject, false)).toBe(false);
   });
 });
 

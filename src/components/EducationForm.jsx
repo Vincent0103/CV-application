@@ -33,16 +33,16 @@ const EducationForm = ({
         return (
           <div key={index} className=' bg-zinc-200 border-2 border-zinc-300 w-full rounded-lg shadow-sm box'>
             {/* add school name, study name  */}
-            <Inputs {...repeated.inputsProps} dataEntries={entries[0]} idToApplyForEachEntry={id}
+            <Inputs {...repeated.inputsProps} dataEntries={entries[0]} idOfChangingObject={id}
             nthNameAndId={currentWordOrdinal}/>
             <div className='flex'>
               {/* add date input  */}
-              <Inputs {...repeated.inputsProps} dataEntries={entries[1]} idToApplyForEachEntry={id}
+              <Inputs {...repeated.inputsProps} dataEntries={entries[1]} idOfChangingObject={id}
               nthNameAndId={currentWordOrdinal} prependingTextToNameAndId='study date'
               keyInnerObject={'studyDate'}/>
             </div>
             {/* add school location, school summary inputs  */}
-            <Inputs {...repeated.inputsProps} dataEntries={entries[2]} idToApplyForEachEntry={id}
+            <Inputs {...repeated.inputsProps} dataEntries={entries[2]} idOfChangingObject={id}
             nthNameAndId={currentWordOrdinal} prependingTextToNameAndId={'school'}/>
           </div>
         );

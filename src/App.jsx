@@ -44,16 +44,21 @@ function App() {
     }
   };
 
-  const handleEducationChange = (e, key, educationId, innerObject = null) => {
-    if (!innerObject && !(key in formDefaultInformations.education)) return;
+  const handleEducationChange = (e, key, educationId) => {
+    Object.entries(formDefaultInformations.education).find(([objKey, objValue]) => {
+      if (typeof objValue === 'object') {
+        
+      }
+    })
+    if (!(key in formDefaultInformations.education)) return;
 
     const index = educationInformations.findIndex((item) => item.id === educationId);
     const newEducationInformations = educationInformations.map((info, i) => {
       if (i === index) {
         const updatedInfo = { ...info };
 
-        if (innerObject) {
-          updatedInfo[innerObject] = { ...updatedInfo[innerObject], [key]: e.target.value };
+        if (innerObjectKey) {
+          updatedInfo[innerObjectKey] = { ...updatedInfo[innerObjectKey], [key]: e.target.value };
         } else {
           updatedInfo[key] = e.target.value;
         }
