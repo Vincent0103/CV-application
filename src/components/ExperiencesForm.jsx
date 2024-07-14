@@ -5,15 +5,15 @@ import { experiencesPlaceholders } from './data/data';
 
 const ExperiencesForm = ({
   experiencesInformations,
-  handleInputChange,
+  handleFormChange,
   handleFormClick,
 }) => {
   const repeated = {
     inputsProps: {
-      formName: 'experiences', placeholders: experiencesPlaceholders, handleInputChange,
+      formName: 'experiences', placeholders: experiencesPlaceholders, handleFormChange,
     },
     experiencesMultipleInputsProps: {
-      formName: 'experiences', handleInputChange, handleFormClick,
+      formName: 'experiences', handleFormChange, handleFormClick,
     },
     addBtnProps: {
       formName: 'experiences', handleFormClick,
@@ -47,7 +47,8 @@ const ExperiencesForm = ({
               inputsArray={item.jobResponsibilities} categoryName={'jobResponsibilities'}
               idOfChangingInformationObject={item.id} responsibilityKey={'responsibility'}/>
               <AddBtn {...repeated.addBtnProps} dataKey={'jobResponsibilities'}
-              innerCategory={'responsibility'} idOfChangingInformationObject={item.id} />
+              innerCategory={'responsibility'} idOfChangingInformationObject={item.id}
+              customStyling=''/>
             </div>
           </div>
         );

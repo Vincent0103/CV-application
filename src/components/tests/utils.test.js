@@ -4,6 +4,7 @@ import {
 import getEntriesFromRange, {
   toTitle, keyInDeeplyNestedObject, toSpacedLowerCase,
   typeGiver, ArrayOfInputObjectEmptiness, classesHandler,
+  getFormattedDate,
 } from '../utils';
 
 describe('getEntriesFromRange fn', () => {
@@ -346,6 +347,31 @@ describe('classesHandler module', () => {
     it('throws an error if the classes format are invalid', () => {
       expect(() => handleClasses.getUpcomingClasses('relative top-0 w-full left-full pointer-events-none', 'left')).toThrowError();
       expect(() => handleClasses.getUpcomingClasses('transition-transform translate-x-full duration-500', 'right')).toThrowError();
+    });
+  });
+});
+
+describe('getFormattedDate module', () => {
+  let date;
+  let validDateStrings;
+  let formattedValidDateStrings;
+  let invalidDateStrings;
+  beforeEach(() => {
+    date = getFormattedDate();
+    validDateStrings = ['1997-12-02', '0001-08-01', '2004-03-24'];
+    formattedValidDateStrings = ['December 1997', 'August 1', 'March 2004'];
+    invalidDateStrings = ['1907-00-02', '2024-02-32', '1323-24', 'twenty-four', false, '1324-06-00'];
+  });
+
+  it('format date correctly if the date string is valid', () => {
+    validDateStrings.forEach((dateString, i) => {
+      expect(date.formatDate(dateString)).toBe(formattedValidDateStrings[i]);
+    });
+  });
+
+  it('throws an error if the date string is badly formatted', () => {
+    invalidDateStrings.forEach((dateString) => {
+      expect(() => date.formatDate(dateString)).toThrowError();
     });
   });
 });

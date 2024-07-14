@@ -1,9 +1,9 @@
-import { Inputs, GeneralInputsAndSelects, AddBtn } from './FormElements.jsx';
+import { Inputs, InputsAndSelects, AddBtn } from './FormElements.jsx';
 import getEntriesFromRange from './utils';
 import { generalPlaceholders } from './data/data';
 
 const GeneralForm = ({
-  generalInformations, handleInputChange, handleFormClick,
+  generalInformations, handleFormChange, handleFormClick,
   handleImgChange,
 }) => {
   const skillsOptions = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
@@ -18,10 +18,10 @@ const GeneralForm = ({
 
   const repeated = {
     inputsProps: {
-      formName: 'general', placeholders: generalPlaceholders, handleInputChange, handleImgChange,
+      formName: 'general', placeholders: generalPlaceholders, handleFormChange, handleImgChange,
     },
-    generalInputsAndSelectsProps: {
-      formName: 'general', handleInputChange, handleFormClick,
+    inputsAndSelectsProps: {
+      formName: 'general', handleFormChange, handleFormClick,
     },
     addBtnProps: {
       formName: 'general', handleFormClick,
@@ -39,13 +39,13 @@ const GeneralForm = ({
       {/* add email, phone number, location, summary inputs */}
       <Inputs {...repeated.inputsProps} dataEntries={entries[2]} autoFocus={false} />
       <div>
-        <GeneralInputsAndSelects {...repeated.generalInputsAndSelectsProps}
+        <InputsAndSelects {...repeated.inputsAndSelectsProps}
         object={generalInformations} categoryName={'skills'}
         inputtableSubCategoryKeys={['skill', 'expertise']} optionsArray={skillsOptions} />
         <AddBtn {...repeated.addBtnProps} dataKey={'skills'} innerCategory={'skill'} />
       </div>
       <div>
-        <GeneralInputsAndSelects {...repeated.generalInputsAndSelectsProps}
+        <InputsAndSelects {...repeated.inputsAndSelectsProps}
         object={generalInformations} categoryName={'languages'}
         inputtableSubCategoryKeys={['language', 'fluency']} optionsArray={languagesOptions} />
         <AddBtn {...repeated.addBtnProps} dataKey={'languages'} innerCategory={'language'} />

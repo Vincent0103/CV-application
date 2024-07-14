@@ -244,7 +244,6 @@ function App() {
     handleMovingSide(movingSide);
     setCurrentlyVisibleElement(movingSideMap[movingSide][currentlyVisibleElement]);
   };
-
   return (
     <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
@@ -255,20 +254,19 @@ function App() {
         currentlyVisibleElement={currentlyVisibleElement}>
 
           <GeneralForm generalInformations={generalInformations}
-          handleInputChange={handleFormChange} handleFormClick={handleFormClick}
+          handleFormChange={handleFormChange} handleFormClick={handleFormClick}
           handleImgChange={handleImgChange} />
 
           <EducationForm educationInformations={educationInformations}
-          handleInputChange={handleFormChange} handleFormClick={handleFormClick}
-          />
+          handleFormChange={handleFormChange} handleFormClick={handleFormClick}/>
 
           <ExperiencesForm experiencesInformations={experiencesInformations}
-          handleInputChange={handleFormChange} handleFormClick={handleFormClick}
-          />
+          handleFormChange={handleFormChange} handleFormClick={handleFormClick}/>
         </FormContainer>
       </CVcustomizer>
       <CVpreview generalInformations={generalInformations}
-      educationInformations={educationInformations} />
+      educationInformations={educationInformations}
+      experiencesInformations={experiencesInformations}/>
     </div>
   );
 }

@@ -5,12 +5,12 @@ import { educationPlaceholders } from './data/data';
 
 const EducationForm = ({
   educationInformations,
-  handleInputChange,
+  handleFormChange,
   handleFormClick,
 }) => {
   const repeated = {
     inputsProps: {
-      formName: 'education', placeholders: educationPlaceholders, handleInputChange,
+      formName: 'education', placeholders: educationPlaceholders, handleFormChange,
     },
     addBtnProps: {
       formName: 'education', handleFormClick,

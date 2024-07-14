@@ -128,9 +128,34 @@ const classesHandler = () => {
   return { getMovableClasses, getUpcomingClasses };
 };
 
+const getFormattedDate = () => {
+  const isDateToday = (dateString) => {
+    const today = new Date();
+    let month = today.getMonth() + 1;
+    if (month > 0 && month < 10) month = `0${month}`;
+
+    const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;
+    return dateString === todayFormatted;
+  };
+  const formatDate = (dateString) => {
+    if (!dateString) throw new Error(`Invalid date format for ${dateString}, it is supposed be in this format [YYYY]-[MM]-[DD]`);;
+
+    if (isDateToday(dateString)) return 'Present';
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long' };
+    const formattedDate = `${date.toLocaleString('en-US', options)}`;
+    if (formattedDate === 'Invalid Date') {
+      throw new Error(`Invalid date format for ${dateString}, it is supposed be in this format [YYYY]-[MM]-[DD]`);
+    }
+    return formattedDate;
+  };
+
+  return { formatDate };
+};
+
 export default getEntriesFromRange;
 export {
   toTitle, toSpacedLowerCase, typeGiver, getRandomItem,
   ArrayOfInputObjectEmptiness, classesHandler,
-  keyInDeeplyNestedObject,
+  keyInDeeplyNestedObject, getFormattedDate,
 };

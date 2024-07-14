@@ -1,6 +1,6 @@
 import getEntriesFromRange, { ArrayOfInputObjectEmptiness } from './utils';
 
-const CVpreview = ({ generalInformations, educationInformations }) => {
+const CVpreview = ({ generalInformations, educationInformations, experiencesInformations }) => {
   const ListSection = ({ obj, arrayOfInputObjectEmptiness }) => (
     <ul>
       {obj.map((item, index) => {
@@ -95,26 +95,6 @@ const CVpreview = ({ generalInformations, educationInformations }) => {
     const generalObj = generalInformations;
     const educationArray = educationInformations;
     const emptinessFunction = ArrayOfInputObjectEmptiness(educationArray, ['schoolName', 'summary']);
-
-    const isDateToday = (dateString) => {
-      const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-      if (!datePattern.test(dateString)) throw Error(`Invalid date format for ${dateString}, it is supposed be in this format [YYYY]-[MM]-[DD]`);
-
-      const today = new Date();
-      let month = today.getMonth() + 1;
-      if (month > 0 && month < 10) month = `0${month}`;
-
-      const todayFormatted = `${today.getFullYear()}-${month}-${today.getDate()}`;
-      return dateString === todayFormatted;
-    };
-    const formatDate = (dateString) => {
-      if (!dateString) return '';
-      if (isDateToday(dateString)) return 'Present';
-      const date = new Date(dateString);
-      const options = { year: 'numeric', month: 'long' };
-      const formattedDate = `${date.toLocaleString('en-US', options)}`;
-      return formattedDate;
-    };
 
     return (
       <div className="bg-white h-full w-[67%] px-4">

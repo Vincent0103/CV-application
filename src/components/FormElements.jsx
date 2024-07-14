@@ -61,14 +61,17 @@ const InputContainer = ({
 };
 
 const Select = ({
-  nameAndId, values, dataKey, selectedValue,
-  innerCategory, handleChange, innerObjectId = null,
+  formName, nameAndId, values, dataKey,
+  selectedValue, innerCategory, handleChange,
+  innerObjectId,
 }) => {
   const classes = `mt-1 block w-[50%] px-3 py-2
     bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
     focus:border-gray-400 sm:text-sm`;
 
-  const handleChangeParameterized = (e) => handleChange(e, [dataKey, innerCategory], innerObjectId);
+  const handleChangeParameterized = (e) => {
+    handleChange(formName, e, [dataKey, innerCategory], undefined, innerObjectId);
+  };
 
   return (
     <select name={nameAndId} id={nameAndId} className={classes}
@@ -88,60 +91,25 @@ const SectionContainer = ({ children }) => (
 );
 
 const AddBtn = ({
-  formName, handleFormClick, dataKey, idOfChangingInformationObject, innerCategory,
+  formName, handleFormClick, dataKey,
+  idOfChangingInformationObject, innerCategory, customStyling,
 }) => {
   const PlusIcon = <svg className="transition-transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" id="plus"><path d="M12 24c-3.2 0-6.2-1.2-8.5-3.5-4.7-4.7-4.7-12.3 0-17C5.8 1.2 8.8 0 12 0s6.2 1.2 8.5 3.5c4.7 4.7 4.7 12.3 0 17-2.3 2.3-5.3 3.5-8.5 3.5zm0-22C9.3 2 6.8 3 4.9 4.9 1 8.8 1 15.2 4.9 19.1 6.8 21 9.3 22 12 22s5.2-1 7.1-2.9C23 15.2 23 8.9 19.1 5c-1.9-2-4.4-3-7.1-3z"></path><path d="M12 18c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1s1 .4 1 1v10c0 .6-.4 1-1 1z"></path><path d="M17 13H7c-.6 0-1-.4-1-1s.4-1 1-1h10c.6 0 1 .4 1 1s-.4 1-1 1z"></path></svg>;
 
-  const Btn = ({ ariaLabel, handleClick }) => (
-    <div className="w-full pb-4 px-4">
-      <div tabIndex="0" role="button" aria-label={`Add new ${ariaLabel}`}
-      className="bg-black h-[37.28px] rounded-md flex justify-center items-center
-      cursor-pointer group" onClick={handleClick}>
-        {PlusIcon}
-      </div>
-    </div>
-  );
+  const classes = customStyling
+  || 'bg-black h-[37.28px] rounded-md flex justify-center items-center cursor-pointer group';
 
-  const General = () => {
-    const handleClickParameterized = () => {
-      handleFormClick(formName, 'add', dataKey);
-    };
-
-    return <Btn ariaLabel={innerCategory} handleClick={handleClickParameterized} />;
-  };
-
-  const Education = () => {
-    const handleClickParameterized = () => {
-      handleFormClick(formName, 'add');
-    };
-
-    return <Btn ariaLabel={formName} handleClick={handleClickParameterized} />;
-  };
-
-  const Experiences = () => {
-    let handleClickParameterized;
-
-    if (idOfChangingInformationObject) {
-      handleClickParameterized = () => {
-        handleFormClick(formName, 'add', dataKey, idOfChangingInformationObject);
-      };
-
-      return <Btn ariaLabel={innerCategory} handleClick={handleClickParameterized} />;
-    }
-
-    handleClickParameterized = () => {
-      handleFormClick(formName, 'add');
-    };
-
-    return <Btn ariaLabel={formName} handleClick={handleClickParameterized} />;
+  const handleClickParameterized = () => {
+    handleFormClick(formName, 'add', dataKey, idOfChangingInformationObject);
   };
 
   return (
-    <>
-      {formName === 'general' && <General/>}
-      {formName === 'education' && <Education />}
-      {formName === 'experiences' && <Experiences />}
-    </>
+    <div className="w-full pb-4 px-4">
+      <div tabIndex="0" role="button" aria-label={`Add new ${innerCategory || formName}`}
+      className={classes} onClick={handleClickParameterized}>
+        {PlusIcon}
+      </div>
+    </div>
   );
 };
 
@@ -151,67 +119,27 @@ const RemoveBtn = ({
 }) => {
   const CloseIcon = <svg className='transition-transform group-hover:rotate-180' xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24"><title>close-circle-outline</title><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z" /></svg>;
 
-  const Btn = ({ ariaLabel, handleClick }) => (
-    <div tabIndex="0" role="button" aria-label={`Remove ${ariaLabel}`}
-    className='mt-1 flex flex-col justify-center items-center bg-red-500 border
-    border-red-600 rounded-md shadow-sm focus:outline-none focus:ring-red-800
-  focus:border-red-800 px-1 cursor-pointer group' onClick={handleClick}>
-      {CloseIcon}
-    </div>
-  );
+  const classes = 'mt-1 flex flex-col justify-center items-center bg-red-500 border border-red-600 rounded-md shadow-sm focus:outline-none focus:ring-red-800 focus:border-red-800 px-1 cursor-pointer group';
 
-  const General = () => {
-    const handleClickParameterized = () => {
-      handleFormClick(formName, 'remove', dataKey, idOfChangingInformationObject);
-    };
+  const ariaLabel = (nthNameAndId)
+    ? `${nthNameAndId} ${innerCategory || formName}`
+    : formName;
 
-    return <Btn ariaLabel={(nthNameAndId)
-      ? `${nthNameAndId} ${innerCategory}`
-      : innerCategory} handleClick={handleClickParameterized} />;
-  };
-
-  const Education = () => {
-    const handleClickParameterized = () => {
-      handleFormClick(formName, 'remove', null, idOfChangingInformationObject);
-    };
-
-    return <Btn ariaLabel={(nthNameAndId)
-      ? `${nthNameAndId} ${formName}`
-      : formName} handleClick={handleClickParameterized} />;
-  };
-
-  const Experiences = () => {
-    if (innerObjectId) {
-      const handleClickParameterized = () => {
-        handleFormClick(formName, 'remove', dataKey, idOfChangingInformationObject, innerObjectId);
-      };
-
-      return <Btn ariaLabel={(nthNameAndId)
-        ? `${nthNameAndId} ${innerCategory}`
-        : innerCategory} handleClick={handleClickParameterized} />;
-    }
-
-    const handleClickParameterized = () => {
-      handleFormClick(formName, 'remove', null, idOfChangingInformationObject);
-    };
-
-    return <Btn ariaLabel={(nthNameAndId)
-      ? `${nthNameAndId} ${formName}`
-      : formName} handleClick={handleClickParameterized} />;
+  const handleClickParameterized = () => {
+    handleFormClick(formName, 'remove', dataKey, idOfChangingInformationObject, innerObjectId);
   };
 
   return (
-    <>
-      {formName === 'general' && <General/>}
-      {formName === 'education' && <Education />}
-      {formName === 'experiences' && <Experiences />}
-    </>
+    <div tabIndex="0" role="button" aria-label={`Remove ${ariaLabel}`}
+    className={classes} onClick={handleClickParameterized}>
+      {CloseIcon}
+    </div>
   );
 };
 
 const Inputs = ({
   formName,
-  handleInputChange,
+  handleFormChange,
   handleImgChange,
   placeholders,
   dataEntries,
@@ -225,7 +153,7 @@ const Inputs = ({
   dataEntries.map((item, index) => {
     const [key, value] = item;
     const type = typeGiver(key);
-    const handleChange = (type !== 'file') ? handleInputChange : handleImgChange;
+    const handleChange = (type !== 'file') ? handleFormChange : handleImgChange;
 
     let nameAndId = '';
     if (nthNameAndId) nameAndId += `${nthNameAndId} `;
@@ -255,7 +183,7 @@ const Inputs = ({
 
 const ExperiencesMultipleInputs = ({
   formName,
-  handleInputChange,
+  handleFormChange,
   handleFormClick,
   inputsArray,
   idOfChangingInformationObject,
@@ -274,7 +202,7 @@ const ExperiencesMultipleInputs = ({
           <InputContainer key={index} type="text" nameAndId={`${currentConvertedIndex} ${responsibilityKey}`}
             placeholder={item.placeholder} formName={formName}
             additionalStyles={(index === inputsArray.length - 1) ? 'py-0' : 'pb-2'}
-            handleChange={handleInputChange} dataKey={categoryName}
+            handleChange={handleFormChange} dataKey={categoryName}
             value={item[responsibilityKey]} innerCategory={responsibilityKey}
             idOfChangingInformationObject={idOfChangingInformationObject}
             innerObjectId={item.id}>
@@ -289,10 +217,10 @@ const ExperiencesMultipleInputs = ({
   );
 };
 
-const GeneralInputsAndSelects = ({
+const InputsAndSelects = ({
   formName,
   handleFormClick,
-  handleInputChange,
+  handleFormChange,
   object,
   categoryName,
   inputtableSubCategoryKeys,
@@ -312,12 +240,12 @@ const GeneralInputsAndSelects = ({
         return <InputContainer key={index} type="text" nameAndId={`${currentConvertedIndex} ${innerCategory}`}
           placeholder={entry.placeholder} formName={formName}
           additionalStyles={(index === subObject.length - 1) ? 'py-0' : 'pb-2'}
-          handleChange={handleInputChange} dataKey={categoryName}
+          handleChange={handleFormChange} dataKey={categoryName}
           value={entry[innerCategory]} innerCategory={innerCategory}
           innerObjectId={entry.id}>
-          <Select nameAndId={`${currentConvertedIndex} ${innerOption}`}
-            values={optionsArray}
-            handleChange={handleInputChange} dataKey={categoryName}
+          <Select formName={formName}
+            nameAndId={`${currentConvertedIndex} ${innerOption}`} values={optionsArray}
+            handleChange={handleFormChange} dataKey={categoryName}
             selectedValue={entry[innerOption]} innerCategory={innerOption}
             innerObjectId={entry.id} />
           <RemoveBtn formName={formName} idOfChangingInformationObject={entry.id}
@@ -330,5 +258,5 @@ const GeneralInputsAndSelects = ({
 };
 
 export {
-  Inputs, GeneralInputsAndSelects, ExperiencesMultipleInputs, AddBtn, RemoveBtn,
+  Inputs, InputsAndSelects, ExperiencesMultipleInputs, AddBtn, RemoveBtn,
 };
