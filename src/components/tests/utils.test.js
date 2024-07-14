@@ -42,7 +42,7 @@ describe('getEntriesFromRange fn', () => {
     expect(errorThrowingFunction).toThrowError('Cannot have the index of the starting key greater than the ending key index');
   });
 
-  it('throws an error for keys that does not exist', () => {
+  it('throws an error for keys that do not exist', () => {
     const errorThrowingFunction = () => getEntriesFromRange(inputObject, ['mario', 'gets called']);
     expect(errorThrowingFunction).toThrowError('startKey or endKey not found in the object.');
   });
@@ -94,11 +94,11 @@ describe('keyInDeeplyNestedObject fn', () => {
     ];
   });
 
-  it('returns true when the key when nested 2 times', () => {
+  it('returns true when the key is nested 2 times', () => {
     expect(keyInDeeplyNestedObject('from', inputObject)).toBe(true);
   });
 
-  it('returns true when the key when nested 3 times', () => {
+  it('returns true when the key is nested 3 times', () => {
     expect(keyInDeeplyNestedObject('people2', inputObject)).toBe(true);
   });
 
@@ -143,7 +143,7 @@ describe('typeGiver fn', () => {
     categoriesString = ['name', 'lastName', 'location', 'skills', 'languages', 'email', 'phoneNumber', 'summary', 'hobbies'];
   });
 
-  it('correctly returns the type of input element for a given category', () => {
+  it('returns the type of input element for a given category', () => {
     const results = categoriesString.map((category) => typeGiver(category));
     expect(results).toEqual(['text', 'text', 'text', 'text', 'text', 'email', 'tel', 'textarea', 'textarea']);
   });
@@ -235,7 +235,7 @@ describe('ArrayOfInputObjectEmptiness fn', () => {
       expect(languagesFn.isInputObjectEmpty(languages[3])).toBeFalsy();
     });
 
-    it('returns correct value if an item of the input object is itself an object', () => {
+    it('returns a correct value if an item of the input object is itself an object', () => {
       const items = languages[2];
       languages[2] = {
         ...items,
@@ -337,7 +337,7 @@ describe('classesHandler module', () => {
         .toEqual(classes.center);
     });
 
-    it('throws an error if the movingSide form is invalid', () => {
+    it('throws an error if the movingSide is invalid', () => {
       expect(() => handleClasses.getUpcomingClasses(currentClasses1.right, 'droite')).toThrowError('The key droite is not a valid key in upcomingClasses. Ensure that movingSide is one of the expected keys: [\'left\', \'right\']');
       expect(() => handleClasses.getUpcomingClasses(currentClasses1.right, false)).toThrowError();
       expect(() => handleClasses.getUpcomingClasses(currentClasses1.left, 'Left')).toThrowError();
