@@ -27,7 +27,7 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
     const component = (
       !arrayOfInputObjectEmptiness?.isEmpty()
       && <>
-        <div className={`self-stretch ${containerStyles}`}>
+        <div className={`self-stretch ${containerStyles || ''}`}>
           { heading && <h3 className="font-bold text-2xl p-2 text-center">{ heading }</h3>}
           { children }
         </div>
@@ -69,7 +69,7 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
 
         <SectionContainer heading={'Hobbies'} category={'hobbies'} containerStyles='flex flex-col items-center'
         hasHr={false}>
-          <p className="w-[90%]">{ generalInformations.hobbies }</p>
+          <p className="w-[90%] py-2">{ generalInformations.hobbies }</p>
         </SectionContainer>
 
       </div>
@@ -111,38 +111,66 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
             <hr />
           </>
         }
-        {(generalObj.summary)
-        && <>
-            <h3 className="font-extrabold text-2xl py-3">Summary</h3>
-            <p>{generalObj.summary}</p>
-          </>
-        }
-        {(!educationEmptiness.isEmpty())
-        && <>
-            <h3 className='font-extrabold text-2xl py-3'>Education</h3>
-            {educationArray.map((item, index) => (
-              !educationEmptiness.isInputObjectEmpty(item)
-              && <div key={index}
-              className={`${index === 0 && 'pt-0'} py-2 flex flex-col gap-3`}>
-                <div className='flex justify-between items-center'>
-                  <h4 className='font-bold text-xl'>{item.schoolName}</h4>
-                  <p>
-                    {date.formatDate(item.studyDate.from)} - {date.formatDate(item.studyDate.to)}
-                  </p>
+        <div className='flex flex-col gap-2'>
+          {(generalObj.summary)
+          && <div>
+              <h3 className="font-extrabold text-2xl py-3 underline decoration-1 underline-offset-4">Summary</h3>
+              <p>{generalObj.summary}</p>
+            </div>
+          }
+          {(!educationEmptiness.isEmpty())
+          && <div>
+              <h3 className='font-extrabold text-2xl py-3 underline decoration-1 underline-offset-4'>Education</h3>
+              {educationArray.map((item, index) => (
+                !educationEmptiness.isInputObjectEmpty(item)
+                && <div key={index}
+                className={`${index === 0 && 'pt-0'} py-2 flex flex-col gap-2`}>
+                  <div className='flex justify-between items-center'>
+                    <h4 className='font-bold text-xl'>{item.schoolName}</h4>
+                    <p>
+                      {date.formatDate(item.studyDate.from)} - {date.formatDate(item.studyDate.to)}
+                    </p>
+                  </div>
+                  <div>
+                    <p className='font-semibold'>{item.studyName}</p>
+                    <p>{item.location}</p>
+                  </div>
+                  <p className=''>{item.summary}</p>
                 </div>
-                <div>
-                  <p>{item.studyName}</p>
-                  <p>{item.location}</p>
+              ))}
+            </div>
+          }
+          {(!experiencesEmptiness.isEmpty())
+          && <div>
+              <h3 className='font-extrabold text-2xl py-3 underline decoration-1 underline-offset-4'>Experiences</h3>
+              {experiencesArray.map((item, index) => (
+                !experiencesEmptiness.isInputObjectEmpty(item)
+                && <div key={index}
+                className={`${index === 0 && 'pt-0'} py-2 flex flex-col gap-2`}>
+                  <div>
+                    <div className='flex justify-between items-center'>
+                      <h4 className='font-bold text-xl'>{item.positionTitle}</h4>
+                      <p>
+                        {date.formatDate(item.workDate.from)} - {date.formatDate(item.workDate.to)}
+                      </p>
+                    </div>
+                    <div>
+                      <p className='font-semibold'>{item.companyName}</p>
+                    </div>
+                  </div>
+                  <div className='flex flex-col gap-1'>
+                    <p>{item.summary}</p>
+                    <ul className='list-disc ml-4'>
+                      {item.jobResponsibilities.map((jobItem, j) => (
+                        !experiencesEmptiness.isInputObjectEmpty(jobItem)
+                        && <li key={j}>{jobItem.responsibility}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <p className=''>{item.summary}</p>
-              </div>
-            ))}
-          </>
-        }
-        {(!experiencesEmptiness.isEmpty())
-        && <>
-            <h3 className='font-extrabold text-2xl py3'>Experiences</h3>
-        </>}
+              ))}
+          </div>}
+        </div>
       </div>
     );
   };

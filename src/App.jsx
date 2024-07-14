@@ -71,7 +71,6 @@ function App() {
     experiencesId,
     innerObjectId,
   ) => {
-    console.log(experiencesInformations);
     if (!keyInDeeplyNestedObject(
       path[path.length - 1],
       formDefaultInformations.experiences,

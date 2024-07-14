@@ -145,8 +145,8 @@ const education = [
 const experiences = [
   {
     id: uuidv4(),
-    companyName: '',
     positionTitle: '',
+    companyName: '',
     workDate: {
       from: '',
       to: '',

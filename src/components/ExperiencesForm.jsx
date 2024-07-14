@@ -24,7 +24,7 @@ const ExperiencesForm = ({
     <form className='flex flex-col items-center gap-4 m-2'>
       {experiencesInformations.map((item, index) => {
         const entries = [
-          getEntriesFromRange(item, ['companyName', 'positionTitle']),
+          getEntriesFromRange(item, ['positionTitle', 'companyName']),
           Object.entries(item.workDate),
           getEntriesFromRange(item, ['summary', false]),
         ];
