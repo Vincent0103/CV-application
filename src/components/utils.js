@@ -15,10 +15,15 @@ const getEntriesFromRange = (obj, [startKey, endKey]) => {
   return slicedEntries;
 };
 
-const isKeyInDeeplyNestedObject = (object, key) => !!Object.entries(object)
-  .find(([entryKey, entryValue]) => ((typeof entryValue !== 'object')
-    ? entryKey === key
-    : isKeyInDeeplyNestedObject(entryValue, key)));
+const keyInDeeplyNestedObject = (key, object) => {
+  let current = object;
+  while (Array.isArray(current)) [current] = current;
+  return !!Object.entries(object)
+    .find(([entryKey, entryValue]) => (
+      (typeof entryValue !== 'object' && !Array.isArray(entryValue))
+        ? entryKey === key
+        : keyInDeeplyNestedObject(key, entryValue)));
+};
 
 const toTitle = (camelCaseString) => camelCaseString
   // Replace hyphens with spaces
@@ -127,5 +132,5 @@ export default getEntriesFromRange;
 export {
   toTitle, toSpacedLowerCase, typeGiver, getRandomItem,
   ArrayOfInputObjectEmptiness, classesHandler,
-  isKeyInDeeplyNestedObject,
+  keyInDeeplyNestedObject,
 };

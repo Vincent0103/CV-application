@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
+import { produce } from 'immer';
+import { useState, useCallback } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import FormContainer from './components/FormContainer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
@@ -11,7 +12,7 @@ import {
   general, education, experiences,
   defaultGeneral, defaultEducation, defaultExperiences,
 } from './components/data/data';
-import { getRandomItem } from './components/utils';
+import { getRandomItem, keyInDeeplyNestedObject } from './components/utils';
 
 function App() {
   const [moveForms, setMoveForms] = useState('idle');
@@ -26,80 +27,67 @@ function App() {
     experiences: defaultExperiences,
   };
 
-  const handleGeneralChange = (e, key, [category = null, innerObjectId = null]) => {
-    if (!(key in formDefaultInformations.general)) return;
+  const handleGeneralChange = useCallback((e, path, innerObjectId = null) => {
+    if (!keyInDeeplyNestedObject(path[path.length - 1], formDefaultInformations.general)) return;
 
-    if (category !== null && innerObjectId !== null) {
-      setGeneralInformations((prevState) => ({
-        ...prevState,
-        [key]: prevState[key].map((object) => (
-          (object.id !== innerObjectId) ? object : { ...object, [category]: e.target.value }
-        )),
+    if (innerObjectId !== null) {
+      setGeneralInformations(produce((draft) => {
+        const [key, category] = path;
+        const current = draft[key];
+        const index = current.findIndex(({ id }) => id === innerObjectId);
+        current[index][category] = e.target.value;
       }));
     } else {
-      setGeneralInformations((prevState) => ({
-        ...prevState,
-        [key]: e.target.value,
+      setGeneralInformations(produce((draft) => {
+        const current = draft;
+        const [key] = path;
+        current[key] = e.target.value;
       }));
     }
-  };
+  }, [generalInformations]);
 
-  const handleEducationChange = (e, key, educationId) => {
-    Object.entries(formDefaultInformations.education).find(([objKey, objValue]) => {
-      if (typeof objValue === 'object') {
-        
-      }
-    })
-    if (!(key in formDefaultInformations.education)) return;
+  const handleEducationChange = useCallback((e, path, educationId) => {
+    if (!keyInDeeplyNestedObject(path[path.length - 1], formDefaultInformations.education)) return;
 
-    const index = educationInformations.findIndex((item) => item.id === educationId);
-    const newEducationInformations = educationInformations.map((info, i) => {
-      if (i === index) {
-        const updatedInfo = { ...info };
+    setEducationInformations(produce((draft) => {
+      const current = draft;
+      const index = current.findIndex(({ id }) => id === educationId);
+      const [key] = path;
+      current[index][key] = e.target.value;
+    }));
+  }, [educationInformations]);
 
-        if (innerObjectKey) {
-          updatedInfo[innerObjectKey] = { ...updatedInfo[innerObjectKey], [key]: e.target.value };
-        } else {
-          updatedInfo[key] = e.target.value;
-        }
-
-        return updatedInfo;
-      }
-      return info;
-    });
-
-    setEducationInformations(newEducationInformations);
-  };
-
-  const handleExperiencesChange = (
+  const handleExperiencesChange = useCallback((
     e,
-    key,
+    path,
     experiencesId,
-    [category = null, innerObjectId = null],
-    innerObject = null,
+    innerObjectId,
   ) => {
-    const index = experiencesInformations.findIndex((item) => item.id === experiencesId);
-    const newExperiencesInformations = experiencesInformations.map((info, i) => {
-      if (i === index) {
-        const updatedInfo = { ...info };
+    if (!keyInDeeplyNestedObject(
+      path[path.length - 1],
+      formDefaultInformations.experiences,
+    )) return;
 
-        if (innerObject) {
-          updatedInfo[innerObject] = { ...updatedInfo[innerObject], [key]: e.target.value };
-        } else if (category !== null && innerObjectId !== null) {
-          updatedInfo[key].map((object) => (
-            (object.id !== innerObjectId) ? object : { ...object, [category]: e.target.value }
-          ));
-        } else {
-          updatedInfo[key] = e.target.value;
-        }
+    setExperiencesInformations(produce((draft) => {
+      let current = draft;
+      let index = current.findIndex(({ id }) => id === experiencesId);
+      let pathIndex = 0;
 
-        return updatedInfo;
+      if (path.length > 1) {
+        current = current[index][path[pathIndex]];
+        pathIndex += 1;
+      } else {
+        current = current[index];
       }
-      return info;
-    });
 
-    setExperiencesInformations(newExperiencesInformations);
-  };
+      if (Array.isArray(current)) {
+        index = current.findIndex(({ id }) => id === innerObjectId);
+        current[index][path[pathIndex]] = e.target.value;
+      } else {
+        current[path[pathIndex]] = e.target.value;
+      }
+    }));
+  }, [experiencesInformations]);
 
   const handleImgChange = (e) => {
     const { files } = e.target;

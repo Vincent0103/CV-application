@@ -158,9 +158,9 @@ const experiences = [
 ];
 
 // Creating a deep copy so whenever the states change, it doesn't get updated
-const defaultGeneral = { ...general };
-const defaultEducation = { ...education[0] };
-const defaultExperiences = { ...experiences[0] };
+const defaultGeneral = Object.freeze(general);
+const defaultEducation = Object.freeze(education[0]);
+const defaultExperiences = Object.freeze(experiences[0]);
 
 const generalPlaceholders = Placeholders.general;
 const educationPlaceholders = Placeholders.education;

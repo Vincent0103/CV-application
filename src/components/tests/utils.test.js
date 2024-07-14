@@ -2,7 +2,7 @@ import {
   vi, describe, it, expect, beforeEach,
 } from 'vitest';
 import getEntriesFromRange, {
-  toTitle, isKeyInDeeplyNestedObject, toSpacedLowerCase,
+  toTitle, keyInDeeplyNestedObject, toSpacedLowerCase,
   typeGiver, ArrayOfInputObjectEmptiness, classesHandler,
 } from '../utils';
 
@@ -54,8 +54,9 @@ describe('getEntriesFromRange fn', () => {
   });
 });
 
-describe('isKeyInDeeplyNestedObject fn', () => {
+describe('keyInDeeplyNestedObject fn', () => {
   let inputObject;
+  let inputObjectWithNestedArrays;
   beforeEach(() => {
     inputObject = {
       id: 'mario',
@@ -74,20 +75,40 @@ describe('isKeyInDeeplyNestedObject fn', () => {
         },
       },
     };
+
+    inputObjectWithNestedArrays = [
+      {
+        id: 'john',
+        companyName: '',
+        positionTitle: '',
+        jobResponsibilities: [
+          { id: 'martin', responsibility: '', placeholder: 'smh' },
+          { id: 'sohie', responsibility: '', placeholder: 'smh' },
+        ],
+        workDate: {
+          from: '',
+          to: '',
+        },
+      },
+    ];
   });
 
   it('returns true when the key when nested 2 times', () => {
-    expect(isKeyInDeeplyNestedObject(inputObject, 'from')).toBe(true);
+    expect(keyInDeeplyNestedObject('from', inputObject)).toBe(true);
   });
 
   it('returns true when the key when nested 3 times', () => {
-    expect(isKeyInDeeplyNestedObject(inputObject, 'from')).toBe(true);
+    expect(keyInDeeplyNestedObject('people2', inputObject)).toBe(true);
   });
 
   it('returns false when the key isn\'t in the object', () => {
-    expect(isKeyInDeeplyNestedObject(inputObject, 'people3')).toBe(false);
-    expect(isKeyInDeeplyNestedObject(inputObject, 'people')).toBe(false);
-    expect(isKeyInDeeplyNestedObject(inputObject, false)).toBe(false);
+    expect(keyInDeeplyNestedObject('people3', inputObject)).toBe(false);
+    expect(keyInDeeplyNestedObject('people', inputObject)).toBe(false);
+    expect(keyInDeeplyNestedObject(false, inputObject)).toBe(false);
+  });
+
+  it('returns true when the key is nested within an array', () => {
+    expect(keyInDeeplyNestedObject('responsibility', inputObjectWithNestedArrays)).toBe(true);
   });
 });
 
@@ -272,7 +293,6 @@ describe('classesHandler module', () => {
   });
 
   describe('getUpcomingClasses fn', () => {
-    let transitionClasses;
     let currentClasses1;
     let currentClasses2;
     let classes;

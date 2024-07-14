@@ -31,9 +31,8 @@ const InputOrTextarea = ({
 };
 
 const InputContainer = ({
-  children, type, nameAndId, placeholder, value, handleChange, dataKey, formName = 'general',
-  category, innerObjectId, idOfChangingObject, keyInnerObject,
-  hasAutoFocus = false, additionalStyles = '',
+  children, type, nameAndId, placeholder, value, handleChange, dataKey, formName,
+  innerCategory, idOfChangingObject, innerObjectId, hasAutoFocus = false, additionalStyles = '',
 }) => {
   const classes = `mt-1 block w-full px-3 py-2
   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
@@ -41,15 +40,25 @@ const InputContainer = ({
 
   const handleChangeParameterized = (e) => {
     if (formName === 'general') {
+      const keys = [];
+      [dataKey, innerCategory].forEach((item) => {
+        if (item) keys.push(item);
+      });
+
       return ((type !== 'file')
-        ? handleChange(e, dataKey, [category, innerObjectId])
+        ? handleChange(e, keys, innerObjectId)
         : handleChange(e));
     }
     if (formName === 'education') {
-      return handleChange(e, dataKey, idOfChangingObject);
+      return handleChange(e, [dataKey], idOfChangingObject);
     }
     if (formName === 'experiences') {
-      return handleChange(e, dataKey, idOfChangingObject);
+      const keys = [];
+      [dataKey, innerCategory].forEach((item) => {
+        if (item) keys.push(item);
+      });
+
+      return handleChange(e, keys, idOfChangingObject, innerObjectId);
     }
   };
 
@@ -68,18 +77,19 @@ const InputContainer = ({
 };
 
 const Select = ({
-  nameAndId, values, dataKey, selectedValue, category = null, innerObjectId = null, handleChange,
+  nameAndId, values, dataKey, selectedValue,
+  innerCategory, handleChange, innerObjectId = null,
 }) => {
   const classes = `mt-1 block w-[50%] px-3 py-2
     bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
     focus:border-gray-400 sm:text-sm`;
 
-  const handleChangeParameterized = (e) => handleChange(e, dataKey, [category, innerObjectId]);
+  const handleChangeParameterized = (e) => handleChange(e, [dataKey, innerCategory], innerObjectId);
 
   return (
     <select name={nameAndId} id={nameAndId} className={classes}
     value={selectedValue} onChange={handleChangeParameterized}>
-      <option value="" disabled>{category[0].toUpperCase() + category.slice(1)}</option>
+      <option value="" disabled>{innerCategory[0].toUpperCase() + innerCategory.slice(1)}</option>
       {values.map((value) => <option key={uuidv4()} value={value}>
         {value[0].toUpperCase() + value.slice(1)}
       </option>)}
@@ -242,11 +252,12 @@ const Inputs = ({
   handleFileChange,
   placeholders,
   dataEntries,
+  customDataKey,
+  innerCategory,
+  idOfChangingObject,
   autoFocus = false,
   nthNameAndId = '',
   prependingTextToNameAndId = '',
-  idOfChangingObject = null,
-  keyInnerObject = null,
 }) => (
   dataEntries.map((item, index) => {
     const [key, value] = item;
@@ -268,11 +279,11 @@ const Inputs = ({
           placeholder={placeholders[key]}
           hasAutoFocus={autoFocus}
           handleChange={handleChange}
-          dataKey={key}
+          dataKey={(!customDataKey) ? key : customDataKey}
           formName={formName}
           value={value}
           idOfChangingObject={idOfChangingObject}
-          keyInnerObject={keyInnerObject}
+          innerCategory={innerCategory?.[index]}
         />
       </SectionContainer>
     );
@@ -283,30 +294,31 @@ const ExperiencesMultipleInputs = ({
   formName,
   handleInputChange,
   handleFormClick,
-  object,
+  inputsArray,
+  idOfChangingObject,
   categoryName,
   responsibilityKey,
 }) => {
-  const subObject = object[categoryName];
-
   let currentConvertedIndex;
+
   return (
     <SectionContainer>
       <Label name={categoryName} labelName={toTitle(categoryName)} />
-      {subObject.map((_, index) => {
-        const entry = subObject[index];
+      {inputsArray.map((item, index) => {
         currentConvertedIndex = toWordsOrdinal(index + 1);
 
-        return <InputContainer key={index} type="text" nameAndId={`${currentConvertedIndex} ${responsibilityKey}`}
-          placeholder={entry.placeholder}
-          additionalStyles={(index === subObject.length - 1) ? 'py-0' : 'pb-2'}
-          handleChange={handleInputChange} dataKey={categoryName}
-          value={entry[responsibilityKey]} category={responsibilityKey}
-          innerObjectId={entry.id}>
-          <RemoveBtn formName={formName} dataId={entry.id}
-          handleFormClick={handleFormClick} dataKey={categoryName}
-          innerCategory={responsibilityKey} nthNameAndId={currentConvertedIndex}/>
-        </ InputContainer>;
+        return (
+          <InputContainer key={index} type="text" nameAndId={`${currentConvertedIndex} ${responsibilityKey}`}
+            placeholder={item.placeholder} formName={formName}
+            additionalStyles={(index === inputsArray.length - 1) ? 'py-0' : 'pb-2'}
+            handleChange={handleInputChange} dataKey={categoryName}
+            innerObjectId={item.id} value={item[responsibilityKey]}
+            innerCategory={responsibilityKey} idOfChangingObject={idOfChangingObject}>
+            <RemoveBtn formName={formName} objectId={item.id}
+            handleFormClick={handleFormClick} dataKey={categoryName}
+            innerCategory={responsibilityKey} nthNameAndId={currentConvertedIndex}/>
+          </ InputContainer>
+        );
       })}
     </SectionContainer>
   );
@@ -333,15 +345,15 @@ const GeneralInputsAndSelects = ({
         currentConvertedIndex = toWordsOrdinal(index + 1);
 
         return <InputContainer key={index} type="text" nameAndId={`${currentConvertedIndex} ${innerCategory}`}
-          placeholder={entry.placeholder}
+          placeholder={entry.placeholder} formName={formName}
           additionalStyles={(index === subObject.length - 1) ? 'py-0' : 'pb-2'}
           handleChange={handleInputChange} dataKey={categoryName}
-          value={entry[innerCategory]} category={innerCategory}
+          value={entry[innerCategory]} innerCategory={innerCategory}
           innerObjectId={entry.id}>
           <Select nameAndId={`${currentConvertedIndex} ${innerOption}`}
             values={optionsArray}
             handleChange={handleInputChange} dataKey={categoryName}
-            selectedValue={entry[innerOption]} category={innerOption}
+            selectedValue={entry[innerOption]} innerCategory={innerOption}
             innerObjectId={entry.id} />
           <RemoveBtn formName={formName} objectId={entry.id}
           handleFormClick={handleFormClick} dataKey={categoryName}
