@@ -66,7 +66,7 @@ const typeGiver = (category) => {
 const getRandomItem = (array) => array[Math.round(Math.random() * (array.length - 1))];
 
 const ArrayOfInputObjectEmptiness = (array, keysToOmit) => {
-  const isInputObjectEmpty = (entry) => Object.entries(entry)
+  const isInputObjectEmpty = (object) => Object.entries(object)
     .every(([key, value]) => {
       if (keysToOmit.includes(key)) return true;
 
@@ -77,7 +77,7 @@ const ArrayOfInputObjectEmptiness = (array, keysToOmit) => {
       return ArrayOfInputObjectEmptiness(target, keysToOmit).isEmpty();
     });
 
-  const isEmpty = () => array.every((entry) => isInputObjectEmpty(entry));
+  const isEmpty = () => array.every((object) => isInputObjectEmpty(object));
 
   return { isEmpty, isInputObjectEmpty };
 };
