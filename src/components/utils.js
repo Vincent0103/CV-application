@@ -138,7 +138,7 @@ const getFormattedDate = () => {
     return dateString === todayFormatted;
   };
   const formatDate = (dateString) => {
-    if (!dateString) throw new Error(`Invalid date format for ${dateString}, it is supposed be in this format [YYYY]-[MM]-[DD]`);;
+    if (!dateString) return '';
 
     if (isDateToday(dateString)) return 'Present';
     const date = new Date(dateString);

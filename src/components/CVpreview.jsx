@@ -1,4 +1,4 @@
-import getEntriesFromRange, { ArrayOfInputObjectEmptiness } from './utils';
+import getEntriesFromRange, { ArrayOfInputObjectEmptiness, getFormattedDate } from './utils';
 
 const CVpreview = ({ generalInformations, educationInformations, experiencesInformations }) => {
   const ListSection = ({ obj, arrayOfInputObjectEmptiness }) => (
@@ -95,6 +95,7 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
     const generalObj = generalInformations;
     const educationArray = educationInformations;
     const emptinessFunction = ArrayOfInputObjectEmptiness(educationArray, ['schoolName', 'summary']);
+    const date = getFormattedDate();
 
     return (
       <div className="bg-white h-full w-[67%] px-4">
@@ -123,7 +124,7 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
               className={`${index === 0 && 'pt-0'} py-2 flex flex-col gap-3`}>
                 <div className='flex justify-between items-center'>
                   <h4 className='font-bold text-xl'>{item.schoolName}</h4>
-                  <p>{formatDate(item.studyDate.from)} - {formatDate(item.studyDate.to)}</p>
+                  <p>{date.formatDate(item.studyDate.from)} - {date.formatDate(item.studyDate.to)}</p>
                 </div>
                 <div>
                   <p>{item.studyName}</p>

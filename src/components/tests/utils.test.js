@@ -356,11 +356,13 @@ describe('getFormattedDate module', () => {
   let validDateStrings;
   let formattedValidDateStrings;
   let invalidDateStrings;
+  let falsyDateStrings;
   beforeEach(() => {
     date = getFormattedDate();
     validDateStrings = ['1997-12-02', '0001-08-01', '2004-03-24'];
     formattedValidDateStrings = ['December 1997', 'August 1', 'March 2004'];
-    invalidDateStrings = ['1907-00-02', '2024-02-32', '1323-24', 'twenty-four', false, '1324-06-00'];
+    invalidDateStrings = ['1907-00-02', '2024-02-32', '1323-24', 'twenty-four', '1324-06-00'];
+    falsyDateStrings = [false, '', 0, null];
   });
 
   it('format date correctly if the date string is valid', () => {
@@ -372,6 +374,12 @@ describe('getFormattedDate module', () => {
   it('throws an error if the date string is badly formatted', () => {
     invalidDateStrings.forEach((dateString) => {
       expect(() => date.formatDate(dateString)).toThrowError();
+    });
+  });
+
+  it('returns an empty string if the date string is falsy', () => {
+    falsyDateStrings.forEach((dateString) => {
+      expect(date.formatDate(dateString)).toBe('');
     });
   });
 });
