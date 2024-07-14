@@ -39,27 +39,11 @@ const InputContainer = ({
   focus:border-gray-400 sm:text-sm`;
 
   const handleChangeParameterized = (e) => {
-    if (formName === 'general') {
-      const keys = [];
-      [dataKey, innerCategory].forEach((item) => {
-        if (item) keys.push(item);
-      });
-
-      return ((type !== 'file')
-        ? handleChange(e, keys, idOfChangingInformationObject)
-        : handleChange(e));
-    }
-    if (formName === 'education') {
-      return handleChange(e, [dataKey], idOfChangingInformationObject);
-    }
-    if (formName === 'experiences') {
-      const keys = [];
-      [dataKey, innerCategory].forEach((item) => {
-        if (item) keys.push(item);
-      });
-
-      return handleChange(e, keys, idOfChangingInformationObject, innerObjectId);
-    }
+    const keys = [];
+    [dataKey, innerCategory].forEach((item) => {
+      if (item) keys.push(item);
+    });
+    return handleChange(formName, e, keys, idOfChangingInformationObject, innerObjectId);
   };
 
   const inputOrTextareaComponent = <InputOrTextarea type={type} nameAndId={nameAndId}
@@ -102,28 +86,6 @@ const SectionContainer = ({ children }) => (
     {children}
   </div>
 );
-
-const Form = ({
-  children, formName, placeholders, handleInputChange,
-  handleFormClick, handleFileChange, formStyling,
-}) => {
-  const cloneChildrenWithProps = (currentChildren) => React.Children
-    .map(currentChildren, (child) => {
-      if (!React.isValidElement(child)) return child;
-
-      const childProps = {
-        formName, placeholders, handleInputChange, handleFormClick, handleFileChange,
-      };
-
-      if (child.props.children) {
-        childProps.children = cloneChildrenWithProps(child.props.children);
-      }
-
-      return React.cloneElement(child, childProps);
-    });
-
-  return <form className={formStyling}>{cloneChildrenWithProps(children)}</form>;
-};
 
 const AddBtn = ({
   formName, handleFormClick, dataKey, idOfChangingInformationObject, innerCategory,
@@ -250,7 +212,7 @@ const RemoveBtn = ({
 const Inputs = ({
   formName,
   handleInputChange,
-  handleFileChange,
+  handleImgChange,
   placeholders,
   dataEntries,
   customDataKey,
@@ -263,7 +225,7 @@ const Inputs = ({
   dataEntries.map((item, index) => {
     const [key, value] = item;
     const type = typeGiver(key);
-    const handleChange = (type !== 'file') ? handleInputChange : handleFileChange;
+    const handleChange = (type !== 'file') ? handleInputChange : handleImgChange;
 
     let nameAndId = '';
     if (nthNameAndId) nameAndId += `${nthNameAndId} `;
@@ -367,7 +329,6 @@ const GeneralInputsAndSelects = ({
   );
 };
 
-export default Form;
 export {
   Inputs, GeneralInputsAndSelects, ExperiencesMultipleInputs, AddBtn, RemoveBtn,
 };
