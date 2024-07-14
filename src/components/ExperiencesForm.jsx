@@ -48,8 +48,9 @@ const ExperiencesForm = ({
               idOfChangingInformationObject={item.id} responsibilityKey={'responsibility'}/>
               <AddBtn {...repeated.addBtnProps} dataKey={'jobResponsibilities'}
               innerCategory={'responsibility'} idOfChangingInformationObject={item.id}
-              customStyling=''/>
+              customColor='bg-indigo-950'/>
             </div>
+            <div className='bg-'></div>
           </div>
         );
       })}

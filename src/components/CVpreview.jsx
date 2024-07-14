@@ -124,7 +124,9 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
               className={`${index === 0 && 'pt-0'} py-2 flex flex-col gap-3`}>
                 <div className='flex justify-between items-center'>
                   <h4 className='font-bold text-xl'>{item.schoolName}</h4>
-                  <p>{date.formatDate(item.studyDate.from)} - {date.formatDate(item.studyDate.to)}</p>
+                  <p>
+                    {date.formatDate(item.studyDate.from)} - {date.formatDate(item.studyDate.to)}
+                  </p>
                 </div>
                 <div>
                   <p>{item.studyName}</p>

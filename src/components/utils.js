@@ -85,41 +85,32 @@ const ArrayOfInputObjectEmptiness = (array, inputableKeysRanges) => {
 };
 
 const classesHandler = () => {
-  const baseClasses = 'absolute top-0 w-full';
-
   const positionClasses = {
-    left: '-left-full pointer-events-none',
-    center: 'pointer-events-auto',
-    right: 'left-full pointer-events-none',
+    left: 'hidden -left-full pointer-events-none',
+    center: 'block pointer-events-auto',
+    right: 'hidden left-full pointer-events-none',
   };
 
-  const getClasses = (position) => `${(position === 'center') ? baseClasses.replace(/\babsolute\b/, 'relative') : baseClasses} ${positionClasses[position] || ''}`;
-
-  const classesOnMove = {
-    left: getClasses('left'),
-    center: getClasses('center'),
-    right: getClasses('right'),
-  };
-
-  const getMovableClasses = () => classesOnMove;
+  const getMovableClasses = () => positionClasses;
 
   const getUpcomingClasses = (currentClasses, movingSide) => {
     const upcomingClasses = {
       right: {
-        [classesOnMove.center]: classesOnMove.left,
-        [classesOnMove.left]: classesOnMove.right,
-        [classesOnMove.right]: classesOnMove.center,
+        [positionClasses.center]: positionClasses.left,
+        [positionClasses.left]: positionClasses.right,
+        [positionClasses.right]: positionClasses.center,
       },
       left: {
-        [classesOnMove.center]: classesOnMove.right,
-        [classesOnMove.left]: classesOnMove.center,
-        [classesOnMove.right]: classesOnMove.left,
+        [positionClasses.center]: positionClasses.right,
+        [positionClasses.left]: positionClasses.center,
+        [positionClasses.right]: positionClasses.left,
       },
     };
 
     if (!(movingSide in upcomingClasses)) {
       throw Error(`The key ${movingSide} is not a valid key in upcomingClasses. Ensure that movingSide is one of the expected keys: ['left', 'right']`);
     }
+
     if (!(currentClasses in upcomingClasses[movingSide])) throw Error('Given bad classes format in getUpcomingClasses()');
 
     return upcomingClasses[movingSide][currentClasses];

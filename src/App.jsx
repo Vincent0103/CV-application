@@ -50,10 +50,18 @@ function App() {
     if (!keyInDeeplyNestedObject(path[path.length - 1], formDefaultInformations.education)) return;
 
     setEducationInformations(produce((draft) => {
-      const current = draft;
+      let current = draft;
       const index = current.findIndex(({ id }) => id === educationId);
-      const [key] = path;
-      current[index][key] = e.target.value;
+      let pathIndex = 0;
+
+      if (path.length > 1) {
+        current = current[index][path[pathIndex]];
+        pathIndex += 1;
+      } else {
+        current = current[index];
+      }
+
+      current[path[pathIndex]] = e.target.value;
     }));
   }, [educationInformations]);
 

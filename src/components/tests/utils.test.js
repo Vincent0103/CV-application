@@ -287,9 +287,9 @@ describe('classesHandler module', () => {
 
   it('returns the correct object when calling getMovableClasses()', () => {
     expect(handleClasses.getMovableClasses()).toEqual({
-      left: 'absolute top-0 w-full -left-full pointer-events-none',
-      center: 'relative top-0 w-full pointer-events-auto',
-      right: 'absolute top-0 w-full left-full pointer-events-none',
+      left: 'hidden -left-full pointer-events-none',
+      center: 'block pointer-events-auto',
+      right: 'hidden left-full pointer-events-none',
     });
   });
 
@@ -345,7 +345,7 @@ describe('classesHandler module', () => {
     });
 
     it('throws an error if the classes format are invalid', () => {
-      expect(() => handleClasses.getUpcomingClasses('relative top-0 w-full left-full pointer-events-none', 'left')).toThrowError();
+      expect(() => handleClasses.getUpcomingClasses('block left-full pointer-events-none', 'left')).toThrowError();
       expect(() => handleClasses.getUpcomingClasses('transition-transform translate-x-full duration-500', 'right')).toThrowError();
     });
   });
