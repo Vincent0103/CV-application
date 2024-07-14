@@ -216,8 +216,8 @@ describe('ArrayOfInputObjectEmptiness fn', () => {
       },
     ];
 
-    skillsFn = ArrayOfInputObjectEmptiness(skills, ['skill', 'expertise']);
-    languagesFn = ArrayOfInputObjectEmptiness(languages, ['skill', 'fluency']);
+    skillsFn = ArrayOfInputObjectEmptiness(skills, ['id', 'hasAutoFocus']);
+    languagesFn = ArrayOfInputObjectEmptiness(languages, ['id', 'hasAutoFocus']);
   });
 
   describe('isInputObjectEmpty fn', () => {
@@ -259,21 +259,73 @@ describe('ArrayOfInputObjectEmptiness fn', () => {
 
       expect(languagesFn.isInputObjectEmpty(languages[2])).toBeFalsy();
     });
+
+    it('returns a correct value if an item of the input object is itself an array of object', () => {
+      const items = languages[2];
+      languages[2] = {
+        ...items,
+        skill: '',
+        fluency: [
+          {
+            id: 'lolne',
+            inUSA: '',
+            inEuropeanCountries: '',
+          },
+          {
+            id: 'parle',
+            inUSA: '',
+            inEuropeanCountries: '',
+          },
+          {
+            id: 'shote',
+            inUSA: '',
+            inEuropeanCountries: '',
+          },
+        ],
+      };
+
+      expect(languagesFn.isInputObjectEmpty(languages[2])).toBeTruthy();
+
+      languages[2] = {
+        ...items,
+        skills: '',
+        fluency: [
+          {
+            id: 'lolne',
+            inUSA: '',
+            inEuropeanCountries: '',
+          },
+          {
+            id: 'parle',
+            inUSA: '',
+            inEuropeanCountries: 'Begineer',
+          },
+          {
+            id: 'shote',
+            inUSA: 'yes',
+            inEuropeanCountries: '',
+          },
+        ],
+      };
+
+      expect(languagesFn.isInputObjectEmpty(languages[2])).toBeFalsy();
+    });
   });
 
   describe('isEmpty', () => {
     let newSkillsFn;
+
     beforeEach(() => {
       const newSkills = skills.map((item) => ({ ...item, skill: '', expertise: '' }));
-      newSkillsFn = ArrayOfInputObjectEmptiness(newSkills, ['skill', 'expertise']);
+      newSkillsFn = ArrayOfInputObjectEmptiness(newSkills, ['id']);
     });
 
     it('returns true if the inputtable entry values from array are empty', () => {
-      expect(newSkillsFn.isEmpty()).toBe(true);
+      expect(newSkillsFn.isEmpty()).toBeTruthy();
     });
 
     it('returns false if some inputtable entry values from array are empty', () => {
-      expect(languagesFn.isEmpty()).toBe(false);
+      expect(languagesFn.isEmpty()).toBeFalsy();
     });
   });
 });

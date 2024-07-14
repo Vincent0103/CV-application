@@ -43,8 +43,8 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
   const PrimaryContainer = () => {
     const arrays = [generalInformations.skills, generalInformations.languages];
 
-    const emptinessFunctions = [ArrayOfInputObjectEmptiness(arrays[0], ['skill', 'expertise']),
-      ArrayOfInputObjectEmptiness(arrays[1], ['language', 'fluency'])];
+    const emptinessFunctions = [ArrayOfInputObjectEmptiness(arrays[0], ['id', 'placeholder']),
+      ArrayOfInputObjectEmptiness(arrays[1], ['id', 'placeholder'])];
 
     return (
       <div className="bg-slate-800 h-full w-[33%] text-white flex
@@ -94,7 +94,9 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
   const SecondaryContainer = () => {
     const generalObj = generalInformations;
     const educationArray = educationInformations;
-    const emptinessFunction = ArrayOfInputObjectEmptiness(educationArray, ['schoolName', 'summary']);
+    const experiencesArray = experiencesInformations;
+    const educationEmptiness = ArrayOfInputObjectEmptiness(educationArray, ['id']);
+    const experiencesEmptiness = ArrayOfInputObjectEmptiness(experiencesArray, ['id', 'placeholder']);
     const date = getFormattedDate();
 
     return (
@@ -115,11 +117,11 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
             <p>{generalObj.summary}</p>
           </>
         }
-        {(!emptinessFunction.isEmpty())
+        {(!educationEmptiness.isEmpty())
         && <>
             <h3 className='font-extrabold text-2xl py-3'>Education</h3>
             {educationArray.map((item, index) => (
-              !emptinessFunction.isInputObjectEmpty(item)
+              !educationEmptiness.isInputObjectEmpty(item)
               && <div key={index}
               className={`${index === 0 && 'pt-0'} py-2 flex flex-col gap-3`}>
                 <div className='flex justify-between items-center'>
@@ -135,7 +137,12 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
                 <p className=''>{item.summary}</p>
               </div>
             ))}
-          </>}
+          </>
+        }
+        {(!experiencesEmptiness.isEmpty())
+        && <>
+            <h3 className='font-extrabold text-2xl py3'>Experiences</h3>
+        </>}
       </div>
     );
   };

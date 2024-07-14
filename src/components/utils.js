@@ -65,17 +65,16 @@ const typeGiver = (category) => {
 
 const getRandomItem = (array) => array[Math.round(Math.random() * (array.length - 1))];
 
-const ArrayOfInputObjectEmptiness = (array, inputableKeysRanges) => {
-  const [startKey, endKey] = inputableKeysRanges;
+const ArrayOfInputObjectEmptiness = (array, keysToOmit) => {
+  const isInputObjectEmpty = (entry) => Object.entries(entry)
+    .every(([key, value]) => {
+      if (keysToOmit.includes(key)) return true;
 
-  const isInputObjectEmpty = (entry) => getEntriesFromRange(entry, [startKey, endKey])
-    .every(([_, value]) => {
-      if (typeof value !== 'object') return value === '';
+      const isValueAnArray = Array.isArray(value);
+      if (!isValueAnArray && typeof value !== 'object') return value === '';
 
-      // if the value is an object check if all the inner values of the object are empty
-      const keys = Object.keys(value);
-      const firstAndLastKeys = [keys[0], keys[keys.length - 1]];
-      return ArrayOfInputObjectEmptiness([value], firstAndLastKeys).isEmpty();
+      const target = (isValueAnArray) ? value : [value];
+      return ArrayOfInputObjectEmptiness(target, keysToOmit).isEmpty();
     });
 
   const isEmpty = () => array.every((entry) => isInputObjectEmpty(entry));
