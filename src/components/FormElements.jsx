@@ -32,7 +32,7 @@ const InputOrTextarea = ({
 
 const InputContainer = ({
   children, type, nameAndId, placeholder, value, handleChange, dataKey, formName,
-  innerCategory, idOfChangingObject, innerObjectId, hasAutoFocus = false, additionalStyles = '',
+  innerCategory, idOfChangingInformationObject, innerObjectId, hasAutoFocus = false, additionalStyles = '',
 }) => {
   const classes = `mt-1 block w-full px-3 py-2
   bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-400
@@ -46,11 +46,11 @@ const InputContainer = ({
       });
 
       return ((type !== 'file')
-        ? handleChange(e, keys, innerObjectId)
+        ? handleChange(e, keys, idOfChangingInformationObject)
         : handleChange(e));
     }
     if (formName === 'education') {
-      return handleChange(e, [dataKey], idOfChangingObject);
+      return handleChange(e, [dataKey], idOfChangingInformationObject);
     }
     if (formName === 'experiences') {
       const keys = [];
@@ -58,7 +58,7 @@ const InputContainer = ({
         if (item) keys.push(item);
       });
 
-      return handleChange(e, keys, idOfChangingObject, innerObjectId);
+      return handleChange(e, keys, idOfChangingInformationObject, innerObjectId);
     }
   };
 
@@ -126,7 +126,7 @@ const Form = ({
 };
 
 const AddBtn = ({
-  formName, handleFormClick, dataKey, objectId, innerCategory,
+  formName, handleFormClick, dataKey, idOfChangingInformationObject, innerCategory,
 }) => {
   const PlusIcon = <svg className="transition-transform group-hover:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" id="plus"><path d="M12 24c-3.2 0-6.2-1.2-8.5-3.5-4.7-4.7-4.7-12.3 0-17C5.8 1.2 8.8 0 12 0s6.2 1.2 8.5 3.5c4.7 4.7 4.7 12.3 0 17-2.3 2.3-5.3 3.5-8.5 3.5zm0-22C9.3 2 6.8 3 4.9 4.9 1 8.8 1 15.2 4.9 19.1 6.8 21 9.3 22 12 22s5.2-1 7.1-2.9C23 15.2 23 8.9 19.1 5c-1.9-2-4.4-3-7.1-3z"></path><path d="M12 18c-.6 0-1-.4-1-1V7c0-.6.4-1 1-1s1 .4 1 1v10c0 .6-.4 1-1 1z"></path><path d="M17 13H7c-.6 0-1-.4-1-1s.4-1 1-1h10c.6 0 1 .4 1 1s-.4 1-1 1z"></path></svg>;
 
@@ -159,9 +159,9 @@ const AddBtn = ({
   const Experiences = () => {
     let handleClickParameterized;
 
-    if (dataKey && innerCategory) {
+    if (idOfChangingInformationObject) {
       handleClickParameterized = () => {
-        handleFormClick(formName, 'add', dataKey, objectId);
+        handleFormClick(formName, 'add', dataKey, idOfChangingInformationObject);
       };
 
       return <Btn ariaLabel={innerCategory} handleClick={handleClickParameterized} />;
@@ -184,7 +184,8 @@ const AddBtn = ({
 };
 
 const RemoveBtn = ({
-  formName, handleFormClick, dataKey, objectId, innerCategory, nthNameAndId,
+  formName, handleFormClick, dataKey, idOfChangingInformationObject,
+  innerObjectId, innerCategory, nthNameAndId,
 }) => {
   const CloseIcon = <svg className='transition-transform group-hover:rotate-180' xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" viewBox="0 0 24 24"><title>close-circle-outline</title><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z" /></svg>;
 
@@ -199,7 +200,7 @@ const RemoveBtn = ({
 
   const General = () => {
     const handleClickParameterized = () => {
-      handleFormClick(formName, 'remove', dataKey, objectId);
+      handleFormClick(formName, 'remove', dataKey, idOfChangingInformationObject);
     };
 
     return <Btn ariaLabel={(nthNameAndId)
@@ -209,7 +210,7 @@ const RemoveBtn = ({
 
   const Education = () => {
     const handleClickParameterized = () => {
-      handleFormClick(formName, 'remove', null, objectId);
+      handleFormClick(formName, 'remove', null, idOfChangingInformationObject);
     };
 
     return <Btn ariaLabel={(nthNameAndId)
@@ -218,9 +219,9 @@ const RemoveBtn = ({
   };
 
   const Experiences = () => {
-    if (dataKey && innerCategory) {
+    if (innerObjectId) {
       const handleClickParameterized = () => {
-        handleFormClick(formName, 'remove', dataKey, objectId);
+        handleFormClick(formName, 'remove', dataKey, idOfChangingInformationObject, innerObjectId);
       };
 
       return <Btn ariaLabel={(nthNameAndId)
@@ -229,7 +230,7 @@ const RemoveBtn = ({
     }
 
     const handleClickParameterized = () => {
-      handleFormClick(formName, 'remove', null, objectId);
+      handleFormClick(formName, 'remove', null, idOfChangingInformationObject);
     };
 
     return <Btn ariaLabel={(nthNameAndId)
@@ -254,7 +255,7 @@ const Inputs = ({
   dataEntries,
   customDataKey,
   innerCategory,
-  idOfChangingObject,
+  idOfChangingInformationObject,
   autoFocus = false,
   nthNameAndId = '',
   prependingTextToNameAndId = '',
@@ -282,7 +283,7 @@ const Inputs = ({
           dataKey={(!customDataKey) ? key : customDataKey}
           formName={formName}
           value={value}
-          idOfChangingObject={idOfChangingObject}
+          idOfChangingInformationObject={idOfChangingInformationObject}
           innerCategory={innerCategory?.[index]}
         />
       </SectionContainer>
@@ -295,7 +296,7 @@ const ExperiencesMultipleInputs = ({
   handleInputChange,
   handleFormClick,
   inputsArray,
-  idOfChangingObject,
+  idOfChangingInformationObject,
   categoryName,
   responsibilityKey,
 }) => {
@@ -312,9 +313,11 @@ const ExperiencesMultipleInputs = ({
             placeholder={item.placeholder} formName={formName}
             additionalStyles={(index === inputsArray.length - 1) ? 'py-0' : 'pb-2'}
             handleChange={handleInputChange} dataKey={categoryName}
-            innerObjectId={item.id} value={item[responsibilityKey]}
-            innerCategory={responsibilityKey} idOfChangingObject={idOfChangingObject}>
-            <RemoveBtn formName={formName} objectId={item.id}
+            value={item[responsibilityKey]} innerCategory={responsibilityKey}
+            idOfChangingInformationObject={idOfChangingInformationObject}
+            innerObjectId={item.id}>
+            <RemoveBtn formName={formName}
+            idOfChangingInformationObject={idOfChangingInformationObject} innerObjectId={item.id}
             handleFormClick={handleFormClick} dataKey={categoryName}
             innerCategory={responsibilityKey} nthNameAndId={currentConvertedIndex}/>
           </ InputContainer>
@@ -355,7 +358,7 @@ const GeneralInputsAndSelects = ({
             handleChange={handleInputChange} dataKey={categoryName}
             selectedValue={entry[innerOption]} innerCategory={innerOption}
             innerObjectId={entry.id} />
-          <RemoveBtn formName={formName} objectId={entry.id}
+          <RemoveBtn formName={formName} idOfChangingInformationObject={entry.id}
           handleFormClick={handleFormClick} dataKey={categoryName}
           innerCategory={innerCategory} nthNameAndId={currentConvertedIndex}/>
         </ InputContainer>;

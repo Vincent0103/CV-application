@@ -33,21 +33,21 @@ const ExperiencesForm = ({
         return (
           <div key={index} className=' bg-zinc-200 border-2 border-zinc-300 w-full rounded-lg shadow-sm box'>
             {/* add company name, position title inputs  */}
-            <Inputs {...repeated.inputsProps} dataEntries={entries[0]} idOfChangingObject={item.id}
-            nthNameAndId={currentWordOrdinal}/>
+            <Inputs {...repeated.inputsProps} dataEntries={entries[0]}
+            idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}/>
             <div className='flex'>
               {/* add work date input  */}
               <Inputs {...repeated.inputsProps} dataEntries={entries[1]}
-              idOfChangingObject={item.id} nthNameAndId={currentWordOrdinal}
+              idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
               prependingTextToNameAndId='work date' customDataKey={'workDate'}
               innerCategory={['from', 'to']}/>
             </div>
             <div>
               <ExperiencesMultipleInputs {...repeated.experiencesMultipleInputsProps}
               inputsArray={item.jobResponsibilities} categoryName={'jobResponsibilities'}
-              idOfChangingObject={item.id} responsibilityKey={'responsibility'}/>
+              idOfChangingInformationObject={item.id} responsibilityKey={'responsibility'}/>
               <AddBtn {...repeated.addBtnProps} dataKey={'jobResponsibilities'}
-              innerCategory={'responsibility'} objectId={index} />
+              innerCategory={'responsibility'} idOfChangingInformationObject={item.id} />
             </div>
           </div>
         );

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, act } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import FormContainer from './components/FormContainer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
@@ -105,14 +105,15 @@ function App() {
   };
 
   const handleFormClick = (() => {
-    const handleGeneralClick = (action, key, objectId) => {
+    const handleGeneralClick = (action, key, idOfChangingInformationObject) => {
       if (!(key in generalInformations)) return;
       if (!Array.isArray(generalInformations[key])) return;
 
       const target = [...generalInformations[key]];
 
       if (action === 'remove') {
-        const indexOfRemovingEntry = target.findIndex((item) => item.id === objectId);
+        const indexOfRemovingEntry = target
+          .findIndex((item) => item.id === idOfChangingInformationObject);
         target.splice(indexOfRemovingEntry, 1);
       } else if (action === 'add') {
         const entryKeysToChange = Object.keys(formDefaultInformations.general[key][0]);
@@ -141,56 +142,64 @@ function App() {
       ]));
     };
 
-    const handleExperiencesClick = (action, key, objectId) => {
-      let newExperiences;
+    const handleExperiencesClick = (action, key, idOfChangingInformationObject, innerObjectId) => {
+      if (action === 'add') {
+        if (idOfChangingInformationObject) {
+          if (!(key in experiencesInformations[0])) return;
+          const entryKeysToChange = Object.keys(formDefaultInformations.experiences[key][0]);
 
-      if (action === 'add' && objectId) {
+          setExperiencesInformations(produce((draft) => {
+            const index = draft
+              .findIndex(({ id }) => id === idOfChangingInformationObject);
+            const target = draft[index][key];
+
+            target.push({
+              id: uuidv4(),
+              [entryKeysToChange[1]]: '',
+              [entryKeysToChange[2]]: getRandomItem(randomStrings.experiences[key]),
+            });
+          }));
+        } else {
+          setExperiencesInformations(produce((draft) => {
+            draft.push({
+              ...formDefaultInformations.experiences,
+              id: uuidv4(),
+              jobResponsibilities: [
+                { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
+                { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
+              ],
+            });
+          }));
+        }
+      } else if (action === 'remove') {
         if (!(key in experiencesInformations[0])) return;
-        const entryKeysToChange = Object.keys(formDefaultInformations.experiences[key][0]);
+        const experiencesIndex = experiencesInformations
+          .findIndex(({ id }) => id === idOfChangingInformationObject);
 
-        const target = experiencesInformations[objectId][key];
-
-        target.push({
-          id: uuidv4(),
-          [entryKeysToChange[1]]: '',
-          [entryKeysToChange[2]]: getRandomItem(randomStrings.experiences[key]),
-        });
-
-        newExperiences = {
-          ...experiencesInformations[objectId],
-          [key]: [...target],
-        };
-
-        setExperiencesInformations((prevState) => (
-          prevState.map((object, i) => ((i !== objectId) ? object : newExperiences))
-        ));
-      } else if (action === 'add' && !objectId) {
-        newExperiences = {
-          ...formDefaultInformations.experiences,
-          id: uuidv4(),
-          jobResponsibilities: [
-            { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
-            { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
-          ],
-        };
-
-        setExperiencesInformations((prevState) => ([
-          ...prevState,
-          { ...newExperiences },
-        ]));
+        if (innerObjectId) {
+          setExperiencesInformations(produce((draft) => {
+            const current = draft[experiencesIndex][key];
+            const innerObjectIndex = current.findIndex(({ id }) => id === innerObjectId);
+            current.splice(innerObjectIndex, 1);
+          }));
+        } else {
+          setExperiencesInformations(produce((draft) => {
+            draft.splice(experiencesIndex, 1);
+          }));
+        }
       }
     };
 
-    const handleClick = (formName, action, key, objectId) => {
+    const handleClick = (formName, action, key, idOfChangingInformationObject, innerObjectId) => {
       switch (formName) {
         case 'general':
-          handleGeneralClick(action, key, objectId);
+          handleGeneralClick(action, key, idOfChangingInformationObject);
           break;
         case 'education':
           handleEducationClick();
           break;
         case 'experiences':
-          handleExperiencesClick(action, key, objectId);
+          handleExperiencesClick(action, key, idOfChangingInformationObject, innerObjectId);
           break;
         default:
           throw new Error(`${formName} doesn't exist as a form data, cannot update click accordingly`);
