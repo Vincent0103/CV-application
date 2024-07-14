@@ -37,13 +37,13 @@ const EducationForm = ({
               {/* add date input  */}
               <Inputs {...repeated.inputsProps} dataEntries={entries[1]}
               idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
-              prependingTextToNameAndId='study date' customDataKey={'studyDate'}
+              appendingTextToNameAndId='study date' customDataKey={'studyDate'}
               innerCategory={['from', 'to']}/>
             </div>
             {/* add school location, school summary inputs  */}
             <Inputs {...repeated.inputsProps} dataEntries={entries[2]}
             idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
-            prependingTextToNameAndId={'school'}/>
+            appendingTextToNameAndId={'school'}/>
           </div>
         );
       })}

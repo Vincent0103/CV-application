@@ -26,6 +26,7 @@ const ExperiencesForm = ({
         const entries = [
           getEntriesFromRange(item, ['companyName', 'positionTitle']),
           Object.entries(item.workDate),
+          getEntriesFromRange(item, ['summary', false]),
         ];
 
         const currentWordOrdinal = toWordsOrdinal(index + 1);
@@ -39,18 +40,23 @@ const ExperiencesForm = ({
               {/* add work date input  */}
               <Inputs {...repeated.inputsProps} dataEntries={entries[1]}
               idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
-              prependingTextToNameAndId='work date' customDataKey={'workDate'}
+              appendingTextToNameAndId='work date' customDataKey={'workDate'}
               innerCategory={['from', 'to']}/>
             </div>
             <div>
+              {/* add job responsibilites inputs  */}
               <ExperiencesMultipleInputs {...repeated.experiencesMultipleInputsProps}
               inputsArray={item.jobResponsibilities} categoryName={'jobResponsibilities'}
-              idOfChangingInformationObject={item.id} responsibilityKey={'responsibility'}/>
+              idOfChangingInformationObject={item.id} responsibilityKey={'responsibility'}
+              appendingTextToNameAndId={`of ${currentWordOrdinal} experiences`}/>
               <AddBtn {...repeated.addBtnProps} dataKey={'jobResponsibilities'}
-              innerCategory={'responsibility'} idOfChangingInformationObject={item.id}
-              customColor='bg-indigo-950'/>
+              appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}
+              idOfChangingInformationObject={item.id} customColor='bg-indigo-950'/>
             </div>
-            <div className='bg-'></div>
+            {/* add summary input  */}
+            <Inputs {...repeated.inputsProps} dataEntries={entries[2]}
+            idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
+            appendingTextToNameAndId='experiences' />
           </div>
         );
       })}

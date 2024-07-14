@@ -97,6 +97,7 @@ const Placeholders = {
       from: '',
       to: '',
     },
+    summary: 'Led a team of developers in a high-stakes project, delivering the product ahead of schedule with exceptional quality.',
   },
 };
 
@@ -146,14 +147,15 @@ const experiences = [
     id: uuidv4(),
     companyName: '',
     positionTitle: '',
-    jobResponsibilities: [
-      { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
-      { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
-    ],
     workDate: {
       from: '',
       to: '',
     },
+    jobResponsibilities: [
+      { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
+      { id: uuidv4(), responsibility: '', placeholder: getRandomItem(randomStrings.experiences.jobResponsibilities) },
+    ],
+    summary: '',
   },
 ];
 

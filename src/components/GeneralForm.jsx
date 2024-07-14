@@ -34,24 +34,24 @@ const GeneralForm = ({
       <Inputs {...repeated.inputsProps} dataEntries={entries[0]} autoFocus={true} />
       <div className="flex">
         {/* add name and last name inputs */}
-        <Inputs {...repeated.inputsProps} dataEntries={entries[1]} autoFocus={false} />
+        <Inputs {...repeated.inputsProps} dataEntries={entries[1]} />
       </div>
       {/* add email, phone number, location, summary inputs */}
-      <Inputs {...repeated.inputsProps} dataEntries={entries[2]} autoFocus={false} />
+      <Inputs {...repeated.inputsProps} dataEntries={entries[2]} />
       <div>
         <InputsAndSelects {...repeated.inputsAndSelectsProps}
         object={generalInformations} categoryName={'skills'}
         inputtableSubCategoryKeys={['skill', 'expertise']} optionsArray={skillsOptions} />
-        <AddBtn {...repeated.addBtnProps} dataKey={'skills'} innerCategory={'skill'} />
+        <AddBtn {...repeated.addBtnProps} dataKey={'skills'} appendingTextToAriaLabel={'skill'} />
       </div>
       <div>
         <InputsAndSelects {...repeated.inputsAndSelectsProps}
         object={generalInformations} categoryName={'languages'}
         inputtableSubCategoryKeys={['language', 'fluency']} optionsArray={languagesOptions} />
-        <AddBtn {...repeated.addBtnProps} dataKey={'languages'} innerCategory={'language'} />
+        <AddBtn {...repeated.addBtnProps} dataKey={'languages'} appendingTextToAriaLabel={'language'} />
       </div>
       {/* add hobbies input */}
-      <Inputs {...repeated.inputsProps} dataEntries={entries[3]} autoFocus={false} />
+      <Inputs {...repeated.inputsProps} dataEntries={entries[3]} />
     </form>
   );
 };

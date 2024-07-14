@@ -58,7 +58,6 @@ const typeGiver = (category) => {
     studyName: 'text',
     from: 'date',
     to: 'date',
-    schoolSummary: 'textarea',
   };
 
   return types[category] || null;
