@@ -39,7 +39,7 @@ const randomStrings = {
       'Japanese',
       'Vietnamese',
       'Telugu',
-      'mandinka',
+      'Mandinka',
       'Guaraní',
       'Nepali',
       'Romansh',

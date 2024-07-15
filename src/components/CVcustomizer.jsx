@@ -74,7 +74,8 @@ const CVcustomizer = ({ handleFormSwitcherBtn, currentlyVisibleElement, children
   };
 
   return (
-    <div className="max-lg:w-full max-lg:static w-[33%] h-min sticky top-0">
+    <div className="w-[33%] h-min sticky top-0 max-lg:static
+    max-lg:flex max-lg:flex-col max-lg:items-center max-lg:w-full">
       <FormSliderBtns />
       {children}
       <UpcomingFormBtns />

@@ -39,8 +39,8 @@ const FormContainer = ({
     <div className="max-h-full max-w-full relative bg-[#ebebeb] rounded-xl border-2 border-gray-300
       shadow-xl overflow-hidden">
 
-      <div className={`max-lg:max-h-full max-h-[80vh] min-w-full overflow-x-hidden overflow-y-scroll scrollbar-thin
-      scrollbar-track-transparent scrollbar-thumb-rounded-full`}>
+      <div className={`max-h-[80vh] min-w-full overflow-x-hidden overflow-y-scroll scrollbar-thin
+      scrollbar-track-transparent scrollbar-thumb-rounded-full max-lg:max-h-full`}>
 
         <div className={classes.general}>
           { generalChild }
