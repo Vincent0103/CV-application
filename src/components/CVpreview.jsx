@@ -176,7 +176,7 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
   };
 
   return (
-    <div className={`bg-white w-[67%] max-h-[29.7cm] aspect-[0.707] shadow-lg rounded-md self-start
+    <div className={`bg-white max-lg:w-full w-[67%] max-h-[29.7cm] aspect-[0.707] shadow-lg rounded-md self-start
     flex text-sm`}>
       <PrimaryContainer />
       <SecondaryContainer />

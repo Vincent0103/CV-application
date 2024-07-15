@@ -13,18 +13,18 @@ const Btn = ({ handleFormSwitcherBtn, movingSide, children }) => (
 const CVcustomizer = ({ handleFormSwitcherBtn, currentlyVisibleElement, children }) => {
   const FormSliderBtns = () => {
     const getClasses = (isActive) => {
-      const activeTextClasses = 'font-bold text-3xl h-[35px] text-shadow';
-      const inactiveTextClasses = 'font-normal text-base h-6';
+      const activeTextClasses = 'font-bold text-3xl h-[35px] text-shadow max-lg:text-2xl max-lg:h-[32px]';
+      const inactiveTextClasses = 'font-normal text-base h-6 max-lg:text-sm';
 
       return (isActive) ? activeTextClasses : inactiveTextClasses;
     };
 
     return (
       <div className="flex flex-col mb-2">
-        <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-3">
+        <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-2">
           <button type="button" className={`${getClasses(currentlyVisibleElement === 'general')}`} aria-selected="true"
           role="tab">General</button>
-          <button type="button" className={`${getClasses(currentlyVisibleElement === 'education')} border-x-2 border-gray-300 px-3`}
+          <button type="button" className={`${getClasses(currentlyVisibleElement === 'education')} border-x-2 border-gray-300 px-2`}
           role="tab">Education</button>
           <button type="button" className={`${getClasses(currentlyVisibleElement === 'experiences')}`} role="tab">Experiences</button>
         </div>
@@ -74,7 +74,7 @@ const CVcustomizer = ({ handleFormSwitcherBtn, currentlyVisibleElement, children
   };
 
   return (
-    <div className="w-[33%] h-min sticky top-0">
+    <div className="max-lg:w-full max-lg:static w-[33%] h-min sticky top-0">
       <FormSliderBtns />
       {children}
       <UpcomingFormBtns />

@@ -18,7 +18,7 @@ const EducationForm = ({
   };
 
   return (
-    <form className='flex flex-col items-center gap-4 m-2'>
+    <form className='flex flex-col items-center gap-4 m-2 max-lg:m-1 max-lg:gap-3'>
       {educationInformations.map((item, index) => {
         const entries = [
           getEntriesFromRange(item, ['schoolName', 'studyName']),
@@ -33,12 +33,12 @@ const EducationForm = ({
             {/* add school name, study name  */}
             <Inputs {...repeated.inputsProps} dataEntries={entries[0]}
             idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}/>
-            <div className='flex'>
+            <div className='grid grid-cols-2'>
               {/* add date input  */}
               <Inputs {...repeated.inputsProps} dataEntries={entries[1]}
               idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
               appendingTextToNameAndId='study date' customDataKey={'studyDate'}
-              innerCategory={['from', 'to']}/>
+              innerCategory={['from', 'to']} isInFlexContainer={true}/>
             </div>
             {/* add school location, school summary inputs  */}
             <Inputs {...repeated.inputsProps} dataEntries={entries[2]}

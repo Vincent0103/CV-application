@@ -21,7 +21,7 @@ const ExperiencesForm = ({
   };
 
   return (
-    <form className='flex flex-col items-center gap-4 m-2'>
+    <form className='flex flex-col items-center gap-4 m-2 max-lg:m-1 max-lg:gap-3'>
       {experiencesInformations.map((item, index) => {
         const entries = [
           getEntriesFromRange(item, ['positionTitle', 'companyName']),
@@ -36,12 +36,12 @@ const ExperiencesForm = ({
             {/* add company name, position title inputs  */}
             <Inputs {...repeated.inputsProps} dataEntries={entries[0]}
             idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}/>
-            <div className='flex'>
+            <div className='grid grid-cols-2'>
               {/* add work date input  */}
               <Inputs {...repeated.inputsProps} dataEntries={entries[1]}
               idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
               appendingTextToNameAndId='work date' customDataKey={'workDate'}
-              innerCategory={['from', 'to']}/>
+              innerCategory={['from', 'to']} isInFlexContainer={true}/>
             </div>
             <div>
               {/* add job responsibilites inputs  */}

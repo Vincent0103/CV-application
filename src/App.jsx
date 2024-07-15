@@ -253,7 +253,7 @@ function App() {
     setCurrentlyVisibleElement(movingSideMap[movingSide][currentlyVisibleElement]);
   };
   return (
-    <div className='max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
+    <div className='max-lg:flex max-lg:flex-col max-lg:gap-6 max-lg:p-1.5 max-lg:max-h-none max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
       <CVcustomizer handleFormSwitcherBtn={handleFormSwitcherBtn}
       currentlyVisibleElement={currentlyVisibleElement}>

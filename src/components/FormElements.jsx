@@ -84,8 +84,8 @@ const Select = ({
   );
 };
 
-const SectionContainer = ({ children }) => (
-  <div className='p-4 w-full'>
+const SectionContainer = ({ children, customPadding }) => (
+  <div className={`p-4 ${customPadding} w-full max-lg:p-3`}>
     {children}
   </div>
 );
@@ -105,7 +105,7 @@ const AddBtn = ({
   const appendingAriaLabel = appendingTextToAriaLabel || formName;
 
   return (
-    <div className="w-full pb-4 px-4">
+    <div className="w-full pb-4 px-4 max-lg:pb-3 max-lg:px-3">
       <div tabIndex="0" role="button" aria-label={`Add new ${appendingAriaLabel}`}
       className={classes} onClick={handleClickParameterized}>
         {PlusIcon}
@@ -148,6 +148,7 @@ const Inputs = ({
   autoFocus = false,
   nthNameAndId = '',
   appendingTextToNameAndId = '',
+  isInFlexContainer = false,
 }) => (
   dataEntries.map((item, index) => {
     const [key, value] = item;
@@ -159,8 +160,15 @@ const Inputs = ({
     if (appendingTextToNameAndId) nameAndId += `${appendingTextToNameAndId} `;
     nameAndId += toSpacedLowerCase(key);
 
+    let customSectionPadding = '';
+    if (isInFlexContainer) {
+      if (index === 0) customSectionPadding = '!pr-1.5';
+      else if (index === dataEntries.length - 1) customSectionPadding = '!pl-1.5';
+    }
+
     return (
-      <SectionContainer key={index}>
+      <SectionContainer key={index}
+      customPadding={customSectionPadding}>
         <Label name={nameAndId} labelName={toTitle(key)} />
         <InputContainer
           type={type}

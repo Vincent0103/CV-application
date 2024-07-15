@@ -32,9 +32,9 @@ const GeneralForm = ({
     <form>
       {/* add profile picture input */}
       <Inputs {...repeated.inputsProps} dataEntries={entries[0]} autoFocus={true} />
-      <div className="flex">
+      <div className="grid grid-cols-2">
         {/* add name and last name inputs */}
-        <Inputs {...repeated.inputsProps} dataEntries={entries[1]} />
+        <Inputs {...repeated.inputsProps} dataEntries={entries[1]} isInFlexContainer={true} />
       </div>
       {/* add email, phone number, location, summary inputs */}
       <Inputs {...repeated.inputsProps} dataEntries={entries[2]} />
