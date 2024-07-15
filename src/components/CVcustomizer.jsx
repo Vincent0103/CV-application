@@ -10,7 +10,10 @@ const Btn = ({ handleFormSwitcherBtn, movingSide, children }) => (
   </div>
 );
 
-const CVcustomizer = ({ handleFormSwitcherBtn, currentlyVisibleElement, children }) => {
+const CVcustomizer = ({
+  handleFormSwitcherBtn, currentlyVisibleElement,
+  handleClick, children,
+}) => {
   const FormSliderBtns = () => {
     const getClasses = (isActive) => {
       const activeTextClasses = 'font-bold text-3xl h-[35px] text-shadow max-lg:text-2xl max-lg:h-[32px]';
@@ -23,10 +26,11 @@ const CVcustomizer = ({ handleFormSwitcherBtn, currentlyVisibleElement, children
       <div className="flex flex-col mb-2">
         <div className="rounded-lg h-10 max-w-full flex justify-center items-end gap-2">
           <button type="button" className={`${getClasses(currentlyVisibleElement === 'general')}`} aria-selected="true"
-          role="tab">General</button>
+          role="tab" onClick={() => handleClick(null, 'general')}>General</button>
           <button type="button" className={`${getClasses(currentlyVisibleElement === 'education')} border-x-2 border-gray-300 px-2`}
-          role="tab">Education</button>
-          <button type="button" className={`${getClasses(currentlyVisibleElement === 'experiences')}`} role="tab">Experiences</button>
+          role="tab" onClick={() => handleClick(null, 'education')}>Education</button>
+          <button type="button" className={`${getClasses(currentlyVisibleElement === 'experiences')}`} role="tab"
+          onClick={() => handleClick(null, 'experiences')}>Experiences</button>
         </div>
       </div>
     );

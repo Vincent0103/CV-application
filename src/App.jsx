@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { produce } from 'immer';
+import { current, produce } from 'immer';
 import { useState, useCallback, act } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import FormContainer from './components/FormContainer.jsx';
@@ -235,19 +235,33 @@ function App() {
     setMoveForms(movingSide);
   };
 
-  const handleFormSwitcherBtn = (movingSide) => {
-    if (!'idle left right'.includes(movingSide)) return;
-
+  const handleFormSwitcherBtn = (movingSide, toFormName) => {
     const movingSideMap = {
       left: {
         experiences: 'education',
         education: 'general',
+        general: 'experiences',
       },
       right: {
         general: 'education',
         education: 'experiences',
+        experiences: 'general',
       },
     };
+
+    if (toFormName) {
+      if (!'general education experiences'.includes(toFormName)) return;
+      if (currentlyVisibleElement === toFormName) return;
+      if (movingSideMap.left[currentlyVisibleElement] === toFormName) {
+        handleMovingSide('left');
+      } else {
+        handleMovingSide('right');
+      }
+      setCurrentlyVisibleElement(toFormName);
+      return;
+    }
+
+    if (!'idle left right'.includes(movingSide)) return;
 
     handleMovingSide(movingSide);
     setCurrentlyVisibleElement(movingSideMap[movingSide][currentlyVisibleElement]);
@@ -256,7 +270,7 @@ function App() {
     <div className='max-lg:flex max-lg:flex-col max-lg:gap-6 max-lg:p-1.5 max-lg:max-h-none max-w-[1500px] w-[1500px] max-h-[29.7cm] flex justify-center gap-6
     p-5'>
       <CVcustomizer handleFormSwitcherBtn={handleFormSwitcherBtn}
-      currentlyVisibleElement={currentlyVisibleElement}>
+      currentlyVisibleElement={currentlyVisibleElement} handleClick={handleFormSwitcherBtn}>
         <FormContainer childrenRelatedData={['general', 'education', 'experiences']}
         handleMovingSide={handleMovingSide} movingSide={moveForms}
         currentlyVisibleElement={currentlyVisibleElement}>
