@@ -1,4 +1,7 @@
-import getEntriesFromRange, { ArrayOfInputObjectEmptiness, getFormattedDate } from './utils';
+import getEntriesFromRange, {
+  ArrayOfInputObjectEmptiness,
+  getFormattedDate, ColorRatio,
+} from './utils';
 
 const CVpreview = ({ generalInformations, educationInformations, experiencesInformations }) => {
   const ListSection = ({ obj, arrayOfInputObjectEmptiness }) => (
@@ -50,8 +53,13 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
     const emptinessFunctions = [ArrayOfInputObjectEmptiness(arrays[0], ['id', 'placeholder']),
       ArrayOfInputObjectEmptiness(arrays[1], ['id', 'placeholder'])];
 
+    const colorRatio = ColorRatio();
     return (
-      <div className="bg-slate-800 h-full w-[33%] text-white flex
+      <div style={{
+        backgroundColor: generalInformations.accentColor,
+        color: colorRatio.getTextColorBasedOfBackgroundColor(generalInformations.accentColor),
+      }}
+      className="bg-slate-800 h-full w-[33%] text-white flex
       flex-col items-center">
 
         <SectionContainer category={'profilePicture'}

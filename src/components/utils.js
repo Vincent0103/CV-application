@@ -1,3 +1,5 @@
+import Color from 'color';
+
 const getEntriesFromRange = (obj, [startKey, endKey]) => {
   const keys = Object.keys(obj);
   const startingIndex = keys.indexOf(startKey);
@@ -47,6 +49,7 @@ const typeGiver = (category) => {
     name: 'text',
     lastName: 'text',
     location: 'text',
+    accentColor: 'color',
     profilePicture: 'file',
     skills: 'text',
     languages: 'text',
@@ -142,9 +145,33 @@ const getFormattedDate = () => {
   return { formatDate };
 };
 
+const ColorRatio = () => {
+  const calculateRatio = (foregroundLuminosity, backgroundLuminosity) => {
+    const [L1, L2] = (foregroundLuminosity > backgroundLuminosity)
+      ? [foregroundLuminosity, backgroundLuminosity]
+      : [backgroundLuminosity, foregroundLuminosity];
+    return (L1 + 0.05) / (L2 + 0.05);
+  };
+
+  const getTextColorBasedOfBackgroundColor = (backgroundColor) => {
+    const backgroundLuminosity = Color(backgroundColor).luminosity();
+
+    const WHITE_LUMINOSITY = 1;
+    const BLACK_LUMINOSITY = 0;
+
+    const whiteContrastRatio = calculateRatio(WHITE_LUMINOSITY, backgroundLuminosity);
+    const blackContrastRatio = calculateRatio(BLACK_LUMINOSITY, backgroundLuminosity);
+
+    return (whiteContrastRatio < blackContrastRatio) ? 'black' : 'white';
+  };
+
+  return { getTextColorBasedOfBackgroundColor };
+};
+
 export default getEntriesFromRange;
 export {
   toTitle, toSpacedLowerCase, typeGiver, getRandomItem,
   ArrayOfInputObjectEmptiness, classesHandler,
   keyInDeeplyNestedObject, getFormattedDate,
+  ColorRatio,
 };

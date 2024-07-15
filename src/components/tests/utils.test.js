@@ -4,7 +4,7 @@ import {
 import getEntriesFromRange, {
   toTitle, keyInDeeplyNestedObject, toSpacedLowerCase,
   typeGiver, ArrayOfInputObjectEmptiness, classesHandler,
-  getFormattedDate,
+  getFormattedDate, ColorRatio,
 } from '../utils';
 
 describe('getEntriesFromRange fn', () => {
@@ -432,6 +432,28 @@ describe('getFormattedDate module', () => {
   it('returns an empty string if the date string is falsy', () => {
     falsyDateStrings.forEach((dateString) => {
       expect(date.formatDate(dateString)).toBe('');
+    });
+  });
+});
+
+describe('ColorRatio module', () => {
+  const darkerColors = ['#34A853', '#FF5733', '#2980B9', 'rgb(255, 105, 180)', 'rgb(46, 204, 113)', 'hsl(348, 100%, 61%)', 'hsl(200, 100%, 50%)', 'hsl(120, 73%, 46%)'];
+  const whiterColors = ['rgb(123, 31, 162)', '#00008B', '#005B9A', 'hsl(210, 100%, 20%)', 'hsl(220, 100%, 30%)', 'rgb(38, 38, 38)'];
+  let colorRatio;
+
+  beforeEach(() => {
+    colorRatio = ColorRatio();
+  });
+
+  it('returns the dark text color when given a lighter background color', () => {
+    darkerColors.forEach((color) => {
+      expect(colorRatio.getTextColorBasedOfBackgroundColor(color)).toBe('black');
+    });
+  });
+
+  it('returns the white text color when given a darker background color', () => {
+    whiterColors.forEach((color) => {
+      expect(colorRatio.getTextColorBasedOfBackgroundColor(color)).toBe('white');
     });
   });
 });

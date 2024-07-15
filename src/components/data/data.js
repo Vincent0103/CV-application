@@ -102,6 +102,7 @@ const Placeholders = {
 };
 
 const general = {
+  accentColor: '#1e293b',
   profilePicture: '',
   name: '',
   lastName: '',

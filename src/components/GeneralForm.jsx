@@ -10,7 +10,7 @@ const GeneralForm = ({
   const languagesOptions = ['Beginner', 'Intermediate', 'Advanced', 'Fluent'];
 
   const entries = [
-    getEntriesFromRange(generalInformations, ['profilePicture', false]),
+    getEntriesFromRange(generalInformations, ['accentColor', 'profilePicture']),
     getEntriesFromRange(generalInformations, ['name', 'lastName']),
     getEntriesFromRange(generalInformations, ['email', 'summary']),
     getEntriesFromRange(generalInformations, ['hobbies', false]),
