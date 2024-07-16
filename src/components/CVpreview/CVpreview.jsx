@@ -12,7 +12,7 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
   // converting educationPlaceholders and experiencesPlaceholders
   // into array because they're an object
   const [generalObj, educationObj, experiencesObj] = (areInformationsEmpty)
-    ? [generalPlaceholders, [educationPlaceholders], [experiencesPlaceholders]]
+    ? [generalPlaceholders, educationPlaceholders, experiencesPlaceholders]
     : [generalInformations, educationInformations, experiencesInformations];
 
   return (

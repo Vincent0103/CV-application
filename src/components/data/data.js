@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { getRandomItem } from '../utils';
-import JohnDoeUrl from '../../assets/johnDoe.png';
+import JohnDoeUrl from '../../assets/johnDoe.jpg';
 
 const randomStrings = {
   general: {
@@ -94,31 +94,58 @@ const Placeholders = {
     ],
     hobbies: 'In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.',
   },
-  education: {
-    schoolName: 'University of Example',
-    studyName: 'Bachelor of Science in Computer Science',
-    studyDate: {
-      from: '2015-08-12',
-      to: '2019-05-01',
+  education: [
+    {
+      schoolName: 'University of Example',
+      studyName: 'Bachelor of Science in Computer Science',
+      studyDate: {
+        from: '2015-08-12',
+        to: '2019-05-01',
+      },
+      location: 'Rio de Janeiro, Brazil',
+      summary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
     },
-    location: 'Rio de Janeiro, Brazil',
-    summary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
-  },
-  experiences: {
-    companyName: 'regex101',
-    positionTitle: 'Tester',
-    workDate: {
-      from: '2018-02-03',
-      to: '2022-01-13',
+    {
+      schoolName: 'Lycée Racine',
+      studyName: 'High School Bachelor',
+      studyDate: {
+        from: '2021-09-01',
+        to: '2024-07-03',
+      },
+      location: 'Saint-Lazare, France',
+      summary: 'Graduated with "assez-bien" honors which means pretty good and it\'s given for those who get between 12 and 14 out of 20 in the average total mark',
     },
-    jobResponsibilities: [
-      { responsibility: 'Analyze internal operations and identify areas of process enhancement' },
-      { responsibility: 'Train, coach, and oversee new employees' },
-      { responsibility: 'Implement marketing and advertising campaigns' },
-      { responsibility: 'Support sales staff' },
-    ],
-    summary: 'Led a team of developers in a high-stakes project, delivering the product ahead of schedule with exceptional quality.',
-  },
+  ],
+  experiences: [
+    {
+      companyName: 'regex101',
+      positionTitle: 'Tester',
+      workDate: {
+        from: '2018-02-03',
+        to: '2022-01-13',
+      },
+      jobResponsibilities: [
+        { responsibility: 'Analyze internal operations and identify areas of process enhancement' },
+        { responsibility: 'Train, coach, and oversee new employees' },
+        { responsibility: 'Implement marketing and advertising campaigns' },
+        { responsibility: 'Support sales staff' },
+      ],
+      summary: 'Led a team of developers in a high-stakes project, delivering the product ahead of schedule with exceptional quality.',
+    },
+    {
+      companyName: 'starterpack.co',
+      positionTitle: 'Web Developer',
+      workDate: {
+        from: '2012-11-23',
+        to: '2018-04-05',
+      },
+      jobResponsibilities: [
+        { responsibility: 'Collaborate with team members' },
+        { responsibility: 'Prepare and review operational reports and schedules' },
+      ],
+      summary: 'It is where i got started into coding and also where i mastered it. Seriously i\'d recommend you at all cost this campus if you ever want to learn web dev!',
+    },
+  ],
 };
 
 const general = {
