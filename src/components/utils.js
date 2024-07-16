@@ -85,6 +85,12 @@ const ArrayOfInputObjectEmptiness = (array, keysToOmit) => {
   return { isEmpty, isInputObjectEmpty };
 };
 
+const areObjectsEmpty = (objsArray, keysToOmitArray) => objsArray.every((obj, i) => {
+  let current = obj;
+  if (!Array.isArray(obj)) current = [obj];
+  return ArrayOfInputObjectEmptiness(current, keysToOmitArray[i]).isEmpty();
+});
+
 const classesHandler = () => {
   const positionClasses = {
     left: 'hidden -left-full pointer-events-none',
@@ -171,7 +177,7 @@ const ColorRatio = () => {
 export default getEntriesFromRange;
 export {
   toTitle, toSpacedLowerCase, typeGiver, getRandomItem,
-  ArrayOfInputObjectEmptiness, classesHandler,
-  keyInDeeplyNestedObject, getFormattedDate,
-  ColorRatio,
+  ArrayOfInputObjectEmptiness, areObjectsEmpty,
+  classesHandler, keyInDeeplyNestedObject,
+  getFormattedDate, ColorRatio,
 };

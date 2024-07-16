@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { getRandomItem } from '../utils';
+import JohnDoeUrl from '../../assets/johnDoe.png';
 
 const randomStrings = {
   general: {
@@ -75,12 +76,22 @@ const randomStrings = {
 
 const Placeholders = {
   general: {
+    profilePicture: JohnDoeUrl,
     name: 'John',
     lastName: 'Doe',
     email: 'johndoe@gmail.com',
     phoneNumber: '06 32 73 12 98',
     location: '75010 Paris, France',
     summary: 'I am John Doe, a passionate and dedicated web developer with a proven track record of creating dynamic and user-friendly websites and applications.',
+    skills: [
+      { skill: 'Networking', expertise: 'Advanced' },
+      { skill: 'Coding', expertise: 'Intermediate' },
+    ],
+    languages: [
+      { language: 'French', fluency: 'Fluent' },
+      { language: 'English', fluency: 'Advanced' },
+      { language: 'Spanish', fluency: 'Beginner' },
+    ],
     hobbies: 'In my free time, I enjoy coding personal projects, hiking in nature, reading about the latest technology trends, and volunteering at local community centers.',
   },
   education: {
@@ -97,9 +108,15 @@ const Placeholders = {
     companyName: 'regex101',
     positionTitle: 'Tester',
     workDate: {
-      from: '',
-      to: '',
+      from: '2018-02-03',
+      to: '2022-01-13',
     },
+    jobResponsibilities: [
+      { responsibility: 'Analyze internal operations and identify areas of process enhancement' },
+      { responsibility: 'Train, coach, and oversee new employees' },
+      { responsibility: 'Implement marketing and advertising campaigns' },
+      { responsibility: 'Support sales staff' },
+    ],
     summary: 'Led a team of developers in a high-stakes project, delivering the product ahead of schedule with exceptional quality.',
   },
 };

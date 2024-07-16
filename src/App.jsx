@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
-import { current, produce } from 'immer';
-import { useState, useCallback, act } from 'react';
+import { produce } from 'immer';
+import { useState, useCallback } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import FormContainer from './components/FormContainer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
 import EducationForm from './components/EducationForm.jsx';
 import ExperiencesForm from './components/ExperiencesForm.jsx';
-import CVpreview from './components/CVpreview.jsx';
+import CVpreview from './components/CVpreview/CVpreview.jsx';
 import {
   randomStrings,
   general, education, experiences,
@@ -121,10 +121,10 @@ function App() {
     const reader = new FileReader();
     if (formName === 'general') {
       reader.onloadend = () => {
-        setGeneralInformations({
-          ...generalInformations,
-          profilePicture: reader.result,
-        });
+        setGeneralInformations(produce((draft) => {
+          const current = draft;
+          current.profilePicture = reader.result;
+        }));
       };
       reader.readAsDataURL(file);
     }
