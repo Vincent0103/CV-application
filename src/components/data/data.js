@@ -86,7 +86,10 @@ const Placeholders = {
   education: {
     schoolName: 'University of Example',
     studyName: 'Bachelor of Science in Computer Science',
-    date: 'August 2015 - May 2019',
+    studyDate: {
+      from: '2015-08-12',
+      to: '2019-05-01',
+    },
     location: 'Rio de Janeiro, Brazil',
     summary: 'Graduated with honors, actively participated in coding competitions, and contributed to open-source projects.',
   },

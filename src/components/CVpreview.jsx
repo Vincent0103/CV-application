@@ -2,6 +2,7 @@ import getEntriesFromRange, {
   ArrayOfInputObjectEmptiness,
   getFormattedDate, ColorRatio,
 } from './utils';
+import { generalPlaceholders, educationPlaceholders } from './data/data';
 
 const CVpreview = ({ generalInformations, educationInformations, experiencesInformations }) => {
   const ListSection = ({ obj, arrayOfInputObjectEmptiness }) => (
@@ -111,59 +112,92 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
     const generalObj = generalInformations;
     const educationArray = educationInformations;
     const experiencesArray = experiencesInformations;
-    const educationEmptiness = ArrayOfInputObjectEmptiness(educationArray, ['id']);
     const experiencesEmptiness = ArrayOfInputObjectEmptiness(experiencesArray, ['id', 'placeholder']);
     const date = getFormattedDate();
 
+    const NameHeading = ({ name, lastName }) => (
+      <h1 className="text-5xl font-black text-zinc-700 py-3
+        max-lg:py-2 max-lg:text-4xl max-sm:py-1.5 max-sm:text-xl">{name} {lastName}</h1>
+    );
+
+    const ContactsAndLocationSection = ({ entries }) => (
+      <>
+        <div className="flex flex-wrap gap-1 justify-between py-3
+        max-lg:py-2 max-sm:py-1.5">
+          <FlexItems obj={entries} />
+        </div>
+        <hr />
+      </>
+    );
+
+    const GeneralSummary = ({ summary }) => (
+      <div>
+        <h3 className="font-extrabold text-2xl py-3 underline decoration-1 underline-offset-4
+        max-lg:text-xl max-lg:py-2 max-sm:text-sm max-sm:py-1.5">Summary</h3>
+        <p className='max-lg:text-xs max-sm:text-[8px]
+        max-sm:leading-snug'>{summary}</p>
+      </div>
+    );
+
+    const EducationSection = ({ education, educationEmptiness, addPlaceholders = false }) => {
+      const EducationRelated = ({ object, isFirstOccurence = false }) => (
+        <div className={`${isFirstOccurence && 'pt-0'} py-2 flex flex-col gap-2`}>
+          <div className='flex justify-between items-center'>
+            {object.schoolName
+            && <h4 className='font-bold text-xl max-lg:text-base
+            max-sm:text-xs'>{object.schoolName}</h4>}
+            {(object.studyDate.from || object.studyDate.to)
+            && <p className='max-lg:text-xs max-sm:text-[8px] max-sm:leading-snug'>
+              {date.formatDate(object.studyDate.from)} - {date.formatDate(object.studyDate.to)}
+            </p>}
+          </div>
+          <div>
+            {object.studyName
+            && <p className='font-semibold max-lg:text-sm max-sm:text-[10px]
+            max-sm:leading-snug'>{object.studyName}</p>}
+            {object.location
+            && <p className='max-lg:text-xs
+            max-sm:text-[8px] max-sm:leading-snug'>{object.location}</p>}
+          </div>
+          {object.summary
+          && <p className='max-lg:text-xs
+          max-sm:text-[8px] max-sm:leading-snug'>{object.summary}</p>}
+        </div>
+      );
+
+      return (
+        <div>
+          <h3 className='font-extrabold text-2xl py-3 underline decoration-1 underline-offset-4
+          max-lg:text-xl max-lg:py-2 max-sm:text-sm max-sm:py-1.5'>Education</h3>
+          {!addPlaceholders
+            ? education.map((item, index) => (
+              !educationEmptiness.isInputObjectEmpty(item)
+              && <EducationRelated key={index} object={item} isFirstOccurence={(index === 0)} />
+            ))
+            : <EducationRelated object={education} />
+          }
+        </div>
+      );
+    };
+
+    const emptinessEducation = ArrayOfInputObjectEmptiness(educationArray, ['id']);
     return (
       <div className="bg-white h-full w-[67%] px-4 max-lg:px-3 max-sm:px-2">
         {(generalObj.name || generalObj.lastName)
-        && <h1 className="text-5xl font-black text-zinc-700 py-3
-        max-lg:py-2 max-lg:text-4xl max-sm:py-1.5 max-sm:text-xl">{generalObj.name} {generalObj.lastName}</h1>}
+          ? <NameHeading name={generalObj.name} lastName={generalObj.lastName} />
+          : <NameHeading name={generalPlaceholders.name} lastName={generalPlaceholders.lastName} />}
         {(generalObj.email || generalObj.phoneNumber || generalObj.location)
-        && <>
-            <div className="flex flex-wrap gap-1 justify-between py-3
-            max-lg:py-2 max-sm:py-1.5">
-              <FlexItems obj={getEntriesFromRange(generalObj, ['email', 'location'])} />
-            </div>
-            <hr />
-          </>
-        }
+          ? <ContactsAndLocationSection entries={getEntriesFromRange(generalObj, ['email', 'location'])} />
+          : <ContactsAndLocationSection entries={getEntriesFromRange(generalPlaceholders, ['email', 'location'])} />}
         <div className='flex flex-col gap-2'>
           {(generalObj.summary)
-          && <div>
-              <h3 className="font-extrabold text-2xl py-3 underline decoration-1 underline-offset-4
-              max-lg:text-xl max-lg:py-2 max-sm:text-sm max-sm:py-1.5">Summary</h3>
-              <p className='max-lg:text-xs max-sm:text-[8px]
-              max-sm:leading-snug'>{generalObj.summary}</p>
-            </div>
+            ? <GeneralSummary summary={generalObj.summary} />
+            : <GeneralSummary summary={generalPlaceholders.summary} />
           }
-          {(!educationEmptiness.isEmpty())
-          && <div>
-              <h3 className='font-extrabold text-2xl py-3 underline decoration-1 underline-offset-4
-              max-lg:text-xl max-lg:py-2 max-sm:text-sm max-sm:py-1.5'>Education</h3>
-              {educationArray.map((item, index) => (
-                !educationEmptiness.isInputObjectEmpty(item)
-                && <div key={index}
-                className={`${index === 0 && 'pt-0'} py-2 flex flex-col gap-2`}>
-                  <div className='flex justify-between items-center'>
-                    <h4 className='font-bold text-xl max-lg:text-base
-                    max-sm:text-xs'>{item.schoolName}</h4>
-                    <p className='max-lg:text-xs max-sm:text-[8px] max-sm:leading-snug'>
-                      {date.formatDate(item.studyDate.from)} - {date.formatDate(item.studyDate.to)}
-                    </p>
-                  </div>
-                  <div>
-                    <p className='font-semibold max-lg:text-sm max-sm:text-[10px]
-                    max-sm:leading-snug'>{item.studyName}</p>
-                    <p className='max-lg:text-xs
-                    max-sm:text-[8px] max-sm:leading-snug'>{item.location}</p>
-                  </div>
-                  <p className='max-lg:text-xs
-                    max-sm:text-[8px] max-sm:leading-snug'>{item.summary}</p>
-                </div>
-              ))}
-            </div>
+          {(!emptinessEducation.isEmpty())
+            ? <EducationSection education={educationArray}
+            educationEmptiness={emptinessEducation} />
+            : <EducationSection education={educationPlaceholders} addPlaceholders={true} />
           }
           {(!experiencesEmptiness.isEmpty())
           && <div>
