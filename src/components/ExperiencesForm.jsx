@@ -1,6 +1,6 @@
 import { toWordsOrdinal } from 'number-to-words';
 import { Inputs, AddBtn, ExperiencesMultipleInputs } from './FormElements.jsx';
-import getEntriesFromRange from './utils';
+import getEntriesFromRange, { getRandomItem } from './utils';
 import { experiencesPlaceholders } from './data/data';
 
 const ExperiencesForm = ({
@@ -10,7 +10,7 @@ const ExperiencesForm = ({
 }) => {
   const repeated = {
     inputsProps: {
-      formName: 'experiences', placeholders: experiencesPlaceholders, handleFormChange,
+      formName: 'experiences', placeholders: getRandomItem(experiencesPlaceholders), handleFormChange,
     },
     experiencesMultipleInputsProps: {
       formName: 'experiences', handleFormChange, handleFormClick,

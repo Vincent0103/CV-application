@@ -1,6 +1,6 @@
 import { toWordsOrdinal } from 'number-to-words';
 import { Inputs, AddBtn } from './FormElements.jsx';
-import getEntriesFromRange from './utils';
+import getEntriesFromRange, { getRandomItem } from './utils';
 import { educationPlaceholders } from './data/data';
 
 const EducationForm = ({
@@ -10,7 +10,7 @@ const EducationForm = ({
 }) => {
   const repeated = {
     inputsProps: {
-      formName: 'education', placeholders: educationPlaceholders, handleFormChange,
+      formName: 'education', placeholders: getRandomItem(educationPlaceholders), handleFormChange,
     },
     addBtnProps: {
       formName: 'education', handleFormClick,
