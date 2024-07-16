@@ -32,3 +32,6 @@ This project is licensed under the vinct License.
 ## Acknowledgements
 
 The Odin Project for providing valuable resources and guidance.
+
+<!-- FINISH README.md -->
+<!-- Add remove btn for education and experiences form -->

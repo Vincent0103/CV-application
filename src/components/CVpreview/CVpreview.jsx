@@ -17,7 +17,7 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
 
   return (
     <div className={`bg-white w-[67%] max-h-full aspect-[0.707] shadow-lg rounded-md self-start
-    flex text-sm max-lg:w-full`}>
+    flex text-sm max-lg:w-full overflow-y-hidden`}>
       <PrimaryContainer generalInformations={generalInformations}
       generalObj={generalObj} areInformationsEmpty={areInformationsEmpty}/>
       <SecondaryContainer generalObj={generalObj} educationObj={educationObj}
