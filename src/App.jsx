@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, act } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
 import FormContainer from './components/FormContainer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
@@ -156,20 +156,30 @@ function App() {
     }));
   };
 
-  const handleEducationClick = () => {
-    const newEducation = {
-      ...formDefaultInformations.education,
-      id: uuidv4(),
-    };
-    setEducationInformations((prevState) => ([
-      ...prevState,
-      { ...newEducation },
-    ]));
+  const handleEducationClick = (action, idOfChangingInformationObject) => {
+    if (action === 'add') {
+      const newEducation = {
+        ...formDefaultInformations.education,
+        id: uuidv4(),
+      };
+      setEducationInformations(produce((draft) => {
+        const current = draft;
+        current.push(newEducation);
+      }));
+    } else {
+      const index = educationInformations
+        .findIndex(({ id }) => id === idOfChangingInformationObject);
+
+      setEducationInformations(produce((draft) => {
+        const current = draft;
+        current.splice(index, 1);
+      }));
+    }
   };
 
   const handleExperiencesClick = (action, key, idOfChangingInformationObject, innerObjectId) => {
     if (action === 'add') {
-      if (idOfChangingInformationObject) {
+      if (key) {
         if (!(key in experiencesInformations[0])) return;
         const entryKeysToChange = Object.keys(formDefaultInformations.experiences[key][0]);
 
@@ -221,7 +231,7 @@ function App() {
         handleGeneralClick(action, key, idOfChangingInformationObject);
         break;
       case 'education':
-        handleEducationClick();
+        handleEducationClick(action, idOfChangingInformationObject);
         break;
       case 'experiences':
         handleExperiencesClick(action, key, idOfChangingInformationObject, innerObjectId);

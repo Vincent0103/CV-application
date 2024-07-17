@@ -226,7 +226,6 @@ const ExperiencesMultipleInputs = ({
   idOfChangingInformationObject,
   categoryName,
   responsibilityKey,
-  customColor,
   appendingTextToNameAndId = '',
 }) => {
   let currentConvertedIndex;
@@ -253,7 +252,8 @@ const ExperiencesMultipleInputs = ({
             <Btn formName={formName} btnFunctionName={'remove'}
             idOfChangingInformationObject={idOfChangingInformationObject} innerObjectId={item.id}
             handleFormClick={handleFormClick} dataKey={categoryName}
-            customColor={customColor} appendingTextToAriaLabel={nameAndId}/>
+            customColor={'bg-indigo-500 border-indigo-600 focus:ring-indigo-800 focus:border-indigo-800'}
+            appendingTextToAriaLabel={nameAndId}/>
           </ InputContainer>
         );
       })}
@@ -294,7 +294,8 @@ const InputsAndSelects = ({
             innerObjectId={entry.id} />
           <Btn formName={formName} btnFunctionName={'remove'}
           idOfChangingInformationObject={entry.id} handleFormClick={handleFormClick}
-          dataKey={categoryName} appendingTextToAriaLabel={`${currentConvertedIndex} ${innerCategory}`}/>
+          dataKey={categoryName} appendingTextToAriaLabel={`${currentConvertedIndex} ${innerCategory}`}
+          customColor={'bg-indigo-500 border-indigo-600 focus:ring-indigo-800 focus:border-indigo-800'}/>
         </ InputContainer>;
       })}
     </SectionContainer>

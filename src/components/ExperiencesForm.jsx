@@ -55,8 +55,7 @@ const ExperiencesForm = ({
               <ExperiencesMultipleInputs {...repeated.experiencesMultipleInputsProps}
               inputsArray={item.jobResponsibilities} categoryName={'jobResponsibilities'}
               idOfChangingInformationObject={item.id} responsibilityKey={'responsibility'}
-              appendingTextToNameAndId={`of ${currentWordOrdinal} experiences`}
-              customColor={'bg-indigo-500 border-indigo-600 focus:ring-indigo-800 focus:border-indigo-800'}/>
+              appendingTextToNameAndId={`of ${currentWordOrdinal} experiences`}/>
               <Btn {...repeated.addBtnProps} btnFunctionName={'add'}
               dataKey={'jobResponsibilities'} btnText={'Responsibility'}
               appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}

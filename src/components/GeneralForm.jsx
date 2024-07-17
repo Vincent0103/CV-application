@@ -43,7 +43,8 @@ const GeneralForm = ({
         object={generalInformations} categoryName={'skills'}
         inputtableSubCategoryKeys={['skill', 'expertise']} optionsArray={skillsOptions} />
         <Btn {...repeated.addBtnProps} dataKey={'skills'} btnFunctionName={'add'}
-        appendingTextToAriaLabel={'skill'} btnText={'Skill'}/>
+        appendingTextToAriaLabel={'skill'} btnText={'Skill'}
+        customColor={'bg-indigo-950'}/>
       </div>
       <div>
         <InputsAndSelects {...repeated.inputsAndSelectsProps}
@@ -51,7 +52,7 @@ const GeneralForm = ({
         inputtableSubCategoryKeys={['language', 'fluency']} optionsArray={languagesOptions} />
         <Btn {...repeated.addBtnProps} dataKey={'languages'}
         btnFunctionName={'add'} appendingTextToAriaLabel={'language'}
-        btnText={'Language'}/>
+        btnText={'Language'} customColor={'bg-indigo-950'}/>
       </div>
       {/* add hobbies input */}
       <Inputs {...repeated.inputsProps} dataEntries={entries[3]} />
