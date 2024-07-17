@@ -1,5 +1,5 @@
 import { toWordsOrdinal } from 'number-to-words';
-import { Inputs, AddBtn, RemoveBtn } from './FormElements.jsx';
+import { Inputs, Btn } from './FormElements.jsx';
 import getEntriesFromRange, { getRandomItem } from './utils';
 import { educationPlaceholders } from './data/data';
 
@@ -33,8 +33,8 @@ const EducationForm = ({
 
         return (
           <div key={index} className=' bg-zinc-200 border-2 border-zinc-300 w-full rounded-lg shadow-sm box'>
-            <RemoveBtn {...repeated.removeBtnProps} dataKey={'jobResponsibilities'}
-              appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}
+            <Btn {...repeated.removeBtnProps} btnFunctionName={'remove'} isFormBtn={true}
+              dataKey={'jobResponsibilities'} appendingTextToAriaLabel={`${currentWordOrdinal} education`}
               idOfChangingInformationObject={item.id} btnText={'Education'}/>
             {/* add school name, study name  */}
             <Inputs {...repeated.inputsProps} dataEntries={entries[0]}
@@ -53,7 +53,8 @@ const EducationForm = ({
           </div>
         );
       })}
-      <AddBtn {...repeated.addBtnProps} btnText={'Education'}/>
+      <Btn {...repeated.addBtnProps} btnFunctionName={'add'}
+      isFormBtn={true} btnText={'Education'}/>
     </form>
   );
 };

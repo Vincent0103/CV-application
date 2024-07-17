@@ -1,4 +1,4 @@
-import { Inputs, InputsAndSelects, AddBtn } from './FormElements.jsx';
+import { Inputs, InputsAndSelects, Btn } from './FormElements.jsx';
 import getEntriesFromRange from './utils';
 import { generalPlaceholders } from './data/data';
 
@@ -42,14 +42,15 @@ const GeneralForm = ({
         <InputsAndSelects {...repeated.inputsAndSelectsProps}
         object={generalInformations} categoryName={'skills'}
         inputtableSubCategoryKeys={['skill', 'expertise']} optionsArray={skillsOptions} />
-        <AddBtn {...repeated.addBtnProps} dataKey={'skills'} appendingTextToAriaLabel={'skill'}
-        btnText={'Skill'}/>
+        <Btn {...repeated.addBtnProps} dataKey={'skills'} btnFunctionName={'add'}
+        appendingTextToAriaLabel={'skill'} btnText={'Skill'}/>
       </div>
       <div>
         <InputsAndSelects {...repeated.inputsAndSelectsProps}
         object={generalInformations} categoryName={'languages'}
         inputtableSubCategoryKeys={['language', 'fluency']} optionsArray={languagesOptions} />
-        <AddBtn {...repeated.addBtnProps} dataKey={'languages'} appendingTextToAriaLabel={'language'}
+        <Btn {...repeated.addBtnProps} dataKey={'languages'}
+        btnFunctionName={'add'} appendingTextToAriaLabel={'language'}
         btnText={'Language'}/>
       </div>
       {/* add hobbies input */}

@@ -1,5 +1,5 @@
 import { toWordsOrdinal } from 'number-to-words';
-import { Inputs, AddBtn, RemoveBtn, ExperiencesMultipleInputs } from './FormElements.jsx';
+import { Inputs, Btn, ExperiencesMultipleInputs } from './FormElements.jsx';
 import getEntriesFromRange, { getRandomItem } from './utils';
 import { experiencesPlaceholders } from './data/data';
 
@@ -36,7 +36,8 @@ const ExperiencesForm = ({
 
         return (
           <div key={index} className=' bg-zinc-200 border-2 border-zinc-300 w-full rounded-lg shadow-sm box'>
-            <RemoveBtn {...repeated.removeBtnProps} dataKey={'jobResponsibilities'}
+            <Btn {...repeated.removeBtnProps} btnFunctionName={'remove'} isFormBtn={true}
+              dataKey={'jobResponsibilities'}
               appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}
               idOfChangingInformationObject={item.id} btnText={'Experiences'}/>
             {/* add position title, company name inputs  */}
@@ -56,10 +57,10 @@ const ExperiencesForm = ({
               idOfChangingInformationObject={item.id} responsibilityKey={'responsibility'}
               appendingTextToNameAndId={`of ${currentWordOrdinal} experiences`}
               customColor={'bg-indigo-500 border-indigo-600 focus:ring-indigo-800 focus:border-indigo-800'}/>
-              <AddBtn {...repeated.addBtnProps} dataKey={'jobResponsibilities'}
+              <Btn {...repeated.addBtnProps} btnFunctionName={'add'}
+              dataKey={'jobResponsibilities'} btnText={'Responsibility'}
               appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}
-              idOfChangingInformationObject={item.id} customColor='bg-indigo-950'
-              btnText={'Responsibility'}/>
+              idOfChangingInformationObject={item.id} customColor='bg-indigo-950'/>
             </div>
             {/* add summary input  */}
             <Inputs {...repeated.inputsProps} dataEntries={entries[2]}
@@ -68,7 +69,8 @@ const ExperiencesForm = ({
           </div>
         );
       })}
-      <AddBtn {...repeated.addBtnProps} btnText={'Experiences'}/>
+      <Btn {...repeated.addBtnProps} btnFunctionName={'add'}
+      isFormBtn={true} btnText={'Experiences'}/>
     </form>
   );
 };
