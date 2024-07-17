@@ -22,7 +22,7 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
     : [generalInformations, educationInformations, experiencesInformations];
 
   return (
-    <div className={`bg-white w-[67%] max-h-full aspect-[0.707] shadow-lg rounded-md self-start
+    <div className={`bg-white w-[67%] max-h-[29.7cm] aspect-[0.707] shadow-lg rounded-md self-start
     flex text-sm max-lg:w-full overflow-y-hidden`}>
       <PrimaryContainer generalInformations={generalInformations}
       generalObj={generalObj} areInformationsEmpty={areInformationsEmpty}/>
