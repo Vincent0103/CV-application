@@ -1,29 +1,35 @@
-# testing-practice
+# CV-Application
 
 ## Description
 
-<!-- TODO -->
+This project builds a CV by what the user inputs on the forms (general, education, experiences). It is part of the curriculum I am following known as the [The Odin Project](https://www.theodinproject.com/) This project made me introduce to React, TailwindCSS and the Vite bundler where I learnt to intensively use react hooks, react concepts, ect...
 
 ## Features
 
-<!-- TODO -->
+- Dynamic CV preview update on input changes
+- Very customisable CV (choosable accent color, choosable number of certain inputs or input components like skills or languages, etc...)
+- Responsive on most devices (mobiles, tablets, desktop)
+- Premade CV template when user hops onto the website
 
 ## Technologies Used
 
 - **Programming Language**: Javascript
-- **Testing Framework**: Jest
-- **Additional Technologies**: Check the devDependencies in [packages.json](package.json)
+- **Web Bundler**: Vite
+- **Programming framework**: React
+- **CSS Framework**: TailwindCSS
+- **Testing Framework**: Vitest
+- **Additional Technologies**: Check the dependencies in [packages.json](./package.json)
 
 ## Getting Started
 
-Clone the repository: git clone https://github.com/your-username/your-project.git
-Navigate to the project directory: cd your-project
+Clone the repository: git clone https://github.com/Vincent0103/CV-application.git
+Navigate to the project directory: cd CV-application
 Install dependencies: npm install or yarn install
 Run the tests: npm test or yarn test
 
 ## Testing
 
-all the tests are located in <!-- TODO [LINK] -->
+all the tests are located in [tests](./src/components/tests/).
 
 ## License
 
@@ -33,5 +39,4 @@ This project is licensed under the vinct License.
 
 The Odin Project for providing valuable resources and guidance.
 
-<!-- FINISH README.md -->
-<!-- Add remove btn for education and experiences form -->
+Thank you to all contributors and users for their interest and feedback on this project.
