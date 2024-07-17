@@ -22,10 +22,10 @@ This project builds a CV by what the user inputs on the forms (general, educatio
 
 ## Getting Started
 
-Clone the repository: git clone https://github.com/Vincent0103/CV-application.git
-Navigate to the project directory: cd CV-application
-Install dependencies: npm install or yarn install
-Run the tests: npm test or yarn test
+- Clone the repository: git clone https://github.com/Vincent0103/CV-application.git
+- Navigate to the project directory: cd CV-application
+- Install dependencies: npm install or yarn install
+- Run the tests: npm test or yarn test
 
 ## Testing
 
