@@ -1,5 +1,5 @@
 import { toWordsOrdinal } from 'number-to-words';
-import { Inputs, AddBtn, ExperiencesMultipleInputs } from './FormElements.jsx';
+import { Inputs, AddBtn, RemoveBtn, ExperiencesMultipleInputs } from './FormElements.jsx';
 import getEntriesFromRange, { getRandomItem } from './utils';
 import { experiencesPlaceholders } from './data/data';
 
@@ -18,6 +18,9 @@ const ExperiencesForm = ({
     addBtnProps: {
       formName: 'experiences', handleFormClick,
     },
+    removeBtnProps: {
+      formName: 'experiences', handleFormClick, removeBtnForWholeFormInstance: true,
+    },
   };
 
   return (
@@ -33,7 +36,10 @@ const ExperiencesForm = ({
 
         return (
           <div key={index} className=' bg-zinc-200 border-2 border-zinc-300 w-full rounded-lg shadow-sm box'>
-            {/* add company name, position title inputs  */}
+            <RemoveBtn {...repeated.removeBtnProps} dataKey={'jobResponsibilities'}
+              appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}
+              idOfChangingInformationObject={item.id} btnText={'Experiences'}/>
+            {/* add position title, company name inputs  */}
             <Inputs {...repeated.inputsProps} dataEntries={entries[0]}
             idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}/>
             <div className='grid grid-cols-2'>
@@ -48,10 +54,12 @@ const ExperiencesForm = ({
               <ExperiencesMultipleInputs {...repeated.experiencesMultipleInputsProps}
               inputsArray={item.jobResponsibilities} categoryName={'jobResponsibilities'}
               idOfChangingInformationObject={item.id} responsibilityKey={'responsibility'}
-              appendingTextToNameAndId={`of ${currentWordOrdinal} experiences`}/>
+              appendingTextToNameAndId={`of ${currentWordOrdinal} experiences`}
+              customColor={'bg-indigo-500 border-indigo-600 focus:ring-indigo-800 focus:border-indigo-800'}/>
               <AddBtn {...repeated.addBtnProps} dataKey={'jobResponsibilities'}
               appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}
-              idOfChangingInformationObject={item.id} customColor='bg-indigo-950'/>
+              idOfChangingInformationObject={item.id} customColor='bg-indigo-950'
+              btnText={'Responsibility'}/>
             </div>
             {/* add summary input  */}
             <Inputs {...repeated.inputsProps} dataEntries={entries[2]}
@@ -60,7 +68,7 @@ const ExperiencesForm = ({
           </div>
         );
       })}
-      <AddBtn {...repeated.addBtnProps}/>
+      <AddBtn {...repeated.addBtnProps} btnText={'Experiences'}/>
     </form>
   );
 };

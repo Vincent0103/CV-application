@@ -42,13 +42,15 @@ const GeneralForm = ({
         <InputsAndSelects {...repeated.inputsAndSelectsProps}
         object={generalInformations} categoryName={'skills'}
         inputtableSubCategoryKeys={['skill', 'expertise']} optionsArray={skillsOptions} />
-        <AddBtn {...repeated.addBtnProps} dataKey={'skills'} appendingTextToAriaLabel={'skill'} />
+        <AddBtn {...repeated.addBtnProps} dataKey={'skills'} appendingTextToAriaLabel={'skill'}
+        btnText={'Skill'}/>
       </div>
       <div>
         <InputsAndSelects {...repeated.inputsAndSelectsProps}
         object={generalInformations} categoryName={'languages'}
         inputtableSubCategoryKeys={['language', 'fluency']} optionsArray={languagesOptions} />
-        <AddBtn {...repeated.addBtnProps} dataKey={'languages'} appendingTextToAriaLabel={'language'} />
+        <AddBtn {...repeated.addBtnProps} dataKey={'languages'} appendingTextToAriaLabel={'language'}
+        btnText={'Language'}/>
       </div>
       {/* add hobbies input */}
       <Inputs {...repeated.inputsProps} dataEntries={entries[3]} />
