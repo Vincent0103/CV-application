@@ -9,10 +9,16 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
     [['accentColor', 'id', 'placeholder'], ['id'], ['id', 'placeholder']],
   );
 
+  const placeholders = [
+    { ...generalPlaceholders },
+    [...educationPlaceholders].splice(0, 2),
+    [...experiencesPlaceholders].splice(0, 2),
+  ];
+
   // converting educationPlaceholders and experiencesPlaceholders
   // into array because they're an object
   const [generalObj, educationObj, experiencesObj] = (areInformationsEmpty)
-    ? [generalPlaceholders, educationPlaceholders, experiencesPlaceholders]
+    ? [...placeholders]
     : [generalInformations, educationInformations, experiencesInformations];
 
   return (

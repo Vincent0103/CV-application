@@ -115,6 +115,26 @@ const Placeholders = {
       location: 'Saint-Lazare, France',
       summary: 'Graduated with "assez-bien" honors which means pretty good and it\'s given for those who get between 12 and 14 out of 20 in the average total mark',
     },
+    {
+      schoolName: 'Online University of Tech',
+      studyName: 'Master of Science in Software Engineering',
+      studyDate: {
+        from: '2019-09-01',
+        to: '2021-11-15',
+      },
+      location: 'Online',
+      summary: 'Specialized in advanced software development techniques and project management. Completed a thesis on machine learning applications in web development.',
+    },
+    {
+      schoolName: 'Global Language Institute',
+      studyName: 'Intensive English Language Program',
+      studyDate: {
+        from: '2014-06-01',
+        to: '2015-07-31',
+      },
+      location: 'New York, USA',
+      summary: 'Achieved fluency in English, focusing on technical language for IT professionals. Participated in multicultural communication workshops.',
+    },
   ],
   experiences: [
     {
@@ -144,6 +164,32 @@ const Placeholders = {
         { responsibility: 'Prepare and review operational reports and schedules' },
       ],
       summary: 'It is where i got started into coding and also where i mastered it. Seriously i\'d recommend you at all cost this campus if you ever want to learn web dev!',
+    },
+    {
+      companyName: 'Tech Innovations Inc.',
+      positionTitle: 'Software Engineer',
+      workDate: {
+        from: '2022-02-01',
+        to: '2024-07-17',
+      },
+      jobResponsibilities: [
+        { responsibility: 'Develop and maintain high-quality software products' },
+        { responsibility: 'Collaborate with cross-functional teams to define and design new features' },
+      ],
+      summary: 'Contributing to cutting-edge projects, focusing on innovation and efficiency.',
+    },
+    {
+      companyName: 'Global Tech Solutions',
+      positionTitle: 'Project Manager',
+      workDate: {
+        from: '2018-05-01',
+        to: '2022-01-31',
+      },
+      jobResponsibilities: [
+        { responsibility: 'Lead project planning sessions' },
+        { responsibility: 'Coordinate staff and internal resources' },
+      ],
+      summary: 'Managed diverse teams to deliver projects on time and within budget, enhancing client satisfaction.',
     },
   ],
 };
@@ -212,9 +258,9 @@ const defaultGeneral = Object.freeze(general);
 const defaultEducation = Object.freeze(education[0]);
 const defaultExperiences = Object.freeze(experiences[0]);
 
-const generalPlaceholders = Placeholders.general;
-const educationPlaceholders = Placeholders.education;
-const experiencesPlaceholders = Placeholders.experiences;
+const generalPlaceholders = Object.freeze(Placeholders.general);
+const educationPlaceholders = Object.freeze(Placeholders.education);
+const experiencesPlaceholders = Object.freeze(Placeholders.experiences);
 
 export {
   randomStrings,

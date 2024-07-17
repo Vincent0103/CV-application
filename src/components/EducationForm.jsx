@@ -1,4 +1,6 @@
 import { toWordsOrdinal } from 'number-to-words';
+import { useState } from 'react';
+import { produce } from 'immer';
 import { Inputs, Btn } from './FormElements.jsx';
 import getEntriesFromRange, { getRandomItem } from './utils';
 import { educationPlaceholders } from './data/data';
@@ -8,10 +10,20 @@ const EducationForm = ({
   handleFormChange,
   handleFormClick,
 }) => {
+  const [currentPlaceholders, setCurrentPlaceholders] = useState([
+    getRandomItem(educationPlaceholders),
+  ]);
+
+  const handlePlaceholders = () => {
+    setCurrentPlaceholders(produce((draft) => {
+      draft.push(getRandomItem(educationPlaceholders));
+    }));
+  };
+
   const repeated = {
-    inputsProps: {
-      formName: 'education', placeholders: getRandomItem(educationPlaceholders), handleFormChange,
-    },
+    inputsProps: (placeholderIndex) => ({
+      formName: 'education', placeholders: currentPlaceholders[placeholderIndex], handleFormChange,
+    }),
     addBtnProps: {
       formName: 'education', handleFormClick,
     },
@@ -37,24 +49,25 @@ const EducationForm = ({
               dataKey={'jobResponsibilities'} appendingTextToAriaLabel={`${currentWordOrdinal} education`}
               idOfChangingInformationObject={item.id} btnText={'Education'}/>
             {/* add school name, study name  */}
-            <Inputs {...repeated.inputsProps} dataEntries={entries[0]}
+            <Inputs {...repeated.inputsProps(index)} dataEntries={entries[0]}
             idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}/>
             <div className='grid grid-cols-2'>
               {/* add date input  */}
-              <Inputs {...repeated.inputsProps} dataEntries={entries[1]}
+              <Inputs {...repeated.inputsProps(index)} dataEntries={entries[1]}
               idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
               appendingTextToNameAndId='study date' customDataKey={'studyDate'}
               innerCategory={['from', 'to']} isInFlexContainer={true}/>
             </div>
             {/* add school location, school summary inputs  */}
-            <Inputs {...repeated.inputsProps} dataEntries={entries[2]}
+            <Inputs {...repeated.inputsProps(index)} dataEntries={entries[2]}
             idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
             appendingTextToNameAndId={'school'}/>
           </div>
         );
       })}
       <Btn {...repeated.addBtnProps} btnFunctionName={'add'}
-      isFormBtn={true} btnText={'Education'}/>
+      isFormBtn={true} btnText={'Education'} handlePlaceholders={handlePlaceholders}
+      placeholders={currentPlaceholders}/>
     </form>
   );
 };

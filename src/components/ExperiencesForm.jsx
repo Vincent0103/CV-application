@@ -1,4 +1,6 @@
 import { toWordsOrdinal } from 'number-to-words';
+import { produce } from 'immer';
+import { useState } from 'react';
 import { Inputs, Btn, ExperiencesMultipleInputs } from './FormElements.jsx';
 import getEntriesFromRange, { getRandomItem } from './utils';
 import { experiencesPlaceholders } from './data/data';
@@ -8,10 +10,22 @@ const ExperiencesForm = ({
   handleFormChange,
   handleFormClick,
 }) => {
+  const [currentPlaceholders, setCurrentPlaceholders] = useState([
+    getRandomItem(experiencesPlaceholders),
+  ]);
+
+  const handlePlaceholders = () => {
+    if (experiencesInformations.length >= currentPlaceholders.length) {
+      setCurrentPlaceholders(produce((draft) => {
+        draft.push(getRandomItem(experiencesPlaceholders));
+      }));
+    }
+  };
+
   const repeated = {
-    inputsProps: {
-      formName: 'experiences', placeholders: getRandomItem(experiencesPlaceholders), handleFormChange,
-    },
+    inputsProps: (placeholderIndex) => ({
+      formName: 'experiences', placeholders: currentPlaceholders[placeholderIndex], handleFormChange,
+    }),
     experiencesMultipleInputsProps: {
       formName: 'experiences', handleFormChange, handleFormClick,
     },
@@ -41,11 +55,11 @@ const ExperiencesForm = ({
               appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}
               idOfChangingInformationObject={item.id} btnText={'Experiences'}/>
             {/* add position title, company name inputs  */}
-            <Inputs {...repeated.inputsProps} dataEntries={entries[0]}
+            <Inputs {...repeated.inputsProps(index)} dataEntries={entries[0]}
             idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}/>
             <div className='grid grid-cols-2'>
               {/* add work date input  */}
-              <Inputs {...repeated.inputsProps} dataEntries={entries[1]}
+              <Inputs {...repeated.inputsProps(index)} dataEntries={entries[1]}
               idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
               appendingTextToNameAndId='work date' customDataKey={'workDate'}
               innerCategory={['from', 'to']} isInFlexContainer={true}/>
@@ -62,14 +76,14 @@ const ExperiencesForm = ({
               idOfChangingInformationObject={item.id} customColor='bg-indigo-950'/>
             </div>
             {/* add summary input  */}
-            <Inputs {...repeated.inputsProps} dataEntries={entries[2]}
+            <Inputs {...repeated.inputsProps(index)} dataEntries={entries[2]}
             idOfChangingInformationObject={item.id} nthNameAndId={currentWordOrdinal}
             appendingTextToNameAndId='experiences' />
           </div>
         );
       })}
       <Btn {...repeated.addBtnProps} btnFunctionName={'add'}
-      isFormBtn={true} btnText={'Experiences'}/>
+      isFormBtn={true} btnText={'Experiences'} handlePlaceholders={handlePlaceholders}/>
     </form>
   );
 };
