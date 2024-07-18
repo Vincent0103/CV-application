@@ -70,7 +70,7 @@ const CVcustomizer = ({
     };
 
     const RightBtn = () => {
-      const formSectionName = getNextVisibleElement('right');
+      const formSectionName = toTitle(getNextVisibleElement('right'));
       return (
         <Btn handleFormSwitcherBtn={handleFormSwitcherBtn} movingSide={'right'}
         formSectionName={formSectionName}>
@@ -89,7 +89,7 @@ const CVcustomizer = ({
   };
 
   return (
-    <div className="w-[33%] h-min sticky top-0 max-lg:static
+    <div className="w-[40%] h-min sticky top-0 max-lg:static
     max-lg:flex max-lg:flex-col max-lg:items-center max-lg:w-full">
       <FormSliderBtns />
       {children}

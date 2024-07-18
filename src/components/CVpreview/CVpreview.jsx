@@ -22,8 +22,8 @@ const CVpreview = ({ generalInformations, educationInformations, experiencesInfo
     : [generalInformations, educationInformations, experiencesInformations];
 
   return (
-    <div className={`bg-white w-full max-h-[29.7cm] aspect-[0.707] shadow-lg rounded-md self-start
-    flex text-sm overflow-y-hidden`}>
+    <div className={`bg-white w-full aspect-[0.707] shadow-lg self-start
+    flex text-sm overflow-y-hidden`} id='CV-preview'>
       <PrimaryContainer generalInformations={generalInformations}
       generalObj={generalObj} areInformationsEmpty={areInformationsEmpty}/>
       <SecondaryContainer generalObj={generalObj} educationObj={educationObj}

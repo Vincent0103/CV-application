@@ -297,7 +297,7 @@ function App() {
           handleFormChange={handleFormChange} handleFormClick={handleFormClick}/>
         </FormContainer>
       </CVcustomizer>
-      <div className='w-[67%] flex flex-col max-lg:w-full'>
+      <div className='w-[60%] flex flex-col max-lg:w-full'>
         <CVpreview generalInformations={generalInformations}
         educationInformations={educationInformations}
         experiencesInformations={experiencesInformations}/>
