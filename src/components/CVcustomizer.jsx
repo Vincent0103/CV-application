@@ -1,10 +1,12 @@
 import { toTitle } from './utils';
 
-const Btn = ({ handleFormSwitcherBtn, movingSide, children }) => (
+const Btn = ({
+  handleFormSwitcherBtn, movingSide, formSectionName, children,
+}) => (
   <div className="flex max-w-full justify-center">
-    <div tabIndex="0" role="button" aria-label="Add new skill" onClick={() => handleFormSwitcherBtn(movingSide)}
-    className="bg-black max-w-48 h-[37.28px] rounded-md flex justify-center items-center cursor-pointer
-    my-4 group" >
+    <div tabIndex="0" role="button" aria-label={`Move to ${formSectionName}`} onClick={() => handleFormSwitcherBtn(movingSide)}
+    className="bg-black max-w-48 h-[37.28px] rounded-md shadow-sm flex justify-center items-center
+    cursor-pointer my-4 group" >
       { children }
     </div>
   </div>
@@ -55,19 +57,28 @@ const CVcustomizer = ({
       return movingSideMap[movingSide][currentlyVisibleElement];
     };
 
-    const LeftBtn = () => (
-      <Btn handleFormSwitcherBtn={handleFormSwitcherBtn} movingSide={'left'} >
-        {leftArrow}
-        <p className="text-white text-xl font-semibold p-4 pl-2">{toTitle(getNextVisibleElement('left'))}</p>
-      </Btn>
-    );
+    const LeftBtn = () => {
+      const formSectionName = toTitle(getNextVisibleElement('left'));
 
-    const RightBtn = () => (
-      <Btn handleFormSwitcherBtn={handleFormSwitcherBtn} movingSide={'right'} >
-        <p className="text-white text-xl font-semibold p-4 pr-2">{toTitle(getNextVisibleElement('right'))}</p>
-        {rightArrow}
-      </Btn>
-    );
+      return (
+        <Btn handleFormSwitcherBtn={handleFormSwitcherBtn} movingSide={'left'}
+        formSectionName={formSectionName}>
+          {leftArrow}
+          <p className="text-white text-xl font-semibold p-4 pl-2">{formSectionName}</p>
+        </Btn>
+      );
+    };
+
+    const RightBtn = () => {
+      const formSectionName = getNextVisibleElement('right');
+      return (
+        <Btn handleFormSwitcherBtn={handleFormSwitcherBtn} movingSide={'right'}
+        formSectionName={formSectionName}>
+          <p className="text-white text-xl font-semibold p-4 pr-2">{formSectionName}</p>
+          {rightArrow}
+        </Btn>
+      );
+    };
 
     return (
       <div className='flex justify-center items-center gap-2'>

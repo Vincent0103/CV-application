@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
-import { useState, useCallback, act } from 'react';
+import { useState, useCallback } from 'react';
 import CVcustomizer from './components/CVcustomizer.jsx';
+import CVExporter from './components/CVExporter.jsx';
 import FormContainer from './components/FormContainer.jsx';
 import GeneralForm from './components/GeneralForm.jsx';
 import EducationForm from './components/EducationForm.jsx';
@@ -296,9 +297,12 @@ function App() {
           handleFormChange={handleFormChange} handleFormClick={handleFormClick}/>
         </FormContainer>
       </CVcustomizer>
-      <CVpreview generalInformations={generalInformations}
-      educationInformations={educationInformations}
-      experiencesInformations={experiencesInformations}/>
+      <div className='w-[67%] flex flex-col max-lg:w-full'>
+        <CVpreview generalInformations={generalInformations}
+        educationInformations={educationInformations}
+        experiencesInformations={experiencesInformations}/>
+        <CVExporter />
+      </div>
     </div>
   );
 }
