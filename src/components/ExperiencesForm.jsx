@@ -52,7 +52,7 @@ const ExperiencesForm = ({
           <div key={index} className=' bg-zinc-200 border-2 border-zinc-300 w-full rounded-lg shadow-sm box'>
             <Btn {...repeated.removeBtnProps} btnFunctionName={'remove'} isFormBtn={true}
               dataKey={'jobResponsibilities'}
-              appendingTextToAriaLabel={`responsibility for the ${currentWordOrdinal} experiences`}
+              appendingTextToAriaLabel={`${currentWordOrdinal} experiences`}
               idOfChangingInformationObject={item.id} btnText={'Experiences'}/>
             {/* add position title, company name inputs  */}
             <Inputs {...repeated.inputsProps(index)} dataEntries={entries[0]}
